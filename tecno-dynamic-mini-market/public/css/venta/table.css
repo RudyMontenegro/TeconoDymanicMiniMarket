@@ -1,0 +1,16 @@
+h5, .h5 {
+    color: #f30000;
+}
+#formulario1 {
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #ffffff;
+    width: 800px;
+}
+
+.card .table td,
+.card .table th {
+    padding-right: 0.1rem;
+    padding-left: 0.1rem;
+}
