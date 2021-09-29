@@ -23,7 +23,8 @@
             </ul>
         </div>
         @endif
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="{{asset('css/bootstrap-theme.min.css')}}">
+        <script src="{{asset('js/jquery-3.6.0.min.js')}}"></script>
         <script>
         function validaComprobante() {
 
