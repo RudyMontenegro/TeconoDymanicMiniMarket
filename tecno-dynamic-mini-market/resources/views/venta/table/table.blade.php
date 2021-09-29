@@ -271,17 +271,14 @@ function validarPrecio() {
         if ($("#precio").val() <= 0) {
             $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'>Cantidad debe ser mayor a 0</h5></span>");
         } else {
-            if (!re.test($("#precio").val()) || $("#precio").val() == 'e' || $("#precio").val() == '-') {
-                $("#estadoPrecio").html(
-                    "<span  class='menor'><h5 class='menor'>Cantidad ingresada incorrecta</h5></span>");
-            } else {
+           
                 prueba.style.borderColor = '#cad1d7';
                 var a = document.getElementById("subTotal");
                 a.style.borderColor = '#cad1d7';
                 $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'> </h5></span>");
                 $("#estadoSubTotal").html("<span  class='menor'><h5 class='menor'> </h5></span>");
                // calcular();
-            }
+            
         }
     }
 }
