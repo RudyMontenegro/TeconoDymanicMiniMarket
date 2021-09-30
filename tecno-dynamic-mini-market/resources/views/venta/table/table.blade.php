@@ -17,7 +17,7 @@
 <table class="table table-responsive" id="tabla">
     <thead class="thead-light">
         <tr>
-            <th scope="col">Codigo de producto</th>
+            <th scope="col">Codigo de Barras</th>
             <th scope="col">Nombre</th>
             <th scope="col">Unidad</th>
             <th scope="col">Cantidad</th>
@@ -94,6 +94,8 @@ $("#codigoI").change(event => {
     $.get(`envioN/${$("#codigoI").val()}`, function(res, sta) {
         $("#nombre").empty();
         $("#nombre").val(res[0].nombre);
+        $("#unidad").val(res[0].unidad);
+        $("#precio").val(res[0].precio_venta_menor);
     });
 });
 $('#codigoI').keyup(function() {
@@ -147,12 +149,7 @@ function limpiarCampos() {
 $("#sucursal_origen").change(event => {
     limpiarCampos();
     $("#estadoCodigo").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-    vacio("codigoI");
-    vacio("nombre");
-    vacio("cantidad");
-    vacio("unidad");
-    vacio("precio");
-    vacio("subTotal");
+ 
 });
 
 var iman = 0;

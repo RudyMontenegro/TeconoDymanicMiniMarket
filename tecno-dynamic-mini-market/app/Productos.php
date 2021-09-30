@@ -76,8 +76,8 @@ class Productos extends Model
     }
     public static function nombres($id){
         $nombre = DB::table('productos') 
-        ->select('nombre')
-        ->where('codigo','=',$id)
+        ->select('nombre','unidad','precio_venta_menor')
+        ->where('codigo_barra','=',$id)
         ->get();
         return $nombre;
     }
@@ -93,10 +93,18 @@ class Productos extends Model
     public static function existe4($codigo,$sucursal){
         $nombre = DB::table('productos')
                 ->select('nombre')
-                ->where('codigo','=',$codigo)
+                ->where('codigo_barra','=',$codigo)
                 ->where('id_sucursal','=',$sucursal)
                 ->exists();
         return $nombre;
     }
 
+    function existeCodigoBarra($codigo,$sucursal){
+        $nombre = DB::table('productos')
+                ->select('nombre')
+                ->where('codigo_barra','=',$codigo)
+                ->where('id_sucursal','=',$sucursal)
+                ->exists();
+        return $nombre;
+    }
 } 
