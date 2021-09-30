@@ -48,27 +48,34 @@
                     id="estadoUnidad"></span>
             </td>
             <td>
-                <input type="integer" class="form-control  {{$errors->has('cantidad')?'is-invalid':'' }}"
+                <input type="number" class="form-control  {{$errors->has('cantidad')?'is-invalid':'' }}"
                     name="cantidad[]" id="cantidad" onBlur="calcular()" onkeyup="validarCantidad()"
                     onblur="validarCantidadProducto()"
                     value="{{ isset($transferencia->cantidad)?$transferencia->cantidad:old('cantidad')  }}">
                 <span id="estadoCantidad"></span>
             </td>
             <td>
-                <input type="integer" class="form-control  {{$errors->has('precio')?'is-invalid':'' }}" name="precio[]"
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Bs.</span>
+                    </div>
+                    <input type="number" class="form-control  {{$errors->has('precio')?'is-invalid':'' }}" name="precio[]"
                     onkeyup="validarPrecio()" onBlur="calcular()" id="precio"
                     value="{{ isset($transferencia->precio)?$transferencia->precio:old('precio')  }}"><span
                     id="estadoPrecio"></span>
-
+                </div>
+                
             </td>
             <td>
-
-                <input type="number" class="form-control  {{$errors->has('subTotal')?'is-invalid':'' }}"
-                    name="subTotal[]" id="subTotal"
-                    value="{{ isset($transferencia->subTotal)?$transferencia->subTotal:old('subTotal')  }}"><span
-                    id="estadoSubTotal"></span>
-
-
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Bs.</span>
+                    </div>
+                    <input type="number" class="form-control  {{$errors->has('subTotal')?'is-invalid':'' }}"
+                        name="subTotal[]" id="subTotal"
+                        value="{{ isset($transferencia->subTotal)?$transferencia->subTotal:old('subTotal')  }}"><span
+                        id="estadoSubTotal"></span>
+                </div>
             </td>
             <td class="eliminar" id="deletRow" name="deletRow">
                 <button class="btn btn-icon btn-danger" type="button">
@@ -104,7 +111,7 @@ $('#codigoI').keyup(function() {
                 $('#codigoDatalist').fadeIn();
                 $('#codigoDatalist').html(data);
             }
-         
+
         });
     }
 });
@@ -271,14 +278,14 @@ function validarPrecio() {
         if ($("#precio").val() <= 0) {
             $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'>Cantidad debe ser mayor a 0</h5></span>");
         } else {
-           
-                prueba.style.borderColor = '#cad1d7';
-                var a = document.getElementById("subTotal");
-                a.style.borderColor = '#cad1d7';
-                $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-                $("#estadoSubTotal").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-               // calcular();
-            
+
+            prueba.style.borderColor = '#cad1d7';
+            var a = document.getElementById("subTotal");
+            a.style.borderColor = '#cad1d7';
+            $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            $("#estadoSubTotal").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            // calcular();
+
         }
     }
 }

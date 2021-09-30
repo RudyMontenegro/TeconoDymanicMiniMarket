@@ -51,7 +51,12 @@
                 }
             }
         }
-
+        function caseSN(){
+            if ($("#nombre_contacto").val() == "") {
+                $("#nombre_contacto").val("Sin nombre")
+                $("#SpanValidacionCliente").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            }
+        }
         function validarCliente() {
 
             if ($("#nombre_contacto").val() == "") {
@@ -126,8 +131,7 @@
                         <div class="form-group">
                             <label for="nit">NIT</label>
                             <input type="number" list="datalistOptionsNit" value="1111111"
-                                placeholder="Escriba para buscar..." name="nit" id="nit" 
-                                class="form-control">
+                                placeholder="Escriba para buscar..." name="nit" id="nit" class="form-control">
                             <datalist id="NitList">
                             </datalist>
                             <span id="estadoCodigo2"></span>
@@ -159,7 +163,7 @@
                         <div class="form-group">
                             <label for="comprobante">Comprobante</label>
                             <input type="text" name="comprobante" id="comprobante" class="form-control"
-                            value="Sin comprobante" onkeyup="validaComprobante()"><span
+                                value="Sin comprobante" onkeyup="validaComprobante()"><span
                                 id="estadoComprobante"></span>
                         </div>
                     </div>
@@ -187,8 +191,9 @@
                 <div class="row">
                     <div class="col-6">
                         <label for="nombre_empresa">Cliente</label>
-                        <input class="form-control" name="nombre_contacto" onclick = "if(this.value=='Sin nombre') this.value=''" value="Sin nombre" onkeyup="validarCliente()"
-                            list="datalistOptionsName" id="nombre_contacto">
+                        <input class="form-control" name="nombre_contacto"
+                            onclick="if(this.value=='Sin nombre') this.value=''" value="Sin nombre"
+                            onkeyup="validarCliente()" onBlur="caseSN()" list="datalistOptionsName" id="nombre_contacto">
                         <span id="SpanValidacionCliente"></span>
                         <datalist id="countryList">
                         </datalist>
@@ -198,7 +203,7 @@
                         <select name="sucursal_origen" id="sucursal_origen" onkeyup="validarSucursal()"
                             onchange="validarSucursal()"
                             class="form-control  {{$errors->has('sucursal_origen')?'is-invalid':'' }}">
-                           
+
                             @foreach ($sucursal as $origen)
                             <option {{ old('origen') == $origen->id ? "selected" : "" }} value="{{$origen->id}}">
                                 {{$origen->nombre}}</option>
@@ -256,9 +261,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" onclick="ClickValidadarImprimir()" class="btn btn-info">Validar e
-                    imprimir</button>
-                <button type="button" id="idBotonGuardar" onclick="guardarForm()" disabled class="btn btn-primary">
+                <button type="button" id="idBotonGuardar" onclick="guardarForm()" class="btn btn-primary  btn-lg btn-block">
                     Guardar
                 </button>
             </div>
@@ -307,8 +310,13 @@ function ClickValidadarImprimir() {
 }
 
 function guardarForm() {
-    $('#idform').find(':input').prop('disabled', false);
-    $('#idform').submit();
+    if (existeValorCreate('nombre_contacto') &&
+        existeValorCreate('total') && existeSucursalCreate()) {
+          $('#idform').submit();
+    } else {
+        alert("Revise todos los campos del formulario")
+    }
+
 }
 
 
