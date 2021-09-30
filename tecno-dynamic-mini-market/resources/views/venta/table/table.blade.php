@@ -21,8 +21,8 @@
             <th scope="col">Nombre</th>
             <th scope="col">Unidad</th>
             <th scope="col">Cantidad</th>
-            <th scope="col">Precio</th>
-            <th scope="col">Subtotal</th>
+            <th scope="col">Precio/Bs.</th>
+            <th scope="col">Subtotal/Bs.</th>
             <th scope="col">Eliminar</th>
         </tr>
     </thead>
@@ -38,7 +38,8 @@
             </th>
             <td>
                 <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
-                    id="nombre" value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
+                    id="nombre" onclick="style=borderColor:#cad1d7"
+                    value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
                 <span id="estadoNombre"></span>
             </td>
             <td>
@@ -59,12 +60,11 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">Bs.</span>
                     </div>
-                    <input type="number" class="form-control  {{$errors->has('precio')?'is-invalid':'' }}" name="precio[]"
-                    onkeyup="validarPrecio()" onBlur="calcular()" id="precio"
-                    value="{{ isset($transferencia->precio)?$transferencia->precio:old('precio')  }}"><span
-                    id="estadoPrecio"></span>
+                    <input type="number" class="form-control  {{$errors->has('precio')?'is-invalid':'' }}"
+                        name="precio[]" onkeyup="validarPrecio()" onBlur="calcular()" id="precio"
+                        value="{{ isset($transferencia->precio)?$transferencia->precio:old('precio')  }}">
                 </div>
-                
+
             </td>
             <td>
                 <div class="input-group">
@@ -73,19 +73,21 @@
                     </div>
                     <input type="number" class="form-control  {{$errors->has('subTotal')?'is-invalid':'' }}"
                         name="subTotal[]" id="subTotal"
-                        value="{{ isset($transferencia->subTotal)?$transferencia->subTotal:old('subTotal')  }}"><span
-                        id="estadoSubTotal"></span>
+                        value="{{ isset($transferencia->subTotal)?$transferencia->subTotal:old('subTotal')  }}">
                 </div>
+
             </td>
-            <td class="eliminar" id="deletRow" name="deletRow">
-                <button class="btn btn-icon btn-danger" type="button">
+            <td class="eliminar">
+                <button class="btn btn-icon btn-danger" type="button" id="deletRow" name="deletRow">
                     <span class="btn-inner--icon"><i class="ni ni-fat-remove"></i></span>
                 </button>
             </td>
         </tr>
     </tbody>
 </table>
-
+<div class="div text-center">
+    <span id="stateRow"></span>
+</div>
 <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir</button>
 <script>
 $("#codigoI").change(event => {
@@ -120,6 +122,10 @@ $('#codigoI').keyup(function() {
 <script>
 var res = 0;
 
+function validadoCodigo() {
+
+}
+
 function calcular() {
     try {
         var a = $("input[id=cantidad]").val();
@@ -141,11 +147,16 @@ function limpiarCampos() {
 $("#sucursal_origen").change(event => {
     limpiarCampos();
     $("#estadoCodigo").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+    vacio("codigoI");
+    vacio("nombre");
+    vacio("cantidad");
+    vacio("unidad");
+    vacio("precio");
+    vacio("subTotal");
 });
-var bb = 0;
+
 var iman = 0;
 $(function() {
-
     console.log(existeValor("codigoI"));
     $("#adicional").on('click', function() {
         if (!existeValor("codigoI") && !existeValor("nombre") && !existeValor("cantidad") && !
@@ -155,11 +166,11 @@ $(function() {
         ) {
             iman = iman + 1;
             $("#tabla tbody tr:eq(0)").clone().appendTo("#tabla").attr("id", "columna-" + (iman)).find(
-                'input').attr('readonly', true);
+                'input').attr('readonly', true).show();
             limpiarCampos();
-            bb = bb + 1;
-            $('#deletRow').show();
+            $("#stateRow").html("<span  class='menor'><h5 class='menor'></h5></span>");
         } else {
+            $("#stateRow").html("<h5 class='menor'>Revise todos los campos </h5>");
             vacio("codigoI");
             vacio("nombre");
             vacio("cantidad");
@@ -169,25 +180,11 @@ $(function() {
 
         }
     });
-
-
     $(document).on("click", ".eliminar", function() {
-        if (bb > 0) {
-            var variableRestar = $(this).closest('tr').find('input[id="subTotal"]').val();
-            var parent = $(this).parents().get(0); // eliminar row
-            //  alert(variable);
-            res = res - variableRestar;
-            $("#total").val(res);
-            $(parent).remove();
-            bb = bb - 1;
+        var variableRestar = $(this).closest('tr').find('input[id="subTotal"]').val();
+        if ($(this).parents('tr').attr('id') != "columna-0") {
+            $(this).parents('tr').remove();
         } else {
-            // $(this).find('input').attr('readonly', false);
-            $("#codigoI").attr('readonly', false);
-            $("#unidad").attr('readonly', false);
-            $("#nombre").attr('readonly', false);
-            $("#cantidad").attr('readonly', false);
-            $("#precio").attr('readonly', false);
-            $("#subTotal").attr('readonly', false);
             res = 0;
             $("#total").val(res);
             limpiarCampos();
@@ -207,15 +204,14 @@ function existeValor($dato) {
 function vacio($valor) {
     var dato = document.getElementById($valor).value;
     var prueba = document.getElementById($valor);
-    if (dato == "") {
+    if (dato == "" || dato == "0") {
         prueba.style.borderColor = 'red';
-        $("#estado" + $valor.charAt(0).toUpperCase() + $valor.slice(1)).html(
-            "<span  class='menor'><h5 class='menor'>Campo obligatorio</h5></span>");
+        //$("#estado" + $valor.charAt(0).toUpperCase() + $valor.slice(1)).html(
+        // "<span  class='menor'><h5 class='menor'>Campo obligatorio</h5></span>");
     } else {
         if (validarCantidad() || validarNombre() || validarPrecio() || validarUnidad()) {
             prueba.style.borderColor = '#cad1d7';
-            $("#estado" + $valor.charAt(0).toUpperCase() + $valor.slice(1)).html(
-                "<span  class='menor'><h5 class='menor'></h5></span>");
+
         }
 
     }
@@ -228,7 +224,8 @@ function validarUnidad() {
         $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
     } else {
         if ($("#unidad").val().length < 3) {
-            $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+            $("#estadoUnidad").html(
+                "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
         } else {
             if ($("#unidad").val().length > 50) {
                 $("#estadoUnidad").html(
@@ -254,7 +251,8 @@ function validarCantidad() {
         $("#estadoCantidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
     } else {
         if ($("#cantidad").val() <= 0) {
-            $("#estadoCantidad").html("<span  class='menor'><h5 class='menor'>Cantidad debe ser mayor a 0</h5></span>");
+            $("#estadoCantidad").html(
+                "<span  class='menor'><h5 class='menor'>Cantidad debe ser mayor a 0</h5></span>");
         } else {
             if (!re.test($("#cantidad").val()) || $("#cantidad").val() == 'e' || $("#cantidad").val() == '-') {
                 $("#estadoCantidad").html(
@@ -276,7 +274,8 @@ function validarPrecio() {
         $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'> </h5></span>");
     } else {
         if ($("#precio").val() <= 0) {
-            $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'>Cantidad debe ser mayor a 0</h5></span>");
+            $("#estadoPrecio").html(
+                "<span  class='menor'><h5 class='menor'>Cantidad debe ser mayor a 0</h5></span>");
         } else {
 
             prueba.style.borderColor = '#cad1d7';
@@ -291,6 +290,8 @@ function validarPrecio() {
 }
 
 function existe() {
+    var prueba = document.getElementById("codigoI");
+    prueba.style.borderColor = '#cad1d7';
     var e = document.getElementById("sucursal_origen");
     var str = e.options[e.selectedIndex].text;
     if (str == "Elige una Sucursal de Origen") {
@@ -305,6 +306,8 @@ function existe() {
 }
 
 function validarNombre() {
+    var prueba = document.getElementById("nombre");
+    prueba.style.borderColor = '#cad1d7';
     var cod = document.getElementById("sucursal_origen").value;
     jQuery.ajax({
         url: "/transferencia/llenar",
