@@ -23,8 +23,7 @@
             </ul>
         </div>
         @endif
-        <link rel="stylesheet" href="{{asset('css/bootstrap-theme.min.css')}}">
-        <script src="{{asset('js/jquery-3.6.0.min.js')}}"></script>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
         <script>
         function validaComprobante() {
 
@@ -52,7 +51,12 @@
                 }
             }
         }
-
+        function caseSN(){
+            if ($("#nombre_contacto").val() == "") {
+                $("#nombre_contacto").val("Sin nombre")
+                $("#SpanValidacionCliente").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            }
+        }
         function validarCliente() {
 
             if ($("#nombre_contacto").val() == "") {
@@ -122,12 +126,12 @@
             {{ csrf_field()}}
 
             <div class="col-md-12 mx-auto ">
-                <div class="row">
+                <div class="row" style="display: none;">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="nit">NIT</label>
-                            <input type="number" list="datalistOptionsNit" placeholder="Escriba para buscar..."
-                                name="nit" id="nit" value="{{ old('nit')}}" class="form-control">
+                            <input type="number" list="datalistOptionsNit" value="1111111"
+                                placeholder="Escriba para buscar..." name="nit" id="nit" class="form-control">
                             <datalist id="NitList">
                             </datalist>
                             <span id="estadoCodigo2"></span>
@@ -156,13 +160,12 @@
                         </script>
                     </div>
                     <div class="col-6">
-                        <label for="nombre_empresa">Cliente</label>
-                        <input class="form-control" name="nombre_contacto" onkeyup="validarCliente()"
-                            list="datalistOptionsName" id="nombre_contacto" placeholder="Escriba para buscar...">
-                        <span id="SpanValidacionCliente"></span>
-                        <datalist id="countryList">
-                        </datalist>
-
+                        <div class="form-group">
+                            <label for="comprobante">Comprobante</label>
+                            <input type="text" name="comprobante" id="comprobante" class="form-control"
+                                value="Sin comprobante" onkeyup="validaComprobante()"><span
+                                id="estadoComprobante"></span>
+                        </div>
                     </div>
 
                     <div class="col-6">
@@ -187,11 +190,20 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
+                        <label for="nombre_empresa">Cliente</label>
+                        <input class="form-control" name="nombre_contacto"
+                            onclick="if(this.value=='Sin nombre') this.value=''" value="Sin nombre"
+                            onkeyup="validarCliente()" onBlur="caseSN()" list="datalistOptionsName" id="nombre_contacto">
+                        <span id="SpanValidacionCliente"></span>
+                        <datalist id="countryList">
+                        </datalist>
+                    </div>
+                    <div class="col-6">
                         <label for="sucursal_origen">Sucursal</label>
                         <select name="sucursal_origen" id="sucursal_origen" onkeyup="validarSucursal()"
                             onchange="validarSucursal()"
                             class="form-control  {{$errors->has('sucursal_origen')?'is-invalid':'' }}">
-                            <option selected disabled>Elige una Sucursal de Origen</option>
+
                             @foreach ($sucursal as $origen)
                             <option {{ old('origen') == $origen->id ? "selected" : "" }} value="{{$origen->id}}">
                                 {{$origen->nombre}}</option>
@@ -199,14 +211,6 @@
                         </select><span id="estadoSucursal"></span>
                         {!! $errors->first('sucursal_origen','<div class="invalid-feedback">:message</div>') !!}
 
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="comprobante">Comprobante</label>
-                            <input type="text" name="comprobante" id="comprobante" class="form-control"
-                                value="{{ old('comprobante')}}" onkeyup="validaComprobante()"><span
-                                id="estadoComprobante"></span>
-                        </div>
                     </div>
                 </div>
                 <br>
@@ -257,9 +261,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" onclick="ClickValidadarImprimir()" class="btn btn-info">Validar e
-                    imprimir</button>
-                <button type="button" id="idBotonGuardar" onclick="guardarForm()" disabled class="btn btn-primary">
+                <button type="button" id="idBotonGuardar" onclick="guardarForm()" class="btn btn-primary  btn-lg btn-block">
                     Guardar
                 </button>
             </div>
@@ -270,7 +272,7 @@
 
 <script>
 $(function() {
-  //  $(':input[type="submit"]').prop('disabled', true);
+    //  $(':input[type="submit"]').prop('disabled', true);
 });
 
 function existeValorCreate($dato) {
@@ -291,24 +293,30 @@ function existeSucursalCreate() {
 }
 
 function ClickValidadarImprimir() {
-    
+
     if (existeValorCreate('nit') && existeValorCreate('nombre_contacto') && existeValorCreate('comprobante') &&
         existeValorCreate('total') && existeSucursalCreate()) {
         // alert("me llamabas?");
-        $('#idform').find(':input').prop('disabled', 'disabled');//accede todos los inputs del formulario
-      //  $('#idform').find(':select')
-       //$('#nit').prop('readonly', true);
-       //$('#nombre_contacto').prop('readonly', true);
-      //$('#idform').submit();
-      $('#idBotonGuardar').prop('disabled', false);
-       
+        $('#idform').find(':input').prop('disabled', 'disabled'); //accede todos los inputs del formulario
+        //  $('#idform').find(':select')
+        //$('#nit').prop('readonly', true);
+        //$('#nombre_contacto').prop('readonly', true);
+        //$('#idform').submit();
+        $('#idBotonGuardar').prop('disabled', false);
+
     } else {
         alert("Revise todos los campos del formulario")
     }
 }
+
 function guardarForm() {
-    $('#idform').find(':input').prop('disabled', false);
-    $('#idform').submit();
+    if (existeValorCreate('nombre_contacto') &&
+        existeValorCreate('total') && existeSucursalCreate()) {
+          $('#idform').submit();
+    } else {
+        alert("Revise todos los campos del formulario")
+    }
+
 }
 
 

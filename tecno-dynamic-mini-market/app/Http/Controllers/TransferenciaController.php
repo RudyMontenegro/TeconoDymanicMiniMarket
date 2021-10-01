@@ -178,8 +178,8 @@ class TransferenciaController extends Controller
 
     public function llenar()
     {
-        $db_handle = new TransferenciaDetalle();
-        $existe = $db_handle->existe($_POST["codigoI"],$_POST["sucursal"]);
+        $db_handle = new Productos();
+        $existe = $db_handle->existeCodigoBarra($_POST["codigoI"],$_POST["sucursal"]);
 
         if(!empty($_POST["codigoI"]) && !empty($_POST["sucursal"])){
 
