@@ -102,23 +102,16 @@
                         </div>
                     </div>
 
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label form="responsable_compra">Responsable de compra</label>
-                            <input type="text" name="responsable_compra" class="form-control" type="url" id="responsable_compra" placeholder="001-cbba"
-                                readonly value="{{ auth()->user()->name }}">
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label form="total">Monto Recibido</label>
+                            <label form="total">Recibo</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" class="form-control" placeholder="100" aria-label="Username" onBlur="devolver()"id="recibo" name="recibo"
+                                <input type="number" class="form-control"  aria-label="Username" onBlur="devolver()"id="recibo" name="recibo"
                                     aria-describedby="basic-addon1">
                             </div>
                         </div>
@@ -130,7 +123,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" class="form-control" placeholder="100" aria-label="Username" onBlur="devolver()" id="cambio" name="cambio"
+                                <input type="number" class="form-control"  aria-label="Username" onBlur="devolver()" id="cambio" name="cambio"
                                     aria-describedby="basic-addon1">
                             </div>
                         </div>
@@ -140,6 +133,15 @@
                 <div class="form-group">
                     <label form="observaciones">Observaciones</label>
                     <textarea class="form-control" name="observaciones" id="observaciones" rows="3"></textarea>
+                </div>
+                <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label form="responsable_compra">Responsable de compra</label>
+                        <input type="text" name="responsable_compra" class="form-control" type="url" id="responsable_compra" placeholder="001-cbba"
+                            readonly value="{{ auth()->user()->name }}">
+                    </div>
+                </div>
                 </div>
                 </div>
                 <button type="submit" class="btn btn-success my-2 my-sm-0">
