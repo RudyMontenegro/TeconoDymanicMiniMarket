@@ -213,7 +213,7 @@ function existeValor($dato) {
 function vacio($valor) {
     var dato = document.getElementById($valor).value;
     var prueba = document.getElementById($valor);
-    if (dato == "" || dato == "0") {
+    if (dato == "" || dato == "0.00") {
         prueba.style.borderColor = 'red';
     } else {
         if (validarCantidad() || validarNombre() || validarPrecio() || validarUnidad()) {
