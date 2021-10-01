@@ -24,7 +24,7 @@ class CreateProductosTable extends Migration
             $table->decimal('precio_venta_menor', 8, 2);
             $table->bigInteger('cantidad');
             $table->string('unidad');
-            $table->bigInteger('cantidad_inicial');
+            $table->bigInteger('cantidad_inicial')->nullable();
             $table->unsignedBigInteger('id_proveedor')->nullable();
             $table->unsignedBigInteger('id_categoria')->nullable();
             $table->unsignedBigInteger('id_sucursal')->nullable();

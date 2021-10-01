@@ -23,10 +23,13 @@ class ProductosController extends Controller
         
         $categoria = Categoria::paginate(3,['*'],'categoria');
 
-        $sucursales = Sucursal::all();
+        $producto = DB::table('productos')
+                        ->join('categorias','categorias.id','productos.id_categoria')
+                        ->select('productos.*','categorias.nombre as categoriaNombre')
+                        ->paginate(10,['*'],'producto');
 
         
-        return view('producto.index',['categoria'=>$categoria])->with(compact('sucursal','sucursales'));
+        return view('producto.index',['categoria'=>$categoria])->with(compact('producto'));
     }
 
 
@@ -48,18 +51,14 @@ class ProductosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
         $proveedor = Proveedor::all();
         $categoria = Categoria::all();
         $sucursales = Sucursal::all();
 
-           $sucursal_elegida = DB::table('sucursals')
-                                ->select('*')
-                                ->where('id','=',$id)
-                                ->first(); 
         
-        return view('producto.create',['proveedor'=>$proveedor,'categoria'=>$categoria,'sucursales'=>$sucursales,'sucursal_elegida'=>$sucursal_elegida]);
+        return view('producto.create',['proveedor'=>$proveedor,'categoria'=>$categoria,'sucursales'=>$sucursales]);
     }
 
     /**
@@ -81,10 +80,10 @@ class ProductosController extends Controller
             $producto->precio_venta_menor = request('precioVentaMenor');
             $producto->cantidad = $request->get('cantidad');
             $producto->unidad = $request->get('unidad');
-            $producto->cantidad_inicial = $request->get('cantidadInicial');
-            $producto->id_proveedor = $request->get('proveedor');
+            //$producto->cantidad_inicial = $request->get('cantidadInicial');
+            //$producto->id_proveedor = $request->get('proveedor');
             $producto->id_categoria = $request->get('categoria');
-            $producto->id_sucursal = request('sucursal');
+            //$producto->id_sucursal = request('sucursal');
 
             if($request->hasfile('foto')){
         
@@ -173,19 +172,18 @@ class ProductosController extends Controller
     public function update(Request $request, Productos $productos, $id)
     {
         $producto = Productos::FindOrFail($id);
-
         $producto->codigo = request('codigo');
         $producto->codigo_barra = request('codigoBarra');
         $producto->nombre = request('nombre');
-        $producto->categoria = request('categoria');
+        $producto->id_categoria = $request->get('categoria');
         $producto->marca = request('marca');
         $producto->precio_costo = request('precioCosto');
         $producto->precio_venta_mayor = request('precioVentaMayor');
         $producto->precio_venta_menor = request('precioVentaMenor');
         $producto->cantidad = $request->get('cantidad');
         $producto->unidad = $request->get('unidad');
-        $producto->cantidad_inicial = $request->get('cantidadInicial');
-        $producto->id_proveedor = $request->get('proveedor');
+        //$producto->cantidad_inicial = $request->get('cantidadInicial');
+        //$producto->id_proveedor = $request->get('proveedor');
         
         if($request->hasfile('foto')){
 
