@@ -65,7 +65,7 @@
                 <div class="col-6">
                     <label form="sucursal">Sucursal</label>
                     <select name="sucursal_origen" id="sucursal_origen" class="form-control {{$errors->has('sucursal')?'is-invalid':''}}" onkeyup="validarSucursal()">
-                        <option selected disabled>Elija una Sucursal</option>
+                        
                         @foreach($sucursal as $sucursal)
                         <option {{old('sucursal') == $sucursal->id ? "selected" : ""}} value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
                         @endforeach

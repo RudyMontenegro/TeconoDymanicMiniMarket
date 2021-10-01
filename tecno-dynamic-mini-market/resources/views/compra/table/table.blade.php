@@ -35,10 +35,10 @@
                 <tr>
                     <th>
                         <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existe()" list="codigo">
-                        <datalist id="codigo">
-                        </datalist>
-                        <span id="estadoCodigo"></span>
-                        <span id="estadoCodigoI"></span>
+                    <datalist id="codigoDatalist">
+                    </datalist>
+                    <span id="estadoCodigo"></span>
+                    <span id="estadoCodigoI"></span>
                     </th>
                     <td>
                         <input type="text" class="form-control" name="nombre[]" id="nombre">
@@ -78,22 +78,39 @@
     </div>
 
     <script>
-        $("#sucursal_origen").change(event => {
-            $.get(`envioP/${event.target.value}`, function(res, sta) {
-                $("#codigo").empty();
-                $("#codigo").append(`<option > Elige el codigo de producto </option>`);
-                res.forEach(element => {
-                    $("#codigo").append(
-                        `<option> ${element.codigo} </option>`
-                    );
-                });
-            });
-        });
+        
         $("#codigoI").change(event => {
             $.get(`envioN/${$("#codigoI").val()}`, function(res, sta) {
                 $("#nombre").empty();
                 $("#nombre").val(res[0].nombre);
+                $("#unidad").val(res[0].unidad);
+                $("#precio").val(res[0].precio_venta_menor);
+                validarUnidad();
+                validarCantidad();
+                validarPrecio();
             });
+        });
+
+        $('#codigoI').keyup(function() {
+            var query = $(this).val();
+            var sucursalID = $("#sucursal_origen").val();
+            if (query != '') {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '/autoCompleteCodigoP',
+                    method: 'POST',
+                    data: {
+                        query: query,
+                        _token: _token,
+                        sucursalID: sucursalID
+                    },
+                    success: function(data) {
+                        $('#codigoDatalist').fadeIn();
+                        $('#codigoDatalist').html(data);
+                    }
+        
+                });
+            }
         });
         </script>
         <script>
@@ -157,7 +174,28 @@
             
         }
     }
+    function validarCantidad() {
+        var prueba = document.getElementById("cantidad");
+        var re = new RegExp("^[0-9]+$");
+        if ($("#cantidad").val() == "") {
+            $("#estadoCantidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+        } else {
+            if ($("#cantidad").val() <= 0) {
+                $("#estadoCantidad").html(
+                    "<span  class='menor'><h5 class='menor'>Cantidad debe ser mayor a 0</h5></span>");
+            } else {
+                if (!re.test($("#cantidad").val()) || $("#cantidad").val() == 'e' || $("#cantidad").val() == '-') {
+                    $("#estadoCantidad").html(
+                        "<span  class='menor'><h5 class='menor'>Cantidad ingresada incorrecta</h5></span>");
+                } else {
+                    prueba.style.borderColor = '#cad1d7';
     
+                    $("#estadoCantidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+    
+                }
+            }
+        }
+    }
     function validarUnidad() {
         var prueba = document.getElementById("unidad");
         var re = new RegExp("^[a-zA-Z ]+$");
@@ -181,25 +219,27 @@
             
         }
     }
-    function validarNombre() {
-        var cod = document.getElementById("sucursal_origen").value;
-        jQuery.ajax({
-            url: "/compra/llenar",
-            data:{
-                "_token": "{{ csrf_token() }}",
-                "codigoI": $("#codigoI").val(),
-                "sucursal":cod,
-            },
-            asycn:false,
-            type: "POST",
-            success:function(data){
-                $("#estadoCodigo").html(data);
-                $("#loaderIcon").hide();
-                
-            },
-            error:function (){
-                console.log('no da');
-            }
-            });
+    
+function validarPrecio() {
+    var re = new RegExp("^[0-9]+$");
+    var prueba = document.getElementById("precio");
+    if ($("#precio").val() == "") {
+        $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+    } else {
+        if ($("#precio").val() <= 0) {
+            $("#estadoPrecio").html(
+                "<span  class='menor'><h5 class='menor'>Cantidad debe ser mayor a 0</h5></span>");
+        } else {
+
+            prueba.style.borderColor = '#cad1d7';
+            var a = document.getElementById("subTotal");
+            a.style.borderColor = '#cad1d7';
+            $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            $("#estadoSubTotal").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            // calcular();
+
+        }
     }
+}
+    
         </script>

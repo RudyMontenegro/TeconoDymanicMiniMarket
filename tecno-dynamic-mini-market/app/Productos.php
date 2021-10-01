@@ -13,7 +13,7 @@ class Productos extends Model
         ->where('id_sucursal','=',$id)
         ->get();
         return $persona;
-    }
+    } 
 
     function numRows($nombre,$sucursal) {
         $result  = DB::table('productos')
