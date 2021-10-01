@@ -135,8 +135,13 @@ class VentaController extends Controller
             return response()->json( $cliente);
         }
     }
-   
-
+    public function nombre(Request $request, $id)
+    {
+        if($request->ajax()){
+            $codigo=Productos::nombres2($id);
+            return response()->json( $codigo);
+        }
+    }
     function fetchName(Request $request)
     {
      if($request->get('query'))
@@ -190,6 +195,27 @@ class VentaController extends Controller
       {
        $output .= '
        <option>'.$row->codigo_barra.'</option>
+       ';
+      }
+      $output .= '</datalist>';
+      echo $output;
+     }
+    }
+    function fetchNombreProducto(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+      $sucursalID = $request->get('sucursalID');
+      $data = DB::table('productos')
+        ->where('nombre', 'LIKE', "{$query}%")
+        ->where('id_sucursal', '=', $sucursalID)
+        ->get();
+      $output = '<datalist id="listNombre">';
+      foreach($data as $row)
+      {
+       $output .= '
+       <option>'.$row->nombre.'</option>
        ';
       }
       $output .= '</datalist>';

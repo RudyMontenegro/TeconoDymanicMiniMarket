@@ -329,14 +329,5 @@ function guardarForm() {
     }
 
 }
-
-
-$("form").bind("keypress", function(e) {
-    if (e.keyCode == 13) {
-        $("#btnSearch").attr('value');
-        //add more buttons here
-        return false;
-    }
-});
 </script>
 @endsection

@@ -84,6 +84,7 @@ Route::get('/venta', 'VentaController@index')->middleware('auth');
 Route::get('/venta/{ventas}/show', 'VentaController@show')->middleware('auth');
 Route::get('/venta/create', 'VentaController@create')->middleware('auth');
 Route::get('/venta/envioP/{id}', 'VentaController@getProducto')->middleware('auth');
+Route::get('/venta/envioName/{id}', 'VentaController@nombre')->middleware('auth');
 Route::get('/venta/envioNit/{id}', 'VentaController@getCliente')->middleware('auth');
 Route::post('/venta', 'VentaController@store')->middleware('auth');
 Route::get('/venta/pdf', 'VentaController@imprimir')->middleware('auth');
@@ -95,6 +96,7 @@ Route::post('/venta/validarCodigoProducto', 'VentaController@validarCodigo')->mi
 Route::post('/autoCompletName', 'VentaController@fetchName');
 Route::post('/autoCompleteNit', 'VentaController@fetchNitR');
 Route::post('/autoCompleteCodigoP', 'VentaController@fetchCodigoP');
+Route::post('/autoCompleteNombreP', 'VentaController@fetchNombreProducto');
 Route::get('/autocompleteNit/{id}', 'VentaController@fetchNit');
 Route::get('/venta/envioN/{id}', 'TransferenciaController@nombre')->middleware('auth');
 //COMPRA
