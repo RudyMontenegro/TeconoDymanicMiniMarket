@@ -22,13 +22,13 @@
         <table class="table" id="tabla">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Codigo de producto | </th>
-                    <th scope="col">Nombre | </th>
-                    <th scope="col">Unidad | </th>
-                    <th scope="col">Cantidad | </th>
-                    <th scope="col">Precio | </th>
-                    <th scope="col">Subtotal | </th>
-                    <th scope="col">Eliminar | </th>
+                    <th scope="col">Codigo de Barras </th>
+                    <th scope="col">Nombre </th>
+                    <th scope="col">Unidad </th>
+                    <th scope="col">Cantidad </th>
+                    <th scope="col">Precio </th>
+                    <th scope="col">Subtotal </th>
+                    <th scope="col">Eliminar </th>
                 </tr>
             </thead>
             <tbody>
