@@ -48,9 +48,9 @@
                     <td>
                         <a href="{{ url('/venta/'.$venta->id.'/show') }}" class="btn btn-sm btn-info">Detalles</a>
                         <button class="btn btn-sm btn-danger" type="submit" data-toggle="modal"
-                            data-target="#exampleModal">Eliminar</button>
+                            data-target="#exampleModal{{$venta->id}}">Eliminar</button>
                         <!-- modaal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        <div class="modal fade" id="exampleModal{{$venta->id}}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <h2 class="text-center">
-                                            ¿Esta seguro de eliminar este producto?
+                                            ¿Esta seguro de eliminar esta venta?
                                         </h2>
                                     </div>
                                     <div class="modal-footer">

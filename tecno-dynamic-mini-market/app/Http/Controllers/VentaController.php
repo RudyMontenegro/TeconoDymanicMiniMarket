@@ -109,9 +109,10 @@ class VentaController extends Controller
         $venta->save();
         return redirect('/venta');
     }
-    public function destroy(Venta $venta)
+    public function destroy( $venta)
     {
-        $venta->delete();
+        
+        Venta::destroy($venta);
         return redirect('/venta');
     }
     public function imprimir(){

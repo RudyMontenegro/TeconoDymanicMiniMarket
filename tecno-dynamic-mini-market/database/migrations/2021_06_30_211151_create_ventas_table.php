@@ -25,7 +25,7 @@ class CreateVentasTable extends Migration
             $table->decimal('total', 8, 2);
             $table->decimal('recibo', 8, 2);
             $table->decimal('cambio', 8, 2);
-            $table->string('observaciones');
+            $table->string('observaciones')->nullable();
             $table->string('responsable_venta');
             $table->unsignedBigInteger('id_cliente')->nullable();
             $table->foreign('id_sucursal')
