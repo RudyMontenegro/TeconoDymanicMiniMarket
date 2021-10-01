@@ -138,9 +138,22 @@ class CompraController extends Controller
      * @param  \App\Compra  $compra
      * @return \Illuminate\Http\Response
      */
-    public function show(Compra $compra)
+    public function show(Compra $compra, $id)
     {
-        return view('compra.edit', compact('compra')); 
+        $compra = Compra::findOrFail($id);
+
+        $sucursal = DB::table('compras')
+                    ->join('sucursals','sucursals.id','=','compras.id_sucursal')
+                    ->select("sucursals.nombre")
+                    ->where('compras.id','=',$id)
+                    ->first();
+        $proveedor = DB::table('compras')
+                    ->join('proveedors','proveedors.id','=','compras.id_proveedor')
+                    ->select("proveedors.nombre_empresa")
+                    ->where('compras.id','=',$id)
+                    ->first();
+
+        return view('compra.view', compact('compra','sucursal','proveedor')); 
     }
 
     /**
@@ -219,8 +232,11 @@ class CompraController extends Controller
         $compras = DB::table('compras')
                ->join('proveedors','proveedors.id','=','compras.id_proveedor')
                ->join('sucursals','sucursals.id','=','compras.id_sucursal')
-               ->select('compras.comprobante','proveedors.nombre_empresa','compras.fecha','compras.tipo_compra','sucursals.nombre','compras.total','compras.responsable_compra','compras.observaciones')
+               ->join('compra_detalles','compra_detalles.id_compra','=','compras.id')
+               ->select('compras.comprobante','proveedors.nombre_empresa','compras.fecha','compras.tipo_compra','sucursals.nombre','compras.total','compras.responsable_compra','compras.observaciones',
+                           'compra_detalles.codigo_producto','compra_detalles.nombre','compra_detalles.cantidad','compra_detalles.unidad','compra_detalles.precio','compra_detalles.sub_total')
                ->get();
+               
         $pdf = \PDF::loadView('compra.pdf',compact('compras'));// direccion del view, enviando variable.
     
         return $pdf->setPaper('a4', 'landscape')->stream('compras.pdf');//stream-> solo muestra en el navegador

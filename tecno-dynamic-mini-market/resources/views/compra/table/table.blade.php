@@ -11,6 +11,12 @@
         padding-right: 0.1rem;
         padding-left: 0.1rem;
     }
+        .menor {
+            color:#D60202;
+        }
+        .estado-nulo{
+            color:#D60202;
+        }
     </style>
     <div class="table-responsive">
         <table class="table" id="tabla">
@@ -32,21 +38,33 @@
                         <datalist id="codigo">
                         </datalist>
                         <span id="estadoCodigo"></span>
+                        <span id="estadoCodigoI"></span>
                     </th>
                     <td>
                         <input type="text" class="form-control" name="nombre[]" id="nombre">
                     </td>
                     <td>
-                        <input type="text" class="form-control" name="unidad[]" id="unidad">
+                        <input type="text" class="form-control" name="unidad[]" id="unidad" onkeyup="validarUnidad()">
+                        <span id="estadoUnidad"></span>
                     </td>
                     <td>
                         <input type="number" class="form-control" name="cantidad[]" onBlur="calcular()" id="cantidad">
                     </td>
                     <td>
+                        <div class="input-group">
+                             <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Bs.</span>
+                            </div>
                         <input type="number" class="form-control" onBlur="calcular()" name="precio[]" id="precio">
+                        </div>
                     </td>
                     <td>
-                        <input type="text" class="form-control" name="subTotal[]" id="subTotal">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Bs.</span>
+                            </div>
+                          <input type="number" class="form-control" name="subTotal[]" id="subTotal">
+                        </div>
                     </td>
                     <td class="eliminar" id="deletRow" name="deletRow">
                         <button class="btn btn-icon btn-danger" type="button">
@@ -109,10 +127,21 @@
             });
             $(document).on("click", ".eliminar", function() {
                 if (bb > 0) {
-                    var parent = $(this).parents().get(0);
-                    $(parent).remove();
-                    bb = bb - 1;
-                }
+                    var variableRestar  = $(this).closest('tr').find('input[id="subTotal"]').val();
+                    var parent = $(this).parents().get(0); 
+
+                    //$(parent).remove();
+                    // bb = bb - 1;
+                    res = res - variableRestar;
+                $("#total").val(res); 
+                $(parent).remove();
+                bb = bb - 1;
+            }else{
+                $(this).parents().find('input').attr('readonly', false);
+                res = 0;
+                $("#total").val(res); 
+                limpiarCampos();
+            }
             });
         });
         function existe(){
@@ -122,8 +151,33 @@
             $("#estadoCodigo").html("<span  class='menor'><h5 class='menor'>Seleccione una sucursal de origen </h5></span>");
             $("#estadoCodigoI").html("<span  class='menor'><h5 class='menor'> </h5></span>");
         }else{
+            $("#estadoCodigo").html("<span  class='menor'><h5 class='menor'> </h5></span>");
                 $("#nombre").val('');
                 validarNombre();
+            
+        }
+    }
+    
+    function validarUnidad() {
+        var prueba = document.getElementById("unidad");
+        var re = new RegExp("^[a-zA-Z ]+$");
+        if($("#unidad").val() == ""){
+            $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+        }else{
+            if($("#unidad").val().length < 3){
+                $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+            }else{
+                if($("#unidad").val().length > 50){
+                    $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+                }else{
+                    if(!re.test($("#unidad").val()) ||  $("#unidad").val() == '-'){
+                        $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'>Solo se acepta caracteres [A-Z]</h5></span>");
+                    }else{
+                        prueba.style.borderColor = '#cad1d7';
+                        $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+                    }
+                }
+            }
             
         }
     }

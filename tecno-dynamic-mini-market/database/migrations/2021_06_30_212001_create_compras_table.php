@@ -22,7 +22,9 @@ class CreateComprasTable extends Migration
             $table->decimal('total', 8, 2);
             $table->string('observaciones')->nullable();
             $table->unsignedBigInteger('id_sucursal')->nullable();
-            $table->unsignedBigInteger('id_proveedor')->nullable();
+            //$table->unsignedBigInteger('id_proveedor')->nullable();
+            $table->decimal('recibo', 8, 2)->nullable();
+            $table->decimal('cambio', 8, 2)->nullable();
 
             $table->foreign('id_sucursal')
             ->references('id')
