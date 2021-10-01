@@ -138,14 +138,15 @@ function calcular() {
         a = $("input[id=cantidad]").val();
         b = $("input[id=precio]").val();
 
-        $("#subTotal").val(a * b);
+        $("#subTotal").val((a*b).toFixed(2));
         if ($("input[id=subTotal]").val() != bb1) {
             res = (a * b) + res;
-            $("#total").val(res);
+            $("#total").val(res.toFixed(2));
         }
     } catch (e) {}
 
 }
+
 
 function limpiarCampos() {
     $("#codigoI").val('');

@@ -51,6 +51,8 @@ class VentaController extends Controller
         $venta->id_sucursal = $request->get('sucursal_origen');
         $venta->comprobante = $request->input('comprobante');
         $venta->total = $request->input('total');
+        $venta->recibo = $request->input('recibo');
+        $venta->cambio = $request->input('cambio');
         $venta->observaciones = $request->input('observaciones');
         $venta->responsable_venta = $request->input('responsable_venta');
      //   $r_id_cliente=Cliente::getIdCliente($request->input('nit'));

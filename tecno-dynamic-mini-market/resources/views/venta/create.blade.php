@@ -243,7 +243,29 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" class="form-control" id="total" name="total">
+                                <input type="number" onclick="if(this.value=='0') this.value=''" class="form-control" id="total" name="total">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Recibo</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Bs.</span>
+                                </div>
+                                <input type="number"  onBlur="CalcularCambio()" class="form-control" id="recibo" name="recibo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Cambio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Bs.</span>
+                                </div>
+                                <input type="number" class="form-control" id="cambio" name="cambio">
                             </div>
                         </div>
                     </div>
@@ -271,9 +293,6 @@
 </div>
 
 <script>
-$(function() {
-    //  $(':input[type="submit"]').prop('disabled', true);
-});
 
 function existeValorCreate($dato) {
     var dato = document.getElementById($dato).value;
@@ -282,6 +301,11 @@ function existeValorCreate($dato) {
     }
     return true;
 }
+function CalcularCambio() {
+   try {
+       $("#cambio").val(($("#recibo").val()-$("#total").val()).toFixed(2));
+   } catch (e) {}
+}
 
 function existeSucursalCreate() {
     var cod = document.getElementById("sucursal_origen").value;
@@ -289,23 +313,6 @@ function existeSucursalCreate() {
         return false;
     } else {
         return true;
-    }
-}
-
-function ClickValidadarImprimir() {
-
-    if (existeValorCreate('nit') && existeValorCreate('nombre_contacto') && existeValorCreate('comprobante') &&
-        existeValorCreate('total') && existeSucursalCreate()) {
-        // alert("me llamabas?");
-        $('#idform').find(':input').prop('disabled', 'disabled'); //accede todos los inputs del formulario
-        //  $('#idform').find(':select')
-        //$('#nit').prop('readonly', true);
-        //$('#nombre_contacto').prop('readonly', true);
-        //$('#idform').submit();
-        $('#idBotonGuardar').prop('disabled', false);
-
-    } else {
-        alert("Revise todos los campos del formulario")
     }
 }
 
