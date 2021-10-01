@@ -51,6 +51,8 @@ class VentaController extends Controller
         $venta->id_sucursal = $request->get('sucursal_origen');
         $venta->comprobante = $request->input('comprobante');
         $venta->total = $request->input('total');
+        $venta->recibo = $request->input('recibo');
+        $venta->cambio = $request->input('cambio');
         $venta->observaciones = $request->input('observaciones');
         $venta->responsable_venta = $request->input('responsable_venta');
      //   $r_id_cliente=Cliente::getIdCliente($request->input('nit'));
@@ -63,7 +65,7 @@ class VentaController extends Controller
         ->first();
        // dd($id_venta);
         if($request->input('codigoI') && $request->input('nombre') && $request->input('cantidad') && $request->input('unidad') && $request->input('precio') && $request->input('subTotal')){
-            $codigo_producto = request('codigoI');
+            $codigo_barra = request('codigoI');
             $nombre = request('nombre');
             $cantidad = request('cantidad');
             $unidad = request('unidad');
@@ -71,7 +73,7 @@ class VentaController extends Controller
             $subTotal = request('subTotal');
             for ($i=0; $i < sizeOf($nombre); $i++) { 
                 $venta_detalle = new VentaDetalle();
-                $venta_detalle->codigo_producto = $codigo_producto[$i];;
+                $venta_detalle->codigo_barra = $codigo_barra[$i];;
                 $venta_detalle->nombre = $nombre[$i];
                 $venta_detalle->cantidad = $cantidad[$i];
                 $venta_detalle->unidad = $unidad[$i];
@@ -132,9 +134,7 @@ class VentaController extends Controller
             return response()->json( $cliente);
         }
     }
-    function validateProducto(){
-
-    }
+   
 
     function fetchName(Request $request)
     {
@@ -181,34 +181,34 @@ class VentaController extends Controller
       $query = $request->get('query');
       $sucursalID = $request->get('sucursalID');
       $data = DB::table('productos')
-        ->where('codigo', 'LIKE', "{$query}%")
+        ->where('codigo_barra', 'LIKE', "{$query}%")
         ->where('id_sucursal', '=', $sucursalID)
         ->get();
       $output = '<datalist id="codigo">';
       foreach($data as $row)
       {
        $output .= '
-       <option>'.$row->codigo.'</option>
+       <option>'.$row->codigo_barra.'</option>
        ';
       }
       $output .= '</datalist>';
       echo $output;
      }
     }
-    public function validarCodigo()
+    public function validarCodigoBarra()
     {
         $db_handle = new Productos();
-        $existe = $db_handle->existe($_POST["codigoI"],$_POST["sucursal"]);
+        $existe = $db_handle->existeCodigoBarra($_POST["codigoI"],$_POST["sucursal"]);
 
         if(!empty($_POST["codigoI"]) && !empty($_POST["sucursal"])){
 
             if($existe == 0){
-                echo "<span  class='estado-nulo'><h5 class='estado-nulo'>No existe codigo de producto</h5></span>";
+                echo "<span  class='estado-nulo'><h5 class='estado-nulo'>No existe codigo de productoT</h5></span>";
             }else{
-                echo "<span  class='estado-nulo'><h5 class='estado-nulo'> ddd</h5></span>";
+                echo "<span  class='estado-nulo'><h5 class='estado-nulo'> </h5></span>";
             }
         }else{
-            echo "<span  class='estado-nulo'><h5 class='estado-nulo'>ddd </h5></span>";
+            echo "<span  class='estado-nulo'><h5 class='estado-nulo'> </h5></span>";
         }
         
         

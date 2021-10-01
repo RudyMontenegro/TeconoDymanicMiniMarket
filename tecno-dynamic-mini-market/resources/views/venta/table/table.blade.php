@@ -14,86 +14,93 @@
     padding-left: 0.1rem;
 }
 </style>
-<table class="table table-responsive" id="tabla">
-    <thead class="thead-light">
-        <tr>
-            <th scope="col">Codigo de producto</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Unidad</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Precio/Bs.</th>
-            <th scope="col">Subtotal/Bs.</th>
-            <th scope="col">Eliminar</th>
-        </tr>
-    </thead>
-    <tbody id="tabla3">
-        <span id="estadoBoton"></span>
-        <tr id="columna-0">
-            <th>
-                <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existe()" list="codigo">
-                <datalist id="codigoDatalist">
-                </datalist>
-                <span id="estadoCodigo"></span>
-                <span id="estadoCodigoI"></span>
-            </th>
-            <td>
-                <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
-                    id="nombre" onclick="style=borderColor:#cad1d7"
-                    value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
-                <span id="estadoNombre"></span>
-            </td>
-            <td>
-                <input type="text" class="form-control  {{$errors->has('unidad')?'is-invalid':'' }}" name="unidad[]"
-                    onkeyup="validarUnidad()" id="unidad"
-                    value="{{ isset($transferencia->unidad)?$transferencia->unidad:old('unidad')  }}"> <span
-                    id="estadoUnidad"></span>
-            </td>
-            <td>
-                <input type="number" class="form-control  {{$errors->has('cantidad')?'is-invalid':'' }}"
-                    name="cantidad[]" id="cantidad" onBlur="calcular()" onkeyup="validarCantidad()"
-                    onblur="validarCantidadProducto()"
-                    value="{{ isset($transferencia->cantidad)?$transferencia->cantidad:old('cantidad')  }}">
-                <span id="estadoCantidad"></span>
-            </td>
-            <td>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Bs.</span>
+<div class="table-responsive">
+    <table class="table" id="tabla">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Codigo de Barras</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Unidad</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio/Bs.</th>
+                <th scope="col">Subtotal/Bs.</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody id="tabla3">
+            <span id="estadoBoton"></span>
+            <tr id="columna-0">
+                <th>
+                    <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existe()" list="codigo">
+                    <datalist id="codigoDatalist">
+                    </datalist>
+                    <span id="estadoCodigo"></span>
+                    <span id="estadoCodigoI"></span>
+                </th>
+                <td>
+                    <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
+                        id="nombre" onclick="style=borderColor:#cad1d7"
+                        value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
+                    <span id="estadoNombre"></span>
+                </td>
+                <td>
+                    <input type="text" class="form-control  {{$errors->has('unidad')?'is-invalid':'' }}" name="unidad[]"
+                        onkeyup="validarUnidad()" id="unidad"
+                        value="{{ isset($transferencia->unidad)?$transferencia->unidad:old('unidad')  }}"> <span
+                        id="estadoUnidad"></span>
+                </td>
+                <td>
+                    <input type="number" class="form-control  {{$errors->has('cantidad')?'is-invalid':'' }}"
+                        name="cantidad[]" id="cantidad" onBlur="calcular()" onkeyup="validarCantidad()"
+                        onblur="validarCantidadProducto()"
+                        value="{{ isset($transferencia->cantidad)?$transferencia->cantidad:old('cantidad')  }}">
+                    <span id="estadoCantidad"></span>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Bs.</span>
+                        </div>
+                        <input type="number" class="form-control  {{$errors->has('precio')?'is-invalid':'' }}"
+                            name="precio[]" onkeyup="validarPrecio()" id="precio"
+                            value="{{ isset($transferencia->precio)?$transferencia->precio:old('precio')  }}">
                     </div>
-                    <input type="number" class="form-control  {{$errors->has('precio')?'is-invalid':'' }}"
-                        name="precio[]" onkeyup="validarPrecio()" onBlur="calcular()" id="precio"
-                        value="{{ isset($transferencia->precio)?$transferencia->precio:old('precio')  }}">
-                </div>
 
-            </td>
-            <td>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Bs.</span>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Bs.</span>
+                        </div>
+                        <input type="number" class="form-control  {{$errors->has('subTotal')?'is-invalid':'' }}"
+                            name="subTotal[]" id="subTotal"
+                            value="{{ isset($transferencia->subTotal)?$transferencia->subTotal:old('subTotal')  }}">
                     </div>
-                    <input type="number" class="form-control  {{$errors->has('subTotal')?'is-invalid':'' }}"
-                        name="subTotal[]" id="subTotal"
-                        value="{{ isset($transferencia->subTotal)?$transferencia->subTotal:old('subTotal')  }}">
-                </div>
 
-            </td>
-            <td class="eliminar">
-                <button class="btn btn-icon btn-danger" type="button" id="deletRow" name="deletRow">
-                    <span class="btn-inner--icon"><i class="ni ni-fat-remove"></i></span>
-                </button>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<div class="div text-center">
-    <span id="stateRow"></span>
+                </td>
+                <td class="eliminar">
+                    <button class="btn btn-icon btn-danger" type="button" id="deletRow" name="deletRow">
+                        <span class="btn-inner--icon"><i class="ni ni-fat-remove"></i></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="div text-center">
+        <span id="stateRow"></span>
+    </div>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir</button>
 </div>
-<button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir</button>
 <script>
 $("#codigoI").change(event => {
     $.get(`envioN/${$("#codigoI").val()}`, function(res, sta) {
         $("#nombre").empty();
         $("#nombre").val(res[0].nombre);
+        $("#unidad").val(res[0].unidad);
+        $("#precio").val(res[0].precio_venta_menor);
+        validarUnidad();
+        validarCantidad();
+        validarPrecio();
     });
 });
 $('#codigoI').keyup(function() {
@@ -121,20 +128,25 @@ $('#codigoI').keyup(function() {
 
 <script>
 var res = 0;
-
-function validadoCodigo() {
-
-}
+var a = 0;
+var b = 0;
 
 function calcular() {
+    var bb1 = $("input[id=subTotal]").val();
+
     try {
-        var a = $("input[id=cantidad]").val();
-        var b = $("input[id=precio]").val();
-        res = (a * b) + res;
-        $("#subTotal").val(a * b);
-        $("#total").val(res);
+        a = $("input[id=cantidad]").val();
+        b = $("input[id=precio]").val();
+
+        $("#subTotal").val((a*b).toFixed(2));
+        if ($("input[id=subTotal]").val() != bb1) {
+            res = (a * b) + res;
+            $("#total").val(res.toFixed(2));
+        }
     } catch (e) {}
+
 }
+
 
 function limpiarCampos() {
     $("#codigoI").val('');
@@ -147,12 +159,7 @@ function limpiarCampos() {
 $("#sucursal_origen").change(event => {
     limpiarCampos();
     $("#estadoCodigo").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-    vacio("codigoI");
-    vacio("nombre");
-    vacio("cantidad");
-    vacio("unidad");
-    vacio("precio");
-    vacio("subTotal");
+
 });
 
 var iman = 0;
@@ -183,6 +190,8 @@ $(function() {
     $(document).on("click", ".eliminar", function() {
         var variableRestar = $(this).closest('tr').find('input[id="subTotal"]').val();
         if ($(this).parents('tr').attr('id') != "columna-0") {
+            res = res - variableRestar;
+            $("#total").val(res);
             $(this).parents('tr').remove();
         } else {
             res = 0;
@@ -204,10 +213,8 @@ function existeValor($dato) {
 function vacio($valor) {
     var dato = document.getElementById($valor).value;
     var prueba = document.getElementById($valor);
-    if (dato == "" || dato == "0") {
+    if (dato == "" || dato == "0.00") {
         prueba.style.borderColor = 'red';
-        //$("#estado" + $valor.charAt(0).toUpperCase() + $valor.slice(1)).html(
-        // "<span  class='menor'><h5 class='menor'>Campo obligatorio</h5></span>");
     } else {
         if (validarCantidad() || validarNombre() || validarPrecio() || validarUnidad()) {
             prueba.style.borderColor = '#cad1d7';
