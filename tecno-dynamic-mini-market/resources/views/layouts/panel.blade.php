@@ -16,19 +16,19 @@
     <link href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <!-- Argon CSS -->
     <link href="{{ asset('css/argon.css?v=1.0.0') }}" rel="stylesheet">
-    
+
 
     <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
-<script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
+    <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
 </head>
 <style>
 .main-content .container-fluid {
     padding-right: 15px !important;
     padding-left: 15px !important;
 }
+</style>
 
-    </style>
 <body>
     <!-- Sidenav -->
     <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
@@ -91,7 +91,7 @@
                 </div>
                 @include('layouts.includes.menu_left')
             </div>
-            
+
         </div>
     </nav>
     <!-- Main content -->
@@ -117,7 +117,7 @@
                 <!-- User -->
                 <ul class="navbar-nav align-items-center d-none d-md-flex">
                     <li class="nav-item dropdown">
-                    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             <div class="media align-items-center">
                                 <!-- <span class="avatar avatar-sm rounded-circle">
@@ -141,9 +141,9 @@
             @yield('content')
             @include('layouts.includes.footer')
         </div>
-      
+
     </div>
-    
+
     <!-- Argon Scripts -->
     <!-- Core -->
     <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
@@ -154,8 +154,16 @@
     @yield('scripts')
     <!-- Argon JS -->
     <script src="{{ asset('js/argon.js?v=1.0.0') }}"></script>
-    
-    
+
+    <script>
+    $("form").bind("keypress", function(e) {
+        if (e.keyCode == 13) {
+            $("#btnSearch").attr('value');
+            //add more buttons here
+            return false;
+        }
+    });
+    </script>
 </body>
 
 </html>

@@ -51,12 +51,14 @@
                 }
             }
         }
-        function caseSN(){
+
+        function caseSN() {
             if ($("#nombre_contacto").val() == "") {
                 $("#nombre_contacto").val("Sin nombre")
                 $("#SpanValidacionCliente").html("<span  class='menor'><h5 class='menor'> </h5></span>");
             }
         }
+
         function validarCliente() {
 
             if ($("#nombre_contacto").val() == "") {
@@ -167,14 +169,6 @@
                                 id="estadoComprobante"></span>
                         </div>
                     </div>
-
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="nanombre_contactome">Fecha</label>
-                            <input class="form-control" type="datetime-local" name="fecha" readonly value="" id="fecha"
-                                onblur="validarFecha()">
-                        </div>
-                    </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="direccion">Tipo de Venta</label>
@@ -190,13 +184,11 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <label for="nombre_empresa">Cliente</label>
-                        <input class="form-control" name="nombre_contacto"
-                            onclick="if(this.value=='Sin nombre') this.value=''" value="Sin nombre"
-                            onkeyup="validarCliente()" onBlur="caseSN()" list="datalistOptionsName" id="nombre_contacto">
-                        <span id="SpanValidacionCliente"></span>
-                        <datalist id="countryList">
-                        </datalist>
+                        <div class="form-group">
+                            <label for="nanombre_contactome">Fecha</label>
+                            <input class="form-control" type="datetime-local" name="fecha" readonly value="" id="fecha"
+                                onblur="validarFecha()">
+                        </div>
                     </div>
                     <div class="col-6">
                         <label for="sucursal_origen">Sucursal</label>
@@ -210,7 +202,16 @@
                             @endforeach
                         </select><span id="estadoSucursal"></span>
                         {!! $errors->first('sucursal_origen','<div class="invalid-feedback">:message</div>') !!}
-
+                    </div>
+                    <div class="col-6">
+                        <label for="nombre_empresa">Cliente</label>
+                        <input class="form-control" name="nombre_contacto"
+                            onclick="if(this.value=='Sin nombre') this.value=''" value="Sin nombre"
+                            onkeyup="validarCliente()" onBlur="caseSN()" list="datalistOptionsName"
+                            id="nombre_contacto">
+                        <span id="SpanValidacionCliente"></span>
+                        <datalist id="countryList">
+                        </datalist>
                     </div>
                 </div>
                 <br>
@@ -243,7 +244,31 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" class="form-control" id="total" name="total">
+                                <input type="number" onclick="if(this.value=='0.00') this.value=''" class="form-control"
+                                    id="total" name="total">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Recibo</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Bs.</span>
+                                </div>
+                                <input type="number" onBlur="CalcularCambio()" class="form-control" id="recibo"
+                                    name="recibo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Cambio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Bs.</span>
+                                </div>
+                                <input type="number" class="form-control" id="cambio" name="cambio">
                             </div>
                         </div>
                     </div>
@@ -261,7 +286,8 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" id="idBotonGuardar" onclick="guardarForm()" class="btn btn-primary  btn-lg btn-block">
+                <button type="button" id="idBotonGuardar" onclick="guardarForm()"
+                    class="btn btn-primary  btn-lg btn-block">
                     Guardar
                 </button>
             </div>
@@ -271,16 +297,18 @@
 </div>
 
 <script>
-$(function() {
-    //  $(':input[type="submit"]').prop('disabled', true);
-});
-
 function existeValorCreate($dato) {
     var dato = document.getElementById($dato).value;
     if (dato == "") {
         return false;
     }
     return true;
+}
+
+function CalcularCambio() {
+    try {
+        $("#cambio").val(($("#recibo").val() - $("#total").val()).toFixed(2));
+    } catch (e) {}
 }
 
 function existeSucursalCreate() {
@@ -292,27 +320,10 @@ function existeSucursalCreate() {
     }
 }
 
-function ClickValidadarImprimir() {
-
-    if (existeValorCreate('nit') && existeValorCreate('nombre_contacto') && existeValorCreate('comprobante') &&
-        existeValorCreate('total') && existeSucursalCreate()) {
-        // alert("me llamabas?");
-        $('#idform').find(':input').prop('disabled', 'disabled'); //accede todos los inputs del formulario
-        //  $('#idform').find(':select')
-        //$('#nit').prop('readonly', true);
-        //$('#nombre_contacto').prop('readonly', true);
-        //$('#idform').submit();
-        $('#idBotonGuardar').prop('disabled', false);
-
-    } else {
-        alert("Revise todos los campos del formulario")
-    }
-}
-
 function guardarForm() {
     if (existeValorCreate('nombre_contacto') &&
         existeValorCreate('total') && existeSucursalCreate()) {
-          $('#idform').submit();
+        $('#idform').submit();
     } else {
         alert("Revise todos los campos del formulario")
     }

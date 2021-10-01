@@ -51,6 +51,8 @@ class VentaController extends Controller
         $venta->id_sucursal = $request->get('sucursal_origen');
         $venta->comprobante = $request->input('comprobante');
         $venta->total = $request->input('total');
+        $venta->recibo = $request->input('recibo');
+        $venta->cambio = $request->input('cambio');
         $venta->observaciones = $request->input('observaciones');
         $venta->responsable_venta = $request->input('responsable_venta');
      //   $r_id_cliente=Cliente::getIdCliente($request->input('nit'));
@@ -63,7 +65,7 @@ class VentaController extends Controller
         ->first();
        // dd($id_venta);
         if($request->input('codigoI') && $request->input('nombre') && $request->input('cantidad') && $request->input('unidad') && $request->input('precio') && $request->input('subTotal')){
-            $codigo_producto = request('codigoI');
+            $codigo_barra = request('codigoI');
             $nombre = request('nombre');
             $cantidad = request('cantidad');
             $unidad = request('unidad');
@@ -71,7 +73,7 @@ class VentaController extends Controller
             $subTotal = request('subTotal');
             for ($i=0; $i < sizeOf($nombre); $i++) { 
                 $venta_detalle = new VentaDetalle();
-                $venta_detalle->codigo_barra = $codigo_producto[$i];;
+                $venta_detalle->codigo_barra = $codigo_barra[$i];;
                 $venta_detalle->nombre = $nombre[$i];
                 $venta_detalle->cantidad = $cantidad[$i];
                 $venta_detalle->unidad = $unidad[$i];

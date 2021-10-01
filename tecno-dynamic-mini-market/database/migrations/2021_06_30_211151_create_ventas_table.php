@@ -23,6 +23,8 @@ class CreateVentasTable extends Migration
             $table->unsignedBigInteger('id_sucursal');
             $table->string('comprobante');
             $table->decimal('total', 8, 2);
+            $table->decimal('recibo', 8, 2);
+            $table->decimal('cambio', 8, 2);
             $table->string('observaciones');
             $table->string('responsable_venta');
             $table->unsignedBigInteger('id_cliente')->nullable();
