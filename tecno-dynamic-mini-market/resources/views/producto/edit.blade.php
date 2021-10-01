@@ -343,30 +343,7 @@
                     {!!  $errors->first('unidad','<div class="invalid-feedback">:message</div>') !!}
                 </div>
         </div> 
-        <div class="row">
-            <div class="col-5">
-                    <label for="cantidadInicial"class="control-label">{{'Cantidad Inicial'}}</label>
-                    <input  type="Integer" class="form-control  {{$errors->has('cantidadInicial')?'is-invalid':'' }}" name="cantidadInicial" id="cantidadInicial" 
-                    value="{{ isset($producto->cantidad_inicial)?$producto->cantidad_inicial:old('cantidadInicial') }}" onkeyup="validarCantidadInicial()"
-                    ><span id="estadoCantidadInicial"></span>
-                    {!!  $errors->first('cantidadInicial','<div class="invalid-feedback">:message</div>') !!}
-                </div>
-                <div class="col-5">
-                    <label for="proveedor">Proveedor</label>
-                    <select name="proveedor" class="form-control  {{$errors->has('proveedor')?'is-invalid':'' }}"  onblur="validarProveedor()" >
-                    <option selected disabled>Elige una Carrera para este Usuario</option>
-                    @foreach ($proveedor as $proveedor)
-                    @if ($proveedors->nombre_empresa == $proveedor->nombre_empresa)
-                    <option value="{{$proveedor->id}}" selected>{{$proveedor->nombre_empresa}}</option>
-                    @else
-                    <option value="{{$proveedor->id}}">{{$proveedor->nombre_empresa}}</option>
-                    @endif
-                    @endforeach 
-                    </select>
-                    <span id="estadoProveedor"></span>
-                    {!!  $errors->first('carrera','<div class="invalid-feedback">:message</div>') !!}
-                </div>
-        </div>  
+        
         <div class="row">
             <div class="col-5">
                 <label for="foto"class="control-label">{{'Foto'}}</label>
@@ -376,19 +353,7 @@
                 {!!  $errors->first('foto','<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="col-5">
-                <label for="sucursal">Sucursal</label>
-                <input name="sucursal" value="{{$sucursal_elegida->id}}" type="hidden">
-                <select name="sucursal" id="sucursal" disabled class="form-control text-dark {{$errors->has('sucursal')?'is-invalid':'' }}" >
-                    <option selected disabled>Elige una Sucursal</option>
-                    @foreach ($sucursales as $sucursal)
-                    @if ($sucursal->nombre == $sucursal_elegida->nombre)
-                    <option {{ old('sucursal') == $sucursal->id ? "selected" : "" }} value="{{$sucursal->id}}" selected>{{$sucursal->nombre}}</option>
-                    @else
-                    <option {{ old('sucursal') == $sucursal->id ? "selected" : "" }} value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
-                    @endif
-                    @endforeach 
-                </select><span id="estadoSucursal"></span>
-                {!!  $errors->first('sucursal','<div class="invalid-feedback">:message</div>') !!}
+                
             </div>
                
         </div> 

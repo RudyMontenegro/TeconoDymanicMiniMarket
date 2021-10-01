@@ -92,7 +92,7 @@
                     }else{
                     //    var re = new RegExp("^[0-9a-zA-Z ]+$");
                         var regex = /^[a-zA-Z ]+$/;
-                        if(regex.test($("#marca").val())){
+                        if(!regex.test($("#marca").val())){
                             $("#estadoMarca").html("<span  class='menor'><h5 class='menor'>Solo se acepta caracteres [A-Z]</h5></span>");
                         }else{
                             $("#estadoMarca").html("<span  class='menor'><h5 class='menor'> </h5></span>");
@@ -407,48 +407,17 @@
 </div> 
 <div class=" row justify-content-center">
     <div class="col-5" >
-            <label for="cantidadInicial"class="control-label">{{'Cantidad Inicial'}}</label>
-            <input type="number" class="form-control  {{$errors->has('cantidadInicial')?'is-invalid':'' }}" name="cantidadInicial" id="cantidadInicial" 
-            value="{{ isset($personal->password)?$personal->password:old('cantidadInicial') }}" onkeyup="validarCantidadInicial()"
-            ><span id="estadoCantidadInicial"></span>
-            {!!  $errors->first('cantidadInicial','<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="col-5" >
             <label for="foto"class="control-label">{{'Foto'}}</label>
             <input type="file" class="form-control  {{$errors->has('foto')?'is-invalid':'' }}" name="foto" id="foto" 
             value="{{ isset($personal->password)?$personal->password:old('foto') }}"
             >
             {!!  $errors->first('foto','<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div class="col-5" >
+            
+        </div>
 </div>  
-<div class=" row justify-content-center">
-    <div class="col-5" >
-        <label for="proveedor">Proveedor</label>
-        <select name="proveedor" id="proveedor" class="form-control  {{$errors->has('proveedor')?'is-invalid':'' }}" onblur="validarProveedor()" >
-        <option selected disabled>Elige un Proveedor</option>
-        @foreach ($proveedor as $proveedor)
-            <option {{ old('proveedor') == $proveedor->id ? "selected" : "" }} value="{{$proveedor->id}}">{{$proveedor->nombre_empresa}}</option>
-        @endforeach
-        </select><span id="estadoProveedor"></span>
-        {!!  $errors->first('proveedor','<div class="invalid-feedback">:message</div>') !!}
-    </div>
-    <div class="col-5" >
-        <label for="sucursal">Sucursal</label>
-        <input name="sucursal" value="{{$sucursal_elegida->id}}" type="hidden">
-        <select name="sucursal" id="sucursal" disabled class="form-control text-dark {{$errors->has('sucursal')?'is-invalid':'' }}" onblur="validarSucursal()">
-            <option selected disabled>Elige una Sucursal</option>
-            @foreach ($sucursales as $sucursal)
-            @if ($sucursal->nombre == $sucursal_elegida->nombre)
-            <option {{ old('sucursal') == $sucursal->id ? "selected" : "" }} value="{{$sucursal->id}}" selected>{{$sucursal->nombre}}</option>
-            @else
-            <option {{ old('sucursal') == $sucursal->id ? "selected" : "" }} value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
-            @endif
-            @endforeach 
-        </select><span id="estadoSucursal"></span>
-        {!!  $errors->first('sucursal','<div class="invalid-feedback">:message</div>') !!}
-    </div>
-       
-</div> 
+
 <br>
 <div class=" row justify-content-center">
     

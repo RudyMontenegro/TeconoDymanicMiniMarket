@@ -98,22 +98,7 @@
                     {!!  $errors->first('unidad','<div class="invalid-feedback">:message</div>') !!}
                 </div>
         </div> 
-        <div class="row justify-content-center">
-            <div class="col-5">
-                    <label for="cantidadInicial"class="control-label">{{'Cantidad Inicial'}}</label>
-                    <input disabled type="text" class="form-control  {{$errors->has('cantidadInicial')?'is-invalid':'' }}" name="cantidadInicial" id="cantidadInicial" 
-                    value="{{ isset($producto->cantidad_inicial)?$producto->cantidad_inicial:old('cantidadInicial') }}"
-                    >
-                    {!!  $errors->first('cantidadInicial','<div class="invalid-feedback">:message</div>') !!}
-                </div>
-                <div class="col-5">
-                    <label for="proveedor">Proveedor</label>
-                    <input disabled type="text" class="form-control  {{$errors->has('proveedor')?'is-invalid':'' }}" name="proveedor" id="proveedor" 
-                    value="{{ isset($proveedors->nombre_empresa)?$proveedors->nombre_empresa:old('proveedor') }}"
-                    >
-                    {!!  $errors->first('unidad','<div class="invalid-feedback">:message</div>') !!}
-                </div>
-        </div>  
+         
         <div class="row justify-content-center">
             <div class="col-5">
                 <label for="foto">Foto</label>
