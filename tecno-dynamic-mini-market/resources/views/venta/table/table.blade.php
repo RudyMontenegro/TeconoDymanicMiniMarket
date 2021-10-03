@@ -225,8 +225,9 @@ $(function() {
             $("#total").val(res);
             $(this).parents('tr').remove();
         } else {
-            res = 0;
-            $("#total").val(res);
+            var bb2 = ($("#total").val()-$("#subTotal").val()); 
+            $("#total").val(bb2.toFixed(2));
+            res = $("#total").val();
             limpiarCampos();
         }
     });

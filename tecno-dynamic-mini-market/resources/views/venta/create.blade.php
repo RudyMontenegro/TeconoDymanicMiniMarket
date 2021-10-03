@@ -244,7 +244,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" onclick="if(this.value=='0.00') this.value=''" class="form-control"
+                                <input type="number" require onclick="if(this.value=='0.00') this.value=''" class="form-control"
                                     id="total" name="total">
                             </div>
                         </div>
@@ -256,7 +256,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" onBlur="CalcularCambio()" class="form-control" id="recibo"
+                                <input type="number" onBlur="CalcularCambio()" require class="form-control" id="recibo"
                                     name="recibo">
                             </div>
                         </div>
@@ -268,7 +268,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" class="form-control" id="cambio" name="cambio">
+                                <input type="number" require class="form-control" id="cambio" name="cambio">
                             </div>
                         </div>
                     </div>
