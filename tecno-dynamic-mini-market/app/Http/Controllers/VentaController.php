@@ -81,6 +81,7 @@ class VentaController extends Controller
                 $venta_detalle->sub_total = $subTotal[$i];
                 $venta_detalle->id_venta = $id_venta->id;
                 $venta_detalle->save();
+                $venta_detalle->reducirInventario($id_codigo_origen->id,intval($cantidad[$i]),intval($request->get('sucursal_origen')));
             }
             //$pdf = \PDF::loadView('venta.reciboPdf',compact('venta','codigo_producto','nombre','cantidad','unidad'))
             //->setOptions(['dpi' => 200, 'defaultFont' => 'sans-serif']);// direccion del view, enviando variable.
