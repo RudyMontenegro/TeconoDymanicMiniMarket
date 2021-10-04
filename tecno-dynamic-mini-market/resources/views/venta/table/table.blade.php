@@ -31,7 +31,7 @@
             <span id="estadoBoton"></span>
             <tr id="columna-0">
                 <th>
-                    <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existe()" list="codigo">
+                    <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existeCodigoBarras()" list="codigo">
                     <datalist id="codigoDatalist">
                     </datalist>
                     <span id="estadoCodigo"></span>
@@ -39,8 +39,10 @@
                 </th>
                 <td>
                     <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
-                        id="nombre" onclick="style=borderColor:#cad1d7"
+                        id="nombre" onclick="style=borderColor:#cad1d7"  list="listNombre" placeholder="Buscar.."
                         value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
+                    <datalist id="nombreDatalist">
+                    </datalist>
                     <span id="estadoNombre"></span>
                 </td>
                 <td>
@@ -84,6 +86,7 @@
                     </button>
                 </td>
             </tr>
+          
         </tbody>
     </table>
     <div class="div text-center">
@@ -96,6 +99,17 @@ $("#codigoI").change(event => {
     $.get(`envioN/${$("#codigoI").val()}`, function(res, sta) {
         $("#nombre").empty();
         $("#nombre").val(res[0].nombre);
+        $("#unidad").val(res[0].unidad);
+        $("#precio").val(res[0].precio_venta_menor);
+        validarUnidad();
+        validarCantidad();
+        validarPrecio();
+    });
+});
+$("#nombre").change(event => {
+    $.get(`envioName/${$("#nombre").val()}`, function(res, sta) {
+  //      $("#nombre").empty();
+        $("#codigoI").val(res[0].codigo_barra);
         $("#unidad").val(res[0].unidad);
         $("#precio").val(res[0].precio_venta_menor);
         validarUnidad();
@@ -123,6 +137,26 @@ $('#codigoI').keyup(function() {
 
         });
     }
+});$('#nombre').keyup(function() {
+    var query = $(this).val();
+    var sucursalID = $("#sucursal_origen").val();
+    if (query != '') {
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            url: '/autoCompleteNombreP',
+            method: 'POST',
+            data: {
+                query: query,
+                _token: _token,
+                sucursalID: sucursalID
+            },
+            success: function(data) {
+                $('#nombreDatalist').fadeIn();
+                $('#nombreDatalist').html(data);
+            }
+
+        });
+    }
 });
 </script>
 
@@ -138,7 +172,7 @@ function calcular() {
         a = $("input[id=cantidad]").val();
         b = $("input[id=precio]").val();
 
-        $("#subTotal").val((a*b).toFixed(2));
+        $("#subTotal").val((a * b).toFixed(2));
         if ($("input[id=subTotal]").val() != bb1) {
             res = (a * b) + res;
             $("#total").val(res.toFixed(2));
@@ -168,8 +202,6 @@ $(function() {
     $("#adicional").on('click', function() {
         if (!existeValor("codigoI") && !existeValor("nombre") && !existeValor("cantidad") && !
             existeValor("precio") && !existeValor("unidad") && !existeValor("subTotal")
-
-
         ) {
             iman = iman + 1;
             $("#tabla tbody tr:eq(0)").clone().appendTo("#tabla").attr("id", "columna-" + (iman)).find(
@@ -194,8 +226,9 @@ $(function() {
             $("#total").val(res);
             $(this).parents('tr').remove();
         } else {
-            res = 0;
-            $("#total").val(res);
+            var bb2 = ($("#total").val()-$("#subTotal").val()); 
+            $("#total").val(bb2.toFixed(2));
+            res = $("#total").val();
             limpiarCampos();
         }
     });
@@ -296,7 +329,7 @@ function validarPrecio() {
     }
 }
 
-function existe() {
+function existeCodigoBarras() {
     var prueba = document.getElementById("codigoI");
     prueba.style.borderColor = '#cad1d7';
     var e = document.getElementById("sucursal_origen");
@@ -308,7 +341,20 @@ function existe() {
     } else {
         $("#nombre").val('');
         validarNombre();
-
+    }
+}
+function existeNombreProducto() {
+    var prueba = document.getElementById("codigoI");
+    prueba.style.borderColor = '#cad1d7';
+    var e = document.getElementById("sucursal_origen");
+    var str = e.options[e.selectedIndex].text;
+    if (str == "Elige una Sucursal de Origen") {
+        $("#estadoCodigo").html(
+            "<span  class='menor'><h5 class='menor'>Seleccione una sucursal de origen </h5></span>");
+        $("#estadoCodigoI").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+    } else {
+        $("#nombre").val('');
+        validarNombre();
     }
 }
 

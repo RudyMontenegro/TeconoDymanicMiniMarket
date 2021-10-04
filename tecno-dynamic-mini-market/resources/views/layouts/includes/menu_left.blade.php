@@ -37,7 +37,7 @@
              <i class="fab fa-product-hunt text-blue"></i> Productos
          </a>
      </li>
-     <li
+     <li  style="display: none;"
          class="nav-item {{ request()->is('proveedor') || request()->is('proveedor/create*') || request()->is('proveedor/{proveedor}*')?  'active' : ''}}">
          <a class="nav-link" href="{{ url('/proveedor')}}">
              <i class="ni ni-delivery-fast text-blue"></i> Proveedores

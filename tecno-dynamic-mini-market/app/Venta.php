@@ -14,6 +14,8 @@ class Venta extends Model
         ->get();
         return $nit;
     } 
+ 
+
     public static function ventaXsucursal(){
         $VentasSucursales = DB::table('ventas')
         ->Join('sucursals','sucursals.id', '=', 'ventas.id_sucursal')
