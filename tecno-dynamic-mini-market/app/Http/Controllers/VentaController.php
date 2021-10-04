@@ -58,6 +58,7 @@ class VentaController extends Controller
      //   $r_id_cliente=Cliente::getIdCliente($request->input('nit'));
         //dd($r_id_cliente[0]);
        // $venta->id_cliente = $r_id_cliente[0];
+       error_log('message here.');
         $venta->save();
         $id_venta = DB::table('ventas')
         ->select('id')
@@ -73,6 +74,7 @@ class VentaController extends Controller
             $subTotal = request('subTotal');
             for ($i=0; $i < sizeOf($nombre); $i++) { 
                 $venta_detalle = new VentaDetalle();
+                 if(!is_null($nombre[$i])){
                 $venta_detalle->codigo_barra = $codigo_barra[$i];
                 $venta_detalle->nombre = $nombre[$i];
                 $venta_detalle->cantidad = $cantidad[$i];
@@ -82,6 +84,7 @@ class VentaController extends Controller
                 $venta_detalle->id_venta = $id_venta->id;
                 $venta_detalle->save();
                 $venta_detalle->reducirInventario($codigo_barra[$i],intval($cantidad[$i]),intval($request->get('sucursal_origen')));
+                }
             }
             //$pdf = \PDF::loadView('venta.reciboPdf',compact('venta','codigo_producto','nombre','cantidad','unidad'))
             //->setOptions(['dpi' => 200, 'defaultFont' => 'sans-serif']);// direccion del view, enviando variable.
@@ -89,9 +92,22 @@ class VentaController extends Controller
         }       
     }
 
-    public function show(Venta $venta)
+    public function show($id)
     {
-        return view('venta.view', compact('venta'));
+       // $venta = Venta::findOrFail($id);
+     ///  $ventasAllDetalles = VentaDetalle::all();
+        $tabla = DB::table('ventas')
+       // ->select('*')
+        ->where('id','=',$id)
+        ->first();
+        $ventasDetalles = DB::table('venta_detalles')
+        ->where('id_venta','=',$id)
+        ->select('*')
+        ->get();
+        $sucursal = Sucursal::all();
+        $clientes = Cliente::all();
+        //dd($ventasDetalles);
+        return view('venta.view', compact('tabla','sucursal','clientes','ventasDetalles'));
     }
     public function edit(Venta $venta)
     {

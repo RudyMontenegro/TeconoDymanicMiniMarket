@@ -39,7 +39,7 @@
                 </th>
                 <td>
                     <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
-                        id="nombre" onclick="style=borderColor:#cad1d7"  list="listNombre"
+                        id="nombre" onclick="style=borderColor:#cad1d7"  list="listNombre" placeholder="Buscar.."
                         value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
                     <datalist id="nombreDatalist">
                     </datalist>
@@ -86,6 +86,7 @@
                     </button>
                 </td>
             </tr>
+          
         </tbody>
     </table>
     <div class="div text-center">

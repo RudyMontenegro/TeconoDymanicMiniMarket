@@ -256,7 +256,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" onBlur="CalcularCambio()" require class="form-control" id="recibo"
+                                <input type="number" value="0" onclick="if(this.value=='0') this.value=''" onBlur="CalcularCambio()" require class="form-control" id="recibo"
                                     name="recibo">
                             </div>
                         </div>
@@ -268,7 +268,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" require class="form-control" id="cambio" name="cambio">
+                                <input type="number" value="0" require class="form-control" id="cambio" name="cambio">
                             </div>
                         </div>
                     </div>
@@ -329,5 +329,6 @@ function guardarForm() {
     }
 
 }
+
 </script>
 @endsection
