@@ -45,7 +45,7 @@
             <div class = 'row'>
                  <div class="col-6">
                       <label form="comprobante">Comprobante</label>
-                      <input class="form-control  type="text" name="comprobante" id="comprobante" 
+                      <input class="form-control"  type="text" name="comprobante" id="comprobante" 
                              placeholder="Ingrese el comprobante" value="{{ old('comprobante') }}">
 
                        {!!  $errors->first('comprobante','<div class="invalid-feedback">:message</div>') !!}

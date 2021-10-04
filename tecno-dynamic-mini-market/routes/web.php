@@ -112,3 +112,7 @@ Route::post('/compra/llenar', 'ClienteController@llenado')->middleware('auth');
 
 Route::get('/compra/{id}', 'CompraController@show')->middleware('auth');    
 //jquery
+
+
+//REPORTES
+Route::get('/reporte', 'ReporteController@index')->middleware('auth');
