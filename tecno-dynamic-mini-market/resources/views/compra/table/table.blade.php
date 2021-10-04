@@ -48,14 +48,16 @@
                         <span id="estadoUnidad"></span>
                     </td>
                     <td>
-                        <input type="number" class="form-control" name="cantidad[]" onBlur="calcular()" id="cantidad">
+                        <input type="number" class="form-control" name="cantidad[]" onBlur="calcular()" onkeyup="validarCantidad()" id="cantidad">
                     </td>
                     <td>
                         <div class="input-group">
-                             <div class="input-group-prepend">
+                            <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Bs.</span>
                             </div>
-                        <input type="number" class="form-control" onBlur="calcular()" name="precio[]" id="precio">
+                            <input type="float" class="form-control  {{$errors->has('precio')?'is-invalid':'' }}"
+                                name="precio[]" onkeyup="validarPrecio()" id="precio"
+                                value="{{ isset($transferencia->precio)?$transferencia->precio:old('precio')  }}">
                         </div>
                     </td>
                     <td>
@@ -63,7 +65,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Bs.</span>
                             </div>
-                          <input type="number" class="form-control" name="subTotal[]" id="subTotal">
+                          <input type="float" class="form-control" name="subTotal[]" id="subTotal">
                         </div>
                     </td>
                     <td class="eliminar" id="deletRow" name="deletRow">
@@ -115,15 +117,24 @@
         </script>
         <script>
         var res = 0;
-        function calcular() {
-            try {
-                var a = $("input[id=cantidad]").val();
-                var b = $("input[id=precio]").val();
-                res = (a * b) + res;
-                document.getElementById("subTotal").value = a * b;
-                document.getElementById("total").value = res;
-            } catch (e) {}
+var a = 0;
+var b = 0;
+
+function calcular() {
+    var bb1 = $("input[id=subTotal]").val();
+
+    try {
+        a = $("input[id=cantidad]").val();
+        b = $("input[id=precio]").val();
+
+        $("#subTotal").val((a*b).toFixed(2));
+        if ($("input[id=subTotal]").val() != bb1) {
+            res = (a * b) + res;
+            $("#total").val(res.toFixed(2));
         }
+    } catch (e) {}
+
+}
         </script>
         <script>
         function limpiarCampos() {
@@ -161,6 +172,34 @@
             }
             });
         });
+
+
+        var iman = 0;
+$(function() {
+    console.log(existeValor("codigoI"));
+    $("#adicional").on('click', function() {
+        if (!existeValor("codigoI") && !existeValor("nombre") && !existeValor("cantidad") && !
+            existeValor("precio") && !existeValor("unidad") && !existeValor("subTotal")
+
+
+        ) {
+            iman = iman + 1;
+            $("#tabla tbody tr:eq(0)").clone().appendTo("#tabla").attr("id", "columna-" + (iman)).find(
+                'input').attr('readonly', true).show();
+            limpiarCampos();
+            $("#stateRow").html("<span  class='menor'><h5 class='menor'></h5></span>");
+        } else {
+            $("#stateRow").html("<h5 class='menor'>Revise todos los campos </h5>");
+            vacio("codigoI");
+            vacio("nombre");
+            vacio("cantidad");
+            vacio("unidad");
+            vacio("precio");
+            vacio("subTotal");
+
+        }
+    });
+
         function existe(){
         var e = document.getElementById("sucursal_origen");
         var str = e.options[e.selectedIndex].text;

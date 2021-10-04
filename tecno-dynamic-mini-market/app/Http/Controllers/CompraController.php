@@ -99,7 +99,7 @@ class CompraController extends Controller
                    ->first();
         //*dd($id_compra);
         if($request->input('codigoI') && $request->input('nombre') && $request->input('cantidad') && $request->input('unidad') && $request->input('precio') && $request->input('subTotal')){
-            $codigo = request('codigoI');
+            $codigo_barra  = request('codigoI');
             $nombre = request('nombre');
             $cantidad = request('cantidad');
             $unidad = request('unidad');
@@ -107,16 +107,9 @@ class CompraController extends Controller
             $sub_total = request('subTotal');
 
             for($i=0; $i < sizeof($nombre); $i++){
-                
-
-                $id_codigo_producto = DB::table('productos')
-                                    ->select('id')
-                                    ->where('codigo','=',$codigo[$i])
-                                    ->first();
-
                 $compra_detalle = new CompraDetalle();
 
-                $compra_detalle-> codigo_producto =  $id_codigo_producto->id;
+                $compra_detalle-> codigo_barra =  $codigo_barra[$i];
                 $compra_detalle-> nombre = $nombre[$i];
                 $compra_detalle-> cantidad = $cantidad[$i];
                 $compra_detalle-> unidad = $unidad[$i];

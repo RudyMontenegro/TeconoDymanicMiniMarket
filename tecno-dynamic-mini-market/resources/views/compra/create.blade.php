@@ -96,7 +96,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" class="form-control" placeholder="100" aria-label="Username" id="total" name="total"
+                                <input type="float" class="form-control" placeholder="100" aria-label="Username" id="total" name="total"
                                     aria-describedby="basic-addon1">
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" class="form-control"  aria-label="Username" onBlur="devolver()"id="recibo" name="recibo"
+                                <input type="float" class="form-control"  aria-label="Username" onBlur="devolver()"id="recibo" name="recibo"
                                     aria-describedby="basic-addon1">
                             </div>
                         </div>
@@ -123,8 +123,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" class="form-control"  aria-label="Username" onBlur="devolver()" id="cambio" name="cambio"
-                                    aria-describedby="basic-addon1">
+                                <input type="float" class="form-control"  aria-label="Username" id="cambio" name="cambio">
                             </div>
                         </div>
                     </div>
@@ -209,15 +208,11 @@
         setInterval(validarFecha,30000);
     </script>
     <script>
-        var res = 0;
         function devolver() {
-            try {
-                var a = $("input[id=recibo]").val();
-                var b = $("input[id=total]").val();
-                res = (a - b) + res;
-                document.getElementById("cambio").value = a -b;
-            } catch (e) {}
-        }
+    try {
+        $("#cambio").val(($("#recibo").val() - $("#total").val()).toFixed(2));
+    } catch (e) {}
+}
         </script>
 
 
