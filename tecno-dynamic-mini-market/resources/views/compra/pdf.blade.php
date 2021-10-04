@@ -55,9 +55,8 @@ footer {
         <table class="table table-striped text-left">
             <thead>
                 <tr>
-                <th scope="col">#</th>
+                    <th scope="col">#</th>
                     <th scope="col">Comprobante</th>
-                    <th scope="col">Proveedor</th>
                     <th scope="col">Fecha</th>
                     <th scope="col">Tipo de compra</th>
                     <th scope="col">Sucursal</th>
@@ -65,15 +64,15 @@ footer {
                     <th scope="col">Responsable de Compra</th>
                     <th scope="col">Observaciones</th>
                 </tr>
+
             </thead>
             <tbody>
                 
-                @foreach($compras as $index => $compra)
+                @foreach($ComprasSucursales as $index => $compra)
                 
                 <tr>
                     <th scope="row">{{ $index+1}}</th>
                     <td>{{ $compra->comprobante }}</td>
-                    <td>{{ $compra->nombre_empresa }}</td>
                     <td>{{ $compra->fecha}}</td>
                     <td>{{ $compra->tipo_compra}}</td>
                     <td>{{ $compra->nombre }}</td>
@@ -81,8 +80,34 @@ footer {
                     <td>{{ $compra->responsable_compra }}</td>
                     <td>{{ $compra->observaciones }}</td>
                 </tr>
+
+                <tr>
+                    <td colspan="2"></td>
+
+                    <th scope="col">Codigo de Producto</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Unidad</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Subtotal</th>
+                </tr>
+
+                @foreach ($comprasDetalles as $comprasDetalle)
+                @if($comprasDetalle->id_compra == $compra->id)
+
+                <tr>
+                    <td colspan="2"></td>
+
+                    <td>{{$comprasDetalle->codigo_producto}}</td>
+                    <td>{{$comprasDetalle->nombre}}</td>  
+                    <td>{{$comprasDetalle->cantidad}}</td>
+                    <td>{{$comprasDetalle->unidad}}</td>
+                    <td>{{$comprasDetalle->precio}}</td>
+                    <td>{{$comprasDetalle->sub_total}}</td> 
+                </tr>
+                @endif
                 @endforeach
-                
+                @endforeach
             </tbody>
         </table>
     </main>

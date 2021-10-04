@@ -87,8 +87,10 @@ class CompraController extends Controller
         $compra->fecha = request('fecha');
         $compra->tipo_compra = $request->get('tipo_compra');
         $compra->total = request('total');
+        $compra->recibo = request('recibo');
+        $compra->cambio = request('cambio');
         $compra->observaciones = request('observaciones');
-        $compra->id_sucursal = request('sucursal');
+        $compra->id_sucursal = $request->get('sucursal_origen');
         $compra->id_proveedor = $request->get('proveedor');
 
         $compra->save(); 
@@ -108,7 +110,6 @@ class CompraController extends Controller
 
             for($i=0; $i < sizeof($nombre); $i++){
                 $compra_detalle = new CompraDetalle();
-
                 $compra_detalle-> codigo_barra =  $codigo_barra[$i];
                 $compra_detalle-> nombre = $nombre[$i];
                 $compra_detalle-> cantidad = $cantidad[$i];
@@ -118,8 +119,7 @@ class CompraController extends Controller
                 $compra_detalle-> id_compra = $id_compra->id;
 
                 $compra_detalle->save();
-
-        
+                //$compra_detalle->aumentarInventario($codigo_barra->id,intval($cantidad[$i]),intval($request->get('sucursal_origen')));
             }
         }
         return redirect('compra');
@@ -135,18 +135,14 @@ class CompraController extends Controller
     {
         $compra = Compra::findOrFail($id);
 
-        $sucursal = DB::table('compras')
-                    ->join('sucursals','sucursals.id','=','compras.id_sucursal')
-                    ->select("sucursals.nombre")
-                    ->where('compras.id','=',$id)
-                    ->first();
-        $proveedor = DB::table('compras')
-                    ->join('proveedors','proveedors.id','=','compras.id_proveedor')
-                    ->select("proveedors.nombre_empresa")
-                    ->where('compras.id','=',$id)
-                    ->first();
+        $comprasDetalles = DB::table('compra_detalles')
+        ->where('id_compra','=',$id)
+        ->select('*')
+        ->get();
 
-        return view('compra.view', compact('compra','sucursal','proveedor')); 
+        $sucursal = Sucursal::all();
+
+        return view('compra.view', compact('compra','sucursal','comprasDetalles')); 
     }
 
     /**
@@ -219,19 +215,16 @@ class CompraController extends Controller
         
         
     }
+    
     public function imprimir(){
 
+       $comprasDetalles = CompraDetalle::all();
+       $ComprasSucursales = Compra::compraXsucursal();
 
-        $compras = DB::table('compras')
-               ->join('proveedors','proveedors.id','=','compras.id_proveedor')
-               ->join('sucursals','sucursals.id','=','compras.id_sucursal')
-               ->join('compra_detalles','compra_detalles.id_compra','=','compras.id')
-               ->select('compras.comprobante','proveedors.nombre_empresa','compras.fecha','compras.tipo_compra','sucursals.nombre','compras.total','compras.responsable_compra','compras.observaciones',
-                           'compra_detalles.codigo_producto','compra_detalles.nombre','compra_detalles.cantidad','compra_detalles.unidad','compra_detalles.precio','compra_detalles.sub_total')
-               ->get();
+       dd($ComprasSucursales);
                
-        $pdf = \PDF::loadView('compra.pdf',compact('compras'));// direccion del view, enviando variable.
-    
+       $pdf = \PDF::loadView('compra.pdf',compact('ComprasSucursales','comprasDetalles'));// direccion del view, enviando variable.
+
         return $pdf->setPaper('a4', 'landscape')->stream('compras.pdf');//stream-> solo muestra en el navegador
         //a4, landscape-> enviar en formato horizontal
     }

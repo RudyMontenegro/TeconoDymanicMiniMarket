@@ -16,7 +16,7 @@ class Venta extends Model
     } 
  
 
-    public static function ventaXsucursal(){
+    public static function ventaXsucursal(){ 
         $VentasSucursales = DB::table('ventas')
         ->Join('sucursals','sucursals.id', '=', 'ventas.id_sucursal')
         ->select('ventas.id','ventas.cliente','ventas.nit','ventas.fecha'

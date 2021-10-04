@@ -46,6 +46,7 @@
                     <span id="estadoNombre"></span>
                 </td>
                 <td>
+                    
                     <input type="text" class="form-control  {{$errors->has('unidad')?'is-invalid':'' }}" name="unidad[]"
                         onkeyup="validarUnidad()" id="unidad"
                         value="{{ isset($transferencia->unidad)?$transferencia->unidad:old('unidad')  }}"> <span

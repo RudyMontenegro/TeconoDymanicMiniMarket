@@ -41,7 +41,11 @@
                     <span id="estadoCodigoI"></span>
                     </th>
                     <td>
-                        <input type="text" class="form-control" name="nombre[]" id="nombre">
+                        <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
+                            id="nombre" onclick="style=borderColor:#cad1d7"  list="listNombre" placeholder="Buscar..">
+                        <datalist id="nombreDatalist">
+                        </datalist>
+                        <span id="estadoNombre"></span>
                     </td>
                     <td>
                         <input type="text" class="form-control" name="unidad[]" id="unidad" onkeyup="validarUnidad()">
@@ -213,6 +217,21 @@ $(function() {
             
         }
     }
+    function existeNombreProducto() {
+    var prueba = document.getElementById("codigoI");
+    prueba.style.borderColor = '#cad1d7';
+    var e = document.getElementById("sucursal_origen");
+    var str = e.options[e.selectedIndex].text;
+    if (str == "Elige una Sucursal de Origen") {
+        $("#estadoCodigo").html(
+            "<span  class='menor'><h5 class='menor'>Seleccione una sucursal de origen </h5></span>");
+        $("#estadoCodigoI").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+    } else {
+        $("#nombre").val('');
+        validarNombre();
+    }
+}
+
     function validarCantidad() {
         var prueba = document.getElementById("cantidad");
         var re = new RegExp("^[0-9]+$");

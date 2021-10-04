@@ -107,6 +107,7 @@ Route::get('/compra/envioN/{id}', 'CompraController@nombre')->middleware('auth')
 Route::get('/compra/envioNit/{id}', 'CompraController@nombre')->middleware('auth');
 Route::get('/compra/edit/{id}', 'CompraController@edit')->middleware('auth');
 Route::post('/compra/registrarCompra','CompraController@store')->middleware('auth');
+Route::get('/compra/view/{id}', 'CompraController@show')->middleware('auth');
 Route::get('/compra/pdf', 'CompraController@imprimir')->middleware('auth');
 Route::patch('/compra/edit/{id}', 'CompraController@update')->middleware('auth');
 Route::delete('/compra/{compras}', 'CompraController@destroy')->middleware('auth');

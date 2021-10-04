@@ -19,9 +19,9 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Comprobante</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Tipo de Compra</th>
+                    <th scope="col">Fecha / Hora</th>
                     <th scope="col">Observaciones</th>
+                    <th scope="col">Total</th>
                     <th scope="col">Opciones<th>
                 </tr>
             </thead>
@@ -35,14 +35,14 @@
                         {{ $compra->fecha }}
                     </td>
                     <td>
-                        {{ $compra->tipo_compra }}
+                        {{ $compra->observaciones }}
                     </td>
                     <td>
-                        {{ $compra->observaciones }}
+                        {{ $compra->total }}
                     </td>
                     
                     <td>
-                        <a href="{{ url('/compra/'.$compra->id.'/show') }}" class="btn btn-sm btn-info">Ver</a>
+                        <a href="{{ url('/compra/view/'.$compra->id) }}" class="btn btn-sm btn-info">Detalles</a>
                         
 
                         <button class="btn btn-sm btn-danger" type="submit" data-toggle="modal"
