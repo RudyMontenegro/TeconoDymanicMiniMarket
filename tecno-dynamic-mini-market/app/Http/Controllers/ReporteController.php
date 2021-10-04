@@ -26,19 +26,37 @@ class ReporteController extends Controller
 
     public function filtrado()
     {
-        $venta = DB::table('ventas')
-                    ->join('venta_detalles','venta_detalles.id_venta','ventas.id')
-                    ->select('ventas.*','venta_detalles.*')
+
+        if(request('fecha_inicio') == request('fecha_fin')){
+            $venta = DB::table('ventas')
+                    ->join('sucursals','sucursals.id','ventas.id_sucursal')
+                    ->select('ventas.*','sucursals.nombre as sucursales')
+                    ->where('fecha','>=',request('fecha_inicio'))
+                    ->get();
+             $compra = DB::table('compras')
+                    ->join('sucursals','sucursals.id','compras.id_sucursal')
+                    ->select('compras.*','sucursals.nombre as sucursales')
+                    ->where('fecha','>=',request('fecha_inicio'))
+                    ->get();
+            
+            
+        }else{
+            $venta = DB::table('ventas')
+                    ->join('sucursals','sucursals.id','ventas.id_sucursal')
+                    ->select('ventas.*','sucursals.nombre as sucursales')
                     ->where('fecha','>=',request('fecha_inicio'))
                     ->where('fecha','<=',request('fecha_fin'))
                     ->get();
 
-        $compra = DB::table('compras')
-                    ->join('compra_detalles','compra_detalles.id_compra','compras.id')
-                    ->select('compras.*','compra_detalles.*')
+            $compra = DB::table('compras')
+                    ->join('sucursals','sucursals.id','compras.id_sucursal')
+                    ->select('compras.*','sucursals.nombre as sucursales')
                     ->where('fecha','>=',request('fecha_inicio'))
                     ->where('fecha','<=',request('fecha_fin'))
                     ->get();
+        }
+        
+
         
         return view('reporte.busqueda', compact('venta','compra'));
     }

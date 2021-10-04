@@ -39,11 +39,7 @@
                 </th>
                 <td>
                     <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
-<<<<<<< HEAD
-                        id="nombre" onclick="style=borderColor:#cad1d7"  list="listNombre"
-=======
                         id="nombre" onclick="style=borderColor:#cad1d7"  list="listNombre" placeholder="Buscar.."
->>>>>>> origin/rudy
                         value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
                     <datalist id="nombreDatalist">
                     </datalist>
