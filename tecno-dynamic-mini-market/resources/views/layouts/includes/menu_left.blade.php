@@ -14,7 +14,7 @@
          </a>
      </li>
      <li
-         class="nav-item {{ request()->is('sucursal') || request()->is('sucursal/create*') || request()->is('sucursal/editar*')?  'active' : ''}}">
+     style="display: none;" class="nav-item {{ request()->is('sucursal') || request()->is('sucursal/create*') || request()->is('sucursal/editar*')?  'active' : ''}}">
          <a class="nav-link" href="{{ url('/sucursal')}}">
              <i class="ni ni-shop text-blue"></i> Sucursales
          </a>
@@ -26,19 +26,20 @@
          </a>
      </li>
      <li
-         class="nav-item {{ request()->is('venta') || request()->is('venta/create*') || request()->is('venta/{venta}*')?  'active' : ''}}">
-         <a class="nav-link" href="{{ url('/venta')}}">
-             <i class="ni ni-basket text-blue"></i> Ventas
-         </a>
-     </li>
-     <li
          class="nav-item {{ request()->is('producto') || request()->is('producto/registrarCategoria*')||request()->is('producto/registrarProducto*') || request()->is('producto/editar*')? 'active' : ''}}">
          <a class="nav-link" href="{{url('producto')}}">
              <i class="fab fa-product-hunt text-blue"></i> Productos
          </a>
      </li>
-     <li  style="display: none;"
-         class="nav-item {{ request()->is('proveedor') || request()->is('proveedor/create*') || request()->is('proveedor/{proveedor}*')?  'active' : ''}}">
+     <li
+         class="nav-item {{ request()->is('venta') || request()->is('venta/create*') || request()->is('venta/{venta}*')?  'active' : ''}}">
+         <a class="nav-link" href="{{ url('/venta')}}">
+             <i class="ni ni-basket text-blue"></i> Ventas
+         </a>
+     </li>
+     
+     <li
+     style="display: none;" class="nav-item {{ request()->is('proveedor') || request()->is('proveedor/create*') || request()->is('proveedor/{proveedor}*')?  'active' : ''}}">
          <a class="nav-link" href="{{ url('/proveedor')}}">
              <i class="ni ni-delivery-fast text-blue"></i> Proveedores
          </a>
@@ -53,6 +54,12 @@
      <li class="nav-item {{ request()->is('compra') || request()->is('compra/registrarCompra*') ? 'active' : ''}}">
          <a class="nav-link" href="{{url('compra')}}">
              <i class="ni ni-cart text-blue"></i> Compras
+         </a>
+     </li>
+     <li
+         class="nav-item {{ request()->is('reporte') || request()->is('reporte/busqueda*')   ? 'active' : '' }}">
+         <a class="nav-link" href="{{url('reporte')}}">
+            <i class="fas fa-file-contract text-blue"></i> Reportes
          </a>
      </li>
      <li class="nav-item" style="display: none;">

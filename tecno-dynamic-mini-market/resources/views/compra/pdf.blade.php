@@ -84,7 +84,7 @@ footer {
                 <tr>
                     <td colspan="2"></td>
 
-                    <th scope="col">Codigo de Producto</th>
+                    <th scope="col">Codigo de Barra</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Unidad</th>
                     <th scope="col">Cantidad</th>
@@ -98,7 +98,7 @@ footer {
                 <tr>
                     <td colspan="2"></td>
 
-                    <td>{{$comprasDetalle->codigo_producto}}</td>
+                    <td>{{$comprasDetalle->codigo_barra}}</td>
                     <td>{{$comprasDetalle->nombre}}</td>  
                     <td>{{$comprasDetalle->cantidad}}</td>
                     <td>{{$comprasDetalle->unidad}}</td>

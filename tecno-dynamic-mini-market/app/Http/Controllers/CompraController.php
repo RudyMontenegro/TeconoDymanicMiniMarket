@@ -119,7 +119,7 @@ class CompraController extends Controller
                 $compra_detalle-> id_compra = $id_compra->id;
 
                 $compra_detalle->save();
-                //$compra_detalle->aumentarInventario($codigo_barra->id,intval($cantidad[$i]),intval($request->get('sucursal_origen')));
+                $compra_detalle->aumentarInventario($codigo_barra[$i],intval($cantidad[$i]),intval($request->get('sucursal_origen')));
             }
         }
         return redirect('compra');
@@ -220,8 +220,6 @@ class CompraController extends Controller
 
        $comprasDetalles = CompraDetalle::all();
        $ComprasSucursales = Compra::compraXsucursal();
-
-       dd($ComprasSucursales);
                
        $pdf = \PDF::loadView('compra.pdf',compact('ComprasSucursales','comprasDetalles'));// direccion del view, enviando variable.
 

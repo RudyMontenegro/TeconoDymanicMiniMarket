@@ -329,6 +329,5 @@ function guardarForm() {
     }
 
 }
-
 </script>
 @endsection
