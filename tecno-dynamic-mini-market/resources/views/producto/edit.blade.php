@@ -347,7 +347,7 @@
         <div class="row">
             <div class="col-5">
                 <label for="foto"class="control-label">{{'Foto'}}</label>
-                <input type="file" class="form-control  {{$errors->has('foto')?'is-invalid':'' }}" name="foto" id="foto" 
+                <input type="file" accept="image/*" class="form-control  {{$errors->has('foto')?'is-invalid':'' }}" name="foto" id="foto" 
                 value="{{ isset($personal->password)?$personal->password:old('foto') }}"
                 >
                 {!!  $errors->first('foto','<div class="invalid-feedback">:message</div>') !!}
