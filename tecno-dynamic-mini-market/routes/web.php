@@ -118,3 +118,4 @@ Route::get('/compra/{id}', 'CompraController@show')->middleware('auth');
 
 //REPORTES
 Route::get('/reporte', 'ReporteController@index')->middleware('auth');
+Route::post('/reporte/busqueda', 'ReporteController@filtrado')->middleware('auth');

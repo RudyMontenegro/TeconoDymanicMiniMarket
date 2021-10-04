@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Reporte;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReporteController extends Controller
 {
@@ -22,6 +23,26 @@ class ReporteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function filtrado()
+    {
+        $venta = DB::table('ventas')
+                    ->join('venta_detalles','venta_detalles.id_venta','ventas.id')
+                    ->select('ventas.*','venta_detalles.*')
+                    ->where('fecha','>=',request('fecha_inicio'))
+                    ->where('fecha','<=',request('fecha_fin'))
+                    ->get();
+
+        $compra = DB::table('compras')
+                    ->join('compra_detalles','compra_detalles.id_compra','compras.id')
+                    ->select('compras.*','compra_detalles.*')
+                    ->where('fecha','>=',request('fecha_inicio'))
+                    ->where('fecha','<=',request('fecha_fin'))
+                    ->get();
+        
+        return view('reporte.busqueda', compact('venta','compra'));
+    }
+
     public function create()
     {
         //

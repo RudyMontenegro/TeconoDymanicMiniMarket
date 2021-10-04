@@ -57,7 +57,7 @@
          </a>
      </li>
      <li
-         class="nav-item {{ request()->is('reportes') }}">
+         class="nav-item {{ request()->is('reporte')  ? 'active' : '' }}">
          <a class="nav-link" href="{{url('reporte')}}">
             <i class="fas fa-file-contract text-blue"></i> Reportes
          </a>
