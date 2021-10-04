@@ -81,9 +81,16 @@ class Productos extends Model
         ->get();
         return $nombre;
     }
-    public static function nombres2($id){
+public static function nombres2($id){
         $nombre = DB::table('productos') 
         ->select('codigo_barra','unidad','precio_venta_menor')
+        ->where('nombre','=',$id)
+        ->get();
+        return $nombre;
+    }
+    public static function nombres4($id){
+        $nombre = DB::table('productos') 
+        ->select('codigo_barra','unidad','precio_costo')
         ->where('nombre','=',$id)
         ->get();
         return $nombre;

@@ -110,7 +110,7 @@
             if($("#precioCosto").val() == ""){
                 $("#estadoPrecioCosto").html("<span  class='menor'><h5 class='menor'> </h5></span>");
             }else{     
-                var re = new RegExp("^[+-]?([1-9]+\.?[0-9]*|\.[0-9]+)$");
+                var re = new RegExp("^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$");
                     if(!re.test($("#precioCosto").val()) ){
                         $("#estadoPrecioCosto").html("<span  class='menor'><h5 class='menor'>Monto ingresado incorrecto</h5></span>");
                     }else{
@@ -127,7 +127,7 @@
                 $("#estadoPrecioVentaMayor").html("<span  class='menor'><h5 class='menor'> </h5></span>");
             }else{
 
-                var re = new RegExp("^[+-]?([1-9]+\.?[0-9]*|\.[0-9]+)$");
+                var re = new RegExp("^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$");
                 
                 if(!re.test($("#precioVentaMayor").val())){
                     $("#estadoPrecioVentaMayor").html("<span  class='menor'><h5 class='menor'>Monto ingresado incorrecto</h5></span>");
@@ -141,7 +141,7 @@
             if($("#precioVentaMenor").val() == ""){
                 $("#estadoPrecioVentaMenor").html("<span  class='menor'><h5 class='menor'> </h5></span>");
             }else{
-                var re = new RegExp("^[+-]?([1-9]+\.?[0-9]*|\.[0-9]+)$");
+                var re = new RegExp("^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$");
                 
                 if(!re.test($("#precioVentaMenor").val())){
                     $("#estadoPrecioVentaMenor").html("<span  class='menor'><h5 class='menor'>Monto ingresado incorrecto</h5></span>");

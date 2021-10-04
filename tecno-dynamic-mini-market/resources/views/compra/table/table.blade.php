@@ -90,12 +90,21 @@
                 $("#nombre").empty();
                 $("#nombre").val(res[0].nombre);
                 $("#unidad").val(res[0].unidad);
-                $("#precio").val(res[0].precio_venta_menor);
+                $("#precio").val(res[0].precio_costo);
                 validarUnidad();
                 validarCantidad();
                 validarPrecio();
             });
         });
+
+        $("#nombre").change(event => {
+    $.get(`envioName/${$("#nombre").val()}`, function(res, sta) {
+  //      $("#nombre").empty();
+        $("#codigoI").val(res[0].codigo_barra);
+        $("#unidad").val(res[0].unidad);
+        $("#precio").val(res[0].precio_costo);
+    });
+});
 
         $('#codigoI').keyup(function() {
             var query = $(this).val();
@@ -118,6 +127,27 @@
                 });
             }
         });
+        $('#nombre').keyup(function() {
+    var query = $(this).val();
+    var sucursalID = $("#sucursal_origen").val();
+    if (query != '') {
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            url: '/autoCompleteNombreP',
+            method: 'POST',
+            data: {
+                query: query,
+                _token: _token,
+                sucursalID: sucursalID
+            },
+            success: function(data) {
+                $('#nombreDatalist').fadeIn();
+                $('#nombreDatalist').html(data);
+            }
+
+        });
+    }
+});
         </script>
         <script>
         var res = 0;
@@ -265,29 +295,34 @@ $(function() {
             }
         }
     }
-    function validarUnidad() {
-        var prueba = document.getElementById("unidad");
-        var re = new RegExp("^[a-zA-Z ]+$");
-        if($("#unidad").val() == ""){
-            $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-        }else{
-            if($("#unidad").val().length < 3){
-                $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
-            }else{
-                if($("#unidad").val().length > 50){
-                    $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
-                }else{
-                    if(!re.test($("#unidad").val()) ||  $("#unidad").val() == '-'){
-                        $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'>Solo se acepta caracteres [A-Z]</h5></span>");
-                    }else{
-                        prueba.style.borderColor = '#cad1d7';
-                        $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-                    }
+
+
+function validarUnidad() {
+    var prueba = document.getElementById("unidad");
+    var re = new RegExp("^[a-zA-Z ]+$");
+    if ($("#unidad").val() == "") {
+        $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+    } else {
+        if ($("#unidad").val().length < 3) {
+            $("#estadoUnidad").html(
+                "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+        } else {
+            if ($("#unidad").val().length > 50) {
+                $("#estadoUnidad").html(
+                    "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+            } else {
+                if (!re.test($("#unidad").val()) || $("#unidad").val() == '-') {
+                    $("#estadoUnidad").html(
+                        "<span  class='menor'><h5 class='menor'>Solo se acepta caracteres [A-Z]</h5></span>");
+                } else {
+                    prueba.style.borderColor = '#cad1d7';
+                    $("#estadoUnidad").html("<span  class='menor'><h5 class='menor'> </h5></span>");
                 }
             }
-            
         }
+
     }
+}
     
     
 function validarPrecio() {

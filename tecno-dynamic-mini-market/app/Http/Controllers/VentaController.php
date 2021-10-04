@@ -12,6 +12,14 @@ use Illuminate\Http\Request;
 
 class VentaController extends Controller
 {
+    public function nombre(Request $request, $id)
+    {
+        if($request->ajax()){
+            $codigo=Productos::nombres2($id);
+            return response()->json( $codigo);
+        }
+    }
+
     
     public function index() 
     {
@@ -91,9 +99,21 @@ class VentaController extends Controller
         }       
     }
 
-    public function show(Venta $venta)
+    public function show($id)
     {
-        return view('venta.view', compact('venta'));
+
+        $tabla = DB::table('ventas')
+       // ->select('*')
+        ->where('id','=',$id)
+        ->first();
+        $ventasDetalles = DB::table('venta_detalles')
+        ->where('id_venta','=',$id)
+        ->select('*')
+        ->get();
+        $sucursal = Sucursal::all();
+        $clientes = Cliente::all();
+        //dd($ventasDetalles);
+        return view('venta.view', compact('tabla','sucursal','clientes','ventasDetalles'));
     }
     public function edit(Venta $venta)
     {
@@ -193,6 +213,27 @@ class VentaController extends Controller
       {
        $output .= '
        <option>'.$row->codigo_barra.'</option>
+       ';
+      }
+      $output .= '</datalist>';
+      echo $output;
+     }
+    }
+    function fetchNombreProducto(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+      $sucursalID = $request->get('sucursalID');
+      $data = DB::table('productos')
+        ->where('nombre', 'LIKE', "{$query}%")
+        ->where('id_sucursal', '=', $sucursalID)
+        ->get();
+      $output = '<datalist id="listNombre">';
+      foreach($data as $row)
+      {
+       $output .= '
+       <option>'.$row->nombre.'</option>
        ';
       }
       $output .= '</datalist>';

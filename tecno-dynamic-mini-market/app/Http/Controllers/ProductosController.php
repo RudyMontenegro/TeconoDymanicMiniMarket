@@ -80,10 +80,10 @@ class ProductosController extends Controller
             $producto->precio_venta_menor = request('precioVentaMenor');
             $producto->cantidad = $request->get('cantidad');
             $producto->unidad = $request->get('unidad');
-            //$producto->cantidad_inicial = $request->get('cantidadInicial');
+            //$producto->fecha_vencimiento = $request->get('cantidadInicial');
             //$producto->id_proveedor = $request->get('proveedor');
             $producto->id_categoria = $request->get('categoria');
-            //$producto->id_sucursal = request('sucursal');
+            $producto->id_sucursal = 1;
 
             if($request->hasfile('foto')){
         

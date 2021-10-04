@@ -51,9 +51,11 @@ Route::patch('/transferencia/editar/{id}', 'TransferenciaController@update')->mi
 Route::get('/producto/registrarCategoria', 'CategoriaController@create')->middleware('auth');
 Route::post('/producto/registrarCategoria', 'CategoriaController@store')->middleware('auth');
 Route::get('/producto/categoria/editar/{id}', 'CategoriaController@edit')->middleware('auth');
+Route::delete('/producto/categoria/{id}', 'CategoriaController@destroy')->middleware('auth');
 Route::patch('/producto/categoria/editar/{id}', 'CategoriaController@update')->middleware('auth');
 Route::post('/categoria/validar', 'CategoriaController@validar')->middleware('auth');
 Route::post('/categoria/validarEditar', 'CategoriaController@validarEditar')->middleware('auth');
+
 //PRODUCTO
 Route::get('/producto', 'ProductosController@index')->middleware('auth');
 Route::get('/producto/prueba', 'ProductosController@prueba')->middleware('auth');
@@ -113,6 +115,7 @@ Route::patch('/compra/edit/{id}', 'CompraController@update')->middleware('auth')
 Route::delete('/compra/{compras}', 'CompraController@destroy')->middleware('auth');
 Route::post('/compra/llenar', 'ClienteController@llenado')->middleware('auth');
 
+Route::get('/compra/envioName/{id}', 'CompraController@nombre')->middleware('auth');
 Route::get('/compra/{id}', 'CompraController@show')->middleware('auth');    
 //jquery
 

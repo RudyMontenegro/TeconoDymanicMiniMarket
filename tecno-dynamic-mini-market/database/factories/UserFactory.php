@@ -20,7 +20,7 @@ use Faker\Generator as Faker;
         'email' => $faker->unique()->safeEmail,
         'web_site' => $faker->url,
         'telefono' => $faker->phoneNumber,
-        'categoria'=>$faker->randomElement(['intangible','tangible'])
+        'categoria'=>$faker->randomElement(['tangible'])
     ];
 });
 $factory->define(App\Categoria::class, function (Faker $faker) {

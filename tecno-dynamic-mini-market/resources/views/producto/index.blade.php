@@ -88,7 +88,7 @@
                                                         </h2>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <form method="post" action="{{url('/producto/'.$categorias->id)}}"
+                                                        <form method="post" action="{{url('/producto/categoria/'.$categorias->id)}}"
                                                             style="display:inline">
                                                             {{csrf_field()}}
                                                             {{method_field('DELETE')}}

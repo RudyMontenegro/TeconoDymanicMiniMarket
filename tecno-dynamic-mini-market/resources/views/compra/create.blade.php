@@ -106,7 +106,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label form="total">Recibo</label>
+                            <label form="total">Pagar</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
