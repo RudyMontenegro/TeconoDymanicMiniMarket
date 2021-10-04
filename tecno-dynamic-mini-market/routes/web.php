@@ -81,7 +81,7 @@ Route::delete('/cliente/{id}', 'ClienteController@destroy')->middleware('auth');
 Route::post('/cliente/validar', 'ClienteController@validar')->middleware('auth');
 //VENTA
 Route::get('/venta', 'VentaController@index')->middleware('auth');
-Route::get('/venta/{ventas}/show', 'VentaController@show')->middleware('auth');
+Route::get('/venta/{id}/show', 'VentaController@show')->middleware('auth');
 Route::get('/venta/create', 'VentaController@create')->middleware('auth');
 Route::get('/venta/envioP/{id}', 'VentaController@getProducto')->middleware('auth');
 Route::get('/venta/envioName/{id}', 'VentaController@nombre')->middleware('auth');

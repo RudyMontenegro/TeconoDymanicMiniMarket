@@ -31,15 +31,8 @@
              <i class="fab fa-product-hunt text-blue"></i> Productos
          </a>
      </li>
-     <li
-         class="nav-item {{ request()->is('venta') || request()->is('venta/create*') || request()->is('venta/{venta}*')?  'active' : ''}}">
-         <a class="nav-link" href="{{ url('/venta')}}">
-             <i class="ni ni-basket text-blue"></i> Ventas
-         </a>
-     </li>
-     
-     <li
-     style="display: none;" class="nav-item {{ request()->is('proveedor') || request()->is('proveedor/create*') || request()->is('proveedor/{proveedor}*')?  'active' : ''}}">
+     <li  style="display: none;"
+         class="nav-item {{ request()->is('proveedor') || request()->is('proveedor/create*') || request()->is('proveedor/{proveedor}*')?  'active' : ''}}">
          <a class="nav-link" href="{{ url('/proveedor')}}">
              <i class="ni ni-delivery-fast text-blue"></i> Proveedores
          </a>

@@ -20,10 +20,10 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Cliente</th>
-                    <th scope="col">Nit</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Sucursal</th>
+                    <th scope="col">Fecha / Hora</th>
                     <th scope="col">Total</th>
+                    <th scope="col">Recibo</th>
+                    <th scope="col">Cambio</th>
                     <th scope="col">Opciones</th>
                 </tr>
             </thead>
@@ -34,16 +34,17 @@
                         {{ $venta->cliente }}
                     </th>
                     <td>
-                        {{ $venta->nit }}
+                        {{ $venta->fecha }}
+                    </td>
+                  
+                    <td>
+                        {{ $venta->total}}
                     </td>
                     <td>
-                        {{ $venta->tipo_venta }}
+                        {{ $venta->recibo }}
                     </td>
                     <td>
-                        {{ $venta->nombre}}
-                    </td>
-                    <td>
-                        {{ $venta->total }}
+                        {{ $venta->cambio }}
                     </td>
                     <td>
                         <a href="{{ url('/venta/'.$venta->id.'/show') }}" class="btn btn-sm btn-info">Detalles</a>

@@ -1,61 +1,229 @@
 @extends('layouts.panel')
 @section('subtitulo','proveedores')
 @section('content')
-<div class="card shadow">
+
+<div class="card shadow" style="background-color:#ffffff; color: rgb(0, 0, 0); font color: yellow !important">
     <div class="card-header border-0">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="mb-0">EDITAR PROVEEDOR</h3>
+                <h3 class="mb-0">Detalles de Venta</h3>
             </div>
             <div class="col text-right">
-                <a href="{{ url('proveedor') }}" class="btn btn-sm btn-danger">Cancelar y volver</a>
+                <a href="{{ url('venta') }}" class="btn btn-sm btn-danger">Canselar y volver</a>
             </div>
         </div>
     </div>
     <div class="card-body">
-        <form action="{{ url('proveedor/'.$proveedor->id) }}" method="post">
-            @csrf
-            @method('PUT')
-            <div class="form-group">
-                <label for="disabledTextInput">Nombre de la empresa</label>
-                <input type="disabledTextInput" name="nombre_empresa" class="form-control"
-                    value="{{ old('nombre_empresa',$proveedor->nombre_empresa)}}" required>
+        @if ($errors->any())
+        <div class="alert alert-danger" role="alert">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+        <script>
+        function validaComprobante() {
+
+            if ($("#comprobante").val() == "") {
+                $("#estadoComprobante").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            } else {
+                if ($("#comprobante").val().length < 3) {
+                    $("#estadoComprobante").html(
+                        "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+                } else {
+                    if ($("#comprobante").val().length > 50) {
+                        $("#estadoComprobante").html(
+                            "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+                    } else {
+                        var re = new RegExp("^[0-9a-zA-Z ]+$");
+                        if (!re.test($("#comprobante").val())) {
+                            $("#estadoComprobante").html(
+                                "<span  class='menor'><h5 class='menor'>Solo se acepta caracteres [A-Z] y [0-9]</h5></span>"
+                            );
+                        } else {
+                            $("#estadoComprobante").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+                        }
+                    }
+
+                }
+            }
+        }
+
+        function caseSN() {
+            if ($("#nombre_contacto").val() == "") {
+                $("#nombre_contacto").val("Sin nombre")
+                $("#SpanValidacionCliente").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            }
+        }
+
+        function validarCliente() {
+
+            if ($("#nombre_contacto").val() == "") {
+                $("#SpanValidacionCliente").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            } else {
+                if ($("#nombre_contacto").val().length < 3) {
+                    $("#SpanValidacionCliente").html(
+                        "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+                } else {
+                    if ($("#nombre_contacto").val().length > 50) {
+                        $("#SpanValidacionCliente").html(
+                            "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+                    } else {
+                        var re = new RegExp("^[a-zA-Z ]+$");
+                        if (!re.test($("#nombre_contacto").val())) {
+                            $("#SpanValidacionCliente").html(
+                                "<span  class='menor'><h5 class='menor'>Solo se acepta caracteres [A-Z]</h5></span>"
+                            );
+                        } else {
+                            $("#SpanValidacionCliente").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+
+
+
+        function validarSucursal() {
+
+            var cod = document.getElementById("sucursal_origen").value;
+            //console.log(cod);
+            if (cod != "Elige una Sucursal de Origen") {
+                $("#estadoSucursal").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            } else {
+                $("#estadoSucursal").html("<span  class='menor'><h5 class='menor'>Seleccione una sucursal</h5></span>");
+            }
+        }
+        </script>
+        <style>
+        .menor {
+            color: #D60202;
+        }
+
+        .estado-nulo {
+            color: #D60202;
+        }
+        </style>
+
+        <form action="{{ url('venta') }}" id="idform" method="post">
+
+            {{ csrf_field()}}
+
+            <div class="col-md-12 mx-auto ">
+                
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="nanombre_contactome">Fecha</label>
+                            <input class="form-control"   readonly
+                                value="{{ $tabla->fecha }}" >
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="nombre_empresa">Cliente</label>
+                        <input class="form-control" name="nombre_contacto" readonly value=" {{ $tabla->cliente }}">
+
+                    </div>
+                </div>
+                <br>
             </div>
-            <div class="form-group">
-                <label for="nit">NIT</label>
-                <input type="text" name="nit" class="form-control" value="{{ old('nit',$proveedor->nit)}}" required>
+            @include('venta.table.tableView')
+            <div class="col-md-12 mx-auto ">
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Total</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Bs.</span>
+                                </div>
+                                <input class="form-control"  readonly value=" {{ $tabla->total }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Recibo</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Bs.</span>
+                                </div>
+                                <input class="form-control"  readonly value=" {{ $tabla->recibo }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Cambio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Bs.</span>
+                                </div>
+                                <input class="form-control"  readonly value=" {{ $tabla->cambio }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Observaciones</label>
+                    <input class="form-control" readonly value=" {{ $tabla->observaciones }}" rows="3">
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="nit">Responsable de venta</label>
+                            <input type="text" name="responsable_venta" class="form-control" type="url"
+                                placeholder="001-cbba" readonly value="{{ $tabla->responsable_venta }}">
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="form-group">
-                <label for="nanombre_contactome">Nombre de contacto</label>
-                <input type="text" name="nombre_contacto" class="form-control"
-                    value="{{ old('nombre_contacto',$proveedor->nombre_contacto)}}" required>
-            </div>
-            <div class="form-group">
-                <label for="direccion">Direccion</label>
-                <input type="text" name="direccion" class="form-control"
-                    value="{{ old('direccion',$proveedor->direccion)}}">
-            </div>
-            <div class="form-group">
-                <label for="telefono">Telefono</label>
-                <input type="text" name="telefono" class="form-control" type="tel"
-                    value="{{ old('telefono',$proveedor->telefono)}}" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" name="email" class="form-control" type="email"
-                    value="{{ old('email',$proveedor->email)}}" required>
-            </div>
-            <div class="form-group">
-                <label for="web_site">Sitio web</label>
-                <input type="text" name="web_site" class="form-control" type="url"
-                    value="{{ old('web_site',$proveedor->web_site)}}">
-            </div>
-            <div class="form-group">
-                <label for="categoria">Categoria</label>
-                <input type="text" name="categoria" class="form-control"
-                    value="{{ old('categoria',$proveedor->categoria)}}">
-            </div>
+            </fieldset>
         </form>
     </div>
 </div>
+
+<script>
+function existeValorCreate($dato) {
+    var dato = document.getElementById($dato).value;
+    if (dato == "") {
+        return false;
+    }
+    return true;
+}
+
+function CalcularCambio() {
+    try {
+        $("#cambio").val(($("#recibo").val() - $("#total").val()).toFixed(2));
+    } catch (e) {}
+}
+
+function existeSucursalCreate() {
+    var cod = document.getElementById("sucursal_origen").value;
+    if (cod == "Elige una Sucursal de Origen") {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function guardarForm() {
+    if (existeValorCreate('nombre_contacto') &&
+        existeValorCreate('total') && existeSucursalCreate()) {
+        $('#idform').submit();
+    } else {
+        alert("Revise todos los campos del formulario")
+    }
+
+}
+</script>
 @endsection

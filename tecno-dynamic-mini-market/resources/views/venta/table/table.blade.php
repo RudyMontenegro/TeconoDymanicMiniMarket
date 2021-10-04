@@ -39,7 +39,11 @@
                 </th>
                 <td>
                     <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
+<<<<<<< HEAD
                         id="nombre" onclick="style=borderColor:#cad1d7"  list="listNombre"
+=======
+                        id="nombre" onclick="style=borderColor:#cad1d7"  list="listNombre" placeholder="Buscar.."
+>>>>>>> origin/rudy
                         value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
                     <datalist id="nombreDatalist">
                     </datalist>
@@ -86,6 +90,7 @@
                     </button>
                 </td>
             </tr>
+          
         </tbody>
     </table>
     <div class="div text-center">
@@ -225,8 +230,9 @@ $(function() {
             $("#total").val(res);
             $(this).parents('tr').remove();
         } else {
-            res = 0;
-            $("#total").val(res);
+            var bb2 = ($("#total").val()-$("#subTotal").val()); 
+            $("#total").val(bb2.toFixed(2));
+            res = $("#total").val();
             limpiarCampos();
         }
     });
