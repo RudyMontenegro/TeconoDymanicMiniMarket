@@ -20,13 +20,13 @@ class CompraDetalle extends Model
 
         $cantidad_origen = DB::table('productos')
                             ->select('cantidad')
-                            ->where('codigo_barra','=',$codigo)
+                            ->where('id','=', intval($codigo))
                             ->first();
         
         $res = intval($cantidad_origen->cantidad)+$cantidades;
 
         DB::table('productos')
-        ->where('codigo_barra', $codigo)
+        ->where('id',  intval($codigo))
         ->where('id_sucursal', $origen)
         ->update(['cantidad' => $res]);
     }

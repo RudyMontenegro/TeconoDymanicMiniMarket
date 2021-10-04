@@ -118,8 +118,27 @@ class CompraController extends Controller
                 $compra_detalle-> sub_total = $sub_total[$i];
                 $compra_detalle-> id_compra = $id_compra->id;
 
+                $id2 = DB::table('productos')
+                ->select('id')
+                ->where('codigo_barra','=', $codigo_barra[$i])
+                ->first();
+
+                
+                
+                $cantidad_origen = DB::table('productos')
+                ->select('cantidad')
+                ->where('id','=', intval($id2->id))
+                ->first();
+
+               $res = intval($cantidad_origen->cantidad)+$cantidad[$i];
+
+                DB::table('productos')
+                ->where('id',  intval($id2->id))
+                ->where('id_sucursal', $request->get('sucursal_origen'))
+                ->update(['cantidad' => $res]);
+                 
                 $compra_detalle->save();
-                $compra_detalle->aumentarInventario($codigo_barra[$i],intval($cantidad[$i]),intval($request->get('sucursal_origen')));
+                //$compra_detalle->aumentarInventario($codigo_barra[$i],intval($cantidad[$i]),intval($request->get('sucursal_origen')));
             }
         }
         return redirect('compra');

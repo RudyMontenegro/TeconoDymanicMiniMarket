@@ -217,20 +217,31 @@ $(function() {
             
         }
     }
-    function existeNombreProducto() {
-    var prueba = document.getElementById("codigoI");
-    prueba.style.borderColor = '#cad1d7';
-    var e = document.getElementById("sucursal_origen");
-    var str = e.options[e.selectedIndex].text;
-    if (str == "Elige una Sucursal de Origen") {
-        $("#estadoCodigo").html(
-            "<span  class='menor'><h5 class='menor'>Seleccione una sucursal de origen </h5></span>");
-        $("#estadoCodigoI").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-    } else {
-        $("#nombre").val('');
-        validarNombre();
+
+    function validarRecibo(){
+        if($("#total").val()<$("#recibo").val()){
+            $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'> Monto recibido no puede ser menor al Total</h5></span>");
+            $("#cambio").val(''));
+        }else{
+            $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+        }
     }
-}
+
+
+    function existeNombreProducto() {
+         var prueba = document.getElementById("codigoI");
+       prueba.style.borderColor = '#cad1d7';
+            var e = document.getElementById("sucursal_origen");
+            var str = e.options[e.selectedIndex].text;
+            if (str == "Elige una Sucursal de Origen") {
+                $("#estadoCodigo").html(
+                    "<span  class='menor'><h5 class='menor'>Seleccione una sucursal de origen </h5></span>");
+                $("#estadoCodigoI").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+            } else {
+                $("#nombre").val('');
+                validarNombre();
+        }
+     }
 
     function validarCantidad() {
         var prueba = document.getElementById("cantidad");
@@ -278,6 +289,7 @@ $(function() {
         }
     }
     
+    
 function validarPrecio() {
     var re = new RegExp("^[0-9]+$");
     var prueba = document.getElementById("precio");
@@ -295,6 +307,7 @@ function validarPrecio() {
             $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'> </h5></span>");
             $("#estadoSubTotal").html("<span  class='menor'><h5 class='menor'> </h5></span>");
             // calcular();
+        
 
         }
     }

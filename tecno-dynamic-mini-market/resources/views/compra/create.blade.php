@@ -75,11 +75,11 @@
                         </div>
                 </div>
 
-                 <div class="col-6">
+                <div class="col-6">
                     <div class="form-group">
-                        <label form="fecha">Fecha</label>
-                        <input class="form-control text-dark" type="datetime-local" value="" name="fecha"
-                            id="fecha" onblur="validarFecha()">
+                        <label for="nanombre_contactome">Fecha</label>
+                        <input class="form-control" type="datetime-local" name="fecha" readonly value="" id="fecha"
+                            onblur="validarFecha()">
                     </div>
                 </div>
             </div>  
@@ -111,14 +111,14 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="float" class="form-control"  aria-label="Username" onBlur="devolver()"id="recibo" name="recibo"
-                                    aria-describedby="basic-addon1">
+                                <input type="float" class="form-control" placeholder="100" onblur="devolver()" aria-label="Username" id="recibo" name="recibo"
+                                    aria-describedby="basic-addon1"><span id="estadoRecibo"></span>
                             </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label form="total">Cambio</label>
+                            <label form="cambio">Cambio</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
@@ -190,8 +190,6 @@
             }
         }
      
-    
-    
     function validarFecha(){
             const date = new Date(),
           ten = (i)=> ((i < 10 ? '0' : '') + i ),
@@ -206,6 +204,8 @@
             document.getElementById("fecha").value=`${YYYY}-${MTH}-${DAY}T${HH}:${MM}`;
         }
         setInterval(validarFecha,30000);
+
+        
     </script>
     <script>
         function devolver() {
