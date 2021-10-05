@@ -25,8 +25,8 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        $date = Carbon::now();
+    { 
+               $date = Carbon::now();
 
         $limite_semana =  $date->addDay(7)->format('Y-m-d');
         $limite_mes =  $date->addMonth(2)->format('Y-m-d');
@@ -53,6 +53,6 @@ class HomeController extends Controller
                     ->get();
 
             return view('home',compact('stock','semana','mes'));
-        
+       
     }
 }

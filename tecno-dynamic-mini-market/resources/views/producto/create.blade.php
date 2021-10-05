@@ -417,7 +417,7 @@
         </div>
 </div> 
 <div class=" row justify-content-center">
-        <div class="col-5" >
+    <div class="col-5" >
             <label for="fecha_vencimiento"class="control-label">{{'Fecha de Vencimiento'}}</label>
             <input type="date" class="form-control  {{$errors->has('fecha')?'is-invalid':'' }}" name="fecha" id="fecha" onchange="validarNotificacion()" 
             value="{{ isset($personal->password)?$personal->password:old('unidad') }}"

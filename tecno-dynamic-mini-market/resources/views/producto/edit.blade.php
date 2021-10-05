@@ -353,8 +353,8 @@
                     ><span id="estadoUnidad"></span>
                     {!!  $errors->first('unidad','<div class="invalid-feedback">:message</div>') !!}
                 </div>
-        </div> 
-        <div class="row justify-content-center">
+            </div> 
+            <div class="row justify-content-center">
             <div class="col-5">
                     <label for="fecha"class="control-label">{{'Fecha de Vencimiento'}}</label>
                     <input type="date" class="form-control" name="fecha" id="fecha"  onchange="validarNotificacion()"
@@ -382,13 +382,13 @@
                     </select>
                     <span id="estadoNotificacion"></span>
                 </div>
-                <div class="col-5">
-                    <label for="foto"class="control-label">{{'Foto'}}</label>
-                    <input type="file" accept="image/*" class="form-control  {{$errors->has('foto')?'is-invalid':'' }}" name="foto" id="foto" 
-                    value="{{ isset($personal->password)?$personal->password:old('foto') }}"
-                    >
-                   
-                </div>
+            <div class="col-5">
+                <label for="foto"class="control-label">{{'Foto'}}</label>
+                <input type="file" accept="image/*" class="form-control  {{$errors->has('foto')?'is-invalid':'' }}" name="foto" id="foto" 
+                value="{{ isset($personal->password)?$personal->password:old('foto') }}"
+                >
+                
+            </div>
         </div> 
         <br>
         <div class="row justify-content-center">

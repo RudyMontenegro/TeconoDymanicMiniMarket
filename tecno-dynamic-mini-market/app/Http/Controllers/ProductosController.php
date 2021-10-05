@@ -333,7 +333,7 @@ class ProductosController extends Controller
                         echo "<span  class='estado-no-disponible-usuario'><h5 class='estado-no-disponible-usuario'>Codigo Barra no disponible</h5></span>";
                     }else{
                         echo "<span class='estado-disponible-usuario'><h5 class='estado-disponible-usuario'>Codigo Barra disponible</h5></span>";
-                    }
+                   }
                 }
                 
             }

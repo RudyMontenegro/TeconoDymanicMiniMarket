@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Notificaciones</div>
-
+               
                 <div class="card-body">
                     <h1 class="text-center text-dark">Stock</h1>
                    
@@ -24,7 +24,7 @@
                 @foreach ($mes as $mes)
                     <h4 style="color: rgb(111, 105, 228)">{{$mes->nombre}} vencera el {{$mes->fecha_vencimiento}}</h4>
                 @endforeach
-                    
+                     
                 </div>
             </div>
         </div>
