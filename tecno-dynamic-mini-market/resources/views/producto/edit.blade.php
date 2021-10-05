@@ -23,7 +23,6 @@
             data:{
                 "_token": "{{ csrf_token() }}",
                 "codigo": $("#codigo").val(),
-                "sucursal": $("#sucursal").val(),
                 "id": "{{ $producto->id }}",
             },
             asycn:false,
@@ -45,7 +44,6 @@
             data:{
                 "_token": "{{ csrf_token() }}",
                 "codigoBarra": $("#codigoBarra").val(),
-                "sucursal": $("#sucursal").val(),
                 "id": "{{ $producto->id }}",
             },
             asycn:false,
@@ -67,7 +65,6 @@
             data:{
                 "_token": "{{ csrf_token() }}",
                 "nombre": $("#nombre").val(),
-                "sucursal": $("#sucursal").val(),
                 "id": "{{ $producto->id }}",
             },
             asycn:false,
@@ -212,6 +209,20 @@
           
         }
 
+        function validarNotificacion(){
+            if($("#notificacion").val() == 1){
+                
+                $("#estadoNotificacion").html("<span  class='menor'><h5 class='menor'></h5></span>");
+                
+            }else{
+                if($("#fecha").val() == ""){
+                    $("#estadoNotificacion").html("<span  class='menor'><h5 class='menor'>Ingrese una fecha de vencimiento</h5></span>");
+                }else{
+                    $("#estadoNotificacion").html("<span  class='menor'><h5 class='menor'></h5></span>");
+                }
+            }
+        }
+
         function validarCategoria() {
             
             var cod = document.getElementById("categoria").value;
@@ -248,7 +259,7 @@
     
     <div class="col-md-11 mx-auto "> 
 
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-5">
         
                 <label for="codigo" class="control-label">{{'Codigo'}}</label>
@@ -268,7 +279,7 @@
             </div>
            
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-5">
                 <label for="nombre"class="control-label">{{'Nombre'}}</label>
                 <input  type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre" id="nombre" 
@@ -294,7 +305,7 @@
                            
             
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-5">
                 <label for="marca"class="control-label">{{'Marca'}}</label>
                 <input  type="text" class="form-control  {{$errors->has('marca')?'is-invalid':'' }}" name="marca" id="marca" onkeyup="validarMarca()"
@@ -311,7 +322,7 @@
             </div>
                
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-5">
                 <label for="precioVentaMayor"class="control-label">{{'Precio Venta Mayor'}}</label>
                 <input  type="number" step="0.01"class="form-control  {{$errors->has('precioVentaMayor')?'is-invalid':'' }}" name="precioVentaMayor" id="precioVentaMayor" 
@@ -327,7 +338,7 @@
                 {!!  $errors->first('precioVentaMenor','<div class="invalid-feedback">:message</div>') !!}
             </div>
         </div>  
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-5">
                     <label for="cantidad"class="control-label">{{'Cantidad'}}</label>
                     <input  type="integer" class="form-control  {{$errors->has('cantidad')?'is-invalid':'' }}" name="cantidad" id="cantidad" 
@@ -343,22 +354,44 @@
                     {!!  $errors->first('unidad','<div class="invalid-feedback">:message</div>') !!}
                 </div>
         </div> 
-        
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-5">
-                <label for="foto"class="control-label">{{'Foto'}}</label>
-                <input type="file" accept="image/*" class="form-control  {{$errors->has('foto')?'is-invalid':'' }}" name="foto" id="foto" 
-                value="{{ isset($personal->password)?$personal->password:old('foto') }}"
-                >
-                {!!  $errors->first('foto','<div class="invalid-feedback">:message</div>') !!}
-            </div>
-            <div class="col-5">
-                
-            </div>
-               
+                    <label for="fecha"class="control-label">{{'Fecha de Vencimiento'}}</label>
+                    <input type="date" class="form-control" name="fecha" id="fecha"  onchange="validarNotificacion()"
+                    value="{{ isset($producto->fecha_vencimiento)?$producto->fecha_vencimiento:old('fecha_vencimiento') }}"
+                    >
+                    <select name="notificacion" id="notificacion" onchange="validarNotificacion()" class="form-control" >
+                      
+                        @if ($producto->bandera == 1)
+                            <option  value="1" selected>Sin notificacion</option>
+                            <option  value="2">Notificar 1 semana</option>
+                            <option  value="3">Notificar 2 meses</option>
+                        @else
+                            @if ($producto->bandera == 2)
+                            <option  value="1">Sin notificacion</option>
+                            <option  value="2" selected>Notificar 1 semana</option>
+                            <option  value="3">Notificar 2 meses</option>
+                            @else
+                                @if ($producto->bandera == 3)
+                                <option  value="1">Sin notificacion</option>
+                                <option  value="2" >Notificar 1 semana</option>
+                                <option  value="3"selected>Notificar 2 meses</option>
+                                @endif
+                            @endif
+                        @endif
+                    </select>
+                    <span id="estadoNotificacion"></span>
+                </div>
+                <div class="col-5">
+                    <label for="foto"class="control-label">{{'Foto'}}</label>
+                    <input type="file" accept="image/*" class="form-control  {{$errors->has('foto')?'is-invalid':'' }}" name="foto" id="foto" 
+                    value="{{ isset($personal->password)?$personal->password:old('foto') }}"
+                    >
+                   
+                </div>
         </div> 
         <br>
-        <div class="row">
+        <div class="row justify-content-center">
     
             <div class="col-5">  
                 <a href="{{url('producto')}}"class="btn btn-primary">Regresar</a>

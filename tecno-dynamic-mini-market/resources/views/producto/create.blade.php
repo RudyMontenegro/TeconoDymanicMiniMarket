@@ -24,7 +24,6 @@
             data:{
                 "_token": "{{ csrf_token() }}",
                 "nombre": $("#nombre").val(),
-                "sucursal": $("#sucursal").val(),
             },
             asycn:false,
             type: "POST",
@@ -45,7 +44,6 @@
             data:{
                 "_token": "{{ csrf_token() }}",
                 "codigo": $("#codigo").val(),
-                "sucursal": $("#sucursal").val(),
             },
             asycn:false,
             type: "POST",
@@ -66,7 +64,6 @@
             data:{
                 "_token": "{{ csrf_token() }}",
                 "codigoBarra": $("#codigoBarra").val(),
-                "sucursal": $("#sucursal").val(),
             },
             asycn:false,
             type: "POST",
@@ -249,6 +246,20 @@
             return boolean;
         }
 
+        function validarNotificacion(){
+            if($("#notificacion").val() == 1){
+                
+                $("#estadoNotificacion").html("<span  class='menor'><h5 class='menor'></h5></span>");
+                
+            }else{
+                if($("#fecha").val() == ""){
+                    $("#estadoNotificacion").html("<span  class='menor'><h5 class='menor'>Ingrese una fecha de vencimiento</h5></span>");
+                }else{
+                    $("#estadoNotificacion").html("<span  class='menor'><h5 class='menor'></h5></span>");
+                }
+            }
+        }
+
         function validarTodo(){
             if(existeValor('codigo')){
                 event.preventDefault();
@@ -406,15 +417,24 @@
         </div>
 </div> 
 <div class=" row justify-content-center">
-    <div class="col-5" >
+        <div class="col-5" >
+            <label for="fecha_vencimiento"class="control-label">{{'Fecha de Vencimiento'}}</label>
+            <input type="date" class="form-control  {{$errors->has('fecha')?'is-invalid':'' }}" name="fecha" id="fecha" onchange="validarNotificacion()" 
+            value="{{ isset($personal->password)?$personal->password:old('unidad') }}"
+            >
+            <select name="notificacion" id="notificacion" onchange="validarNotificacion()" class="form-control" >
+                <option  value="1">Sin notificacion</option>
+                <option  value="2">Notificar 1 semana</option>
+                <option  value="3">Notificar 2 meses</option>
+            </select>
+            <span id="estadoNotificacion"></span>
+        </div>
+        <div class="col-5" >
             <label for="foto"class="control-label">{{'Foto'}}</label>
             <input type="file" accept="image/*" class="form-control  {{$errors->has('foto')?'is-invalid':'' }}" name="foto" id="foto" 
             value="{{ isset($personal->password)?$personal->password:old('foto') }}"
             >
             {!!  $errors->first('foto','<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="col-5" >
-            
         </div>
 </div>  
 

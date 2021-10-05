@@ -25,6 +25,7 @@ class CreateProductosTable extends Migration
             $table->bigInteger('cantidad');
             $table->string('unidad');
             $table->date('fecha_vencimiento')->nullable();
+            $table->bigInteger('bandera')->nullable();
             $table->unsignedBigInteger('id_proveedor')->nullable();
             $table->unsignedBigInteger('id_categoria')->nullable();
             $table->unsignedBigInteger('id_sucursal')->nullable();

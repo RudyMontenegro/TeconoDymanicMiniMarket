@@ -98,6 +98,18 @@
                     {!!  $errors->first('unidad','<div class="invalid-feedback">:message</div>') !!}
                 </div>
         </div> 
+        <div class="row justify-content-center">
+            <div class="col-5">
+                    <label for="fecha"class="control-label">{{'Fecha de Vencimiento'}}</label>
+                    <input disabled type="text" class="form-control" name="fecha" id="fecha" 
+                    value="{{ isset($producto->fecha_vencimiento)?$producto->fecha_vencimiento:old('fecha_vencimiento') }}"
+                    >
+                    {!!  $errors->first('cantidad','<div class="invalid-feedback">:message</div>') !!}
+                </div>
+                <div class="col-5">
+                   
+                </div>
+        </div> 
          
         <div class="row justify-content-center">
             <div class="col-5">

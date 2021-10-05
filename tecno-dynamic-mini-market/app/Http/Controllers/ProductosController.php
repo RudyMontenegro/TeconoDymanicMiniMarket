@@ -80,8 +80,8 @@ class ProductosController extends Controller
             $producto->precio_venta_menor = request('precioVentaMenor');
             $producto->cantidad = $request->get('cantidad');
             $producto->unidad = $request->get('unidad');
-            //$producto->fecha_vencimiento = $request->get('cantidadInicial');
-            //$producto->id_proveedor = $request->get('proveedor');
+            $producto->fecha_vencimiento = $request->get('fecha');
+            $producto->bandera = $request->get('notificacion');
             $producto->id_categoria = $request->get('categoria');
             $producto->id_sucursal = 1;
 
@@ -182,8 +182,8 @@ class ProductosController extends Controller
         $producto->precio_venta_menor = request('precioVentaMenor');
         $producto->cantidad = $request->get('cantidad');
         $producto->unidad = $request->get('unidad');
-        //$producto->cantidad_inicial = $request->get('cantidadInicial');
-        //$producto->id_proveedor = $request->get('proveedor');
+        $producto->fecha_vencimiento = $request->get('fecha');
+        $producto->bandera = $request->get('notificacion');
         
         if($request->hasfile('foto')){
 
@@ -225,7 +225,7 @@ class ProductosController extends Controller
         $db_handle = new Productos();
 
         if(!empty($_POST["nombre"])) {
-            $user_count = $db_handle->numRows($_POST["nombre"],$_POST["sucursal"]);
+            $user_count = $db_handle->numRows($_POST["nombre"]);
             $contador = $db_handle->cuenta($_POST["nombre"]);
             if($contador < 3){
                 echo "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>";
@@ -245,7 +245,7 @@ class ProductosController extends Controller
         $db_handle = new Productos();
 
         if(!empty($_POST["codigo"])) {
-            $user_count = $db_handle->numRows2($_POST["codigo"],$_POST["sucursal"]);
+            $user_count = $db_handle->numRows2($_POST["codigo"]);
             $contador = $db_handle->cuenta($_POST["codigo"]);
             if($contador < 3){
                 echo "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>";
@@ -265,7 +265,7 @@ class ProductosController extends Controller
         $db_handle = new Productos();
 
         if(!empty($_POST["codigoBarra"])) {
-            $user_count = $db_handle->numRows3($_POST["codigoBarra"],$_POST["sucursal"]);
+            $user_count = $db_handle->numRows3($_POST["codigoBarra"]);
             $contador = $db_handle->cuenta($_POST["codigoBarra"]);
             if($contador < 3){
                 echo "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>";
@@ -285,7 +285,7 @@ class ProductosController extends Controller
         $db_handle = new Productos();
 
         if(!empty($_POST["codigo"])) {
-            $user_count = $db_handle->existe2($_POST["codigo"],$_POST["sucursal"],$_POST["id"]);
+            $user_count = $db_handle->existe2($_POST["codigo"],$_POST["id"]);
             $contador = $db_handle->cuenta($_POST["codigo"]);
 
             $valida = DB::table('productos')
@@ -315,7 +315,7 @@ class ProductosController extends Controller
         $db_handle = new Productos();
 
         if(!empty($_POST["codigoBarra"])) {
-            $user_count = $db_handle->existe3($_POST["codigoBarra"],$_POST["sucursal"],$_POST["id"]);
+            $user_count = $db_handle->existe3($_POST["codigoBarra"],$_POST["id"]);
             $contador = $db_handle->cuenta($_POST["codigoBarra"]);
 
             $valida = DB::table('productos')
@@ -330,9 +330,9 @@ class ProductosController extends Controller
                     echo "<span  class='menor'><h5 class='menor'> </h5></span>";
                 }else{
                     if($user_count) {
-                        echo "<span  class='estado-no-disponible-usuario'><h5 class='estado-no-disponible-usuario'>Codigo de producto no disponible</h5></span>";
+                        echo "<span  class='estado-no-disponible-usuario'><h5 class='estado-no-disponible-usuario'>Codigo Barra no disponible</h5></span>";
                     }else{
-                        echo "<span class='estado-disponible-usuario'><h5 class='estado-disponible-usuario'>Codigo disponible</h5></span>";
+                        echo "<span class='estado-disponible-usuario'><h5 class='estado-disponible-usuario'>Codigo Barra disponible</h5></span>";
                     }
                 }
                 
@@ -346,7 +346,7 @@ class ProductosController extends Controller
         $db_handle = new Productos();
 
         if(!empty($_POST["nombre"])) {
-            $user_count = $db_handle->existe($_POST["nombre"],$_POST["sucursal"],$_POST["id"]);
+            $user_count = $db_handle->existe($_POST["nombre"],$_POST["id"]);
             $contador = $db_handle->cuenta($_POST["nombre"]);
 
             $valida = DB::table('productos')
@@ -361,9 +361,9 @@ class ProductosController extends Controller
                     echo "<span  class='menor'><h5 class='menor'> </h5></span>";
                 }else{
                     if($user_count) {
-                        echo "<span  class='estado-no-disponible-usuario'><h5 class='estado-no-disponible-usuario'>Codigo de producto no disponible</h5></span>";
+                        echo "<span  class='estado-no-disponible-usuario'><h5 class='estado-no-disponible-usuario'>Nombre no disponible</h5></span>";
                     }else{
-                        echo "<span class='estado-disponible-usuario'><h5 class='estado-disponible-usuario'>Codigo disponible</h5></span>";
+                        echo "<span class='estado-disponible-usuario'><h5 class='estado-disponible-usuario'>Nombre disponible</h5></span>";
                     }
                 }
                 
