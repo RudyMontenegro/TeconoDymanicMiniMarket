@@ -54,7 +54,7 @@ $factory->define(App\Productos::class, function (Faker $faker) {
         'precio_venta_menor' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 48.8932),
         'cantidad' => $faker->randomNumber(2, true),
         'unidad' => $faker->randomElement(['docena','centena']),
-        'cantidad_inicial' => $faker -> randomDigit,     
+      //  'cantidad_inicial' => $faker -> randomDigit,     
         'id_proveedor' =>  $faker->randomElement($proveedor),
         'id_categoria' => $faker->randomElement($categoria),
         'id_sucursal' =>  $faker->randomElement($sucursal),

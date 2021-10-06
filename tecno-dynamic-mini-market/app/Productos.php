@@ -15,10 +15,10 @@ class Productos extends Model
         return $persona;
     } 
 
-    function numRows($nombre,$sucursal) {
+    function numRows($nombre) {
         $result  = DB::table('productos')
                     ->where('nombre','=', $nombre)
-                    ->where('id_sucursal','=', $sucursal)
+                    ->where('id_sucursal','=', 1)
                     ->count();
         return $result;
     }
@@ -26,44 +26,44 @@ class Productos extends Model
         $result  =  strlen($nombre);
         return $result;
     }
-    function existe($codigo,$sucursal,$id) {
+    function existe($codigo,$id) {
         $result  = DB::table('productos')
                     ->where('id','<>', $id)
                     ->where('nombre','=', $codigo)
-                    ->where('id_sucursal','=', $sucursal)
+                    ->where('id_sucursal','=', 1)
                     ->exists();
         return $result;
     }
 
-    function numRows2($nombre,$sucursal) {
+    function numRows2($nombre) {
         $result  = DB::table('productos')
                     ->where('codigo','=', $nombre)
-                    ->where('id_sucursal','=', $sucursal)
+                    ->where('id_sucursal','=', 1)
                     ->count();
         return $result;
     }
-    function existe2($codigo,$sucursal,$id) {
+    function existe2($codigo,$id) {
         $result  = DB::table('productos')
                     ->where('id','<>', $id)
                     ->where('codigo','=', $codigo)
-                    ->where('id_sucursal','=', $sucursal)
+                    ->where('id_sucursal','=', 1)
                     ->exists();
         return $result;
     }
 
-    function numRows3($nombre,$sucursal) {
+    function numRows3($nombre) {
         $result  = DB::table('productos')
                     ->where('codigo_barra','=', $nombre)
-                    ->where('id_sucursal','=', $sucursal)
+                    ->where('id_sucursal','=', 1)
                     ->count();
         return $result;
     }
 
-    function existe3($codigo,$sucursal,$id) {
+    function existe3($codigo,$id) {
         $result  = DB::table('productos')
                     ->where('id','<>', $id)
                     ->where('codigo_barra','=', $codigo)
-                    ->where('id_sucursal','=', $sucursal)
+                    ->where('id_sucursal','=', 1)
                     ->exists();
         return $result;
     }

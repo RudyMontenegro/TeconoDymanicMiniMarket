@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         //factory(Categoria::class, 2)->create();
         //factory(Cliente::class, 100)->create();
        //factory(Productos::class, 100)->create();
-       // factory(Productos::class, 100)->create();
+        factory(Productos::class, 100)->create();
     }
     
 }

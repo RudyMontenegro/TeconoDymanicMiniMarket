@@ -31,7 +31,8 @@
             <span id="estadoBoton"></span>
             <tr id="columna-0">
                 <th>
-                    <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existeCodigoBarras()" list="codigo">
+                    <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existeCodigoBarras()"
+                        list="codigo">
                     <datalist id="codigoDatalist">
                     </datalist>
                     <span id="estadoCodigo"></span>
@@ -39,14 +40,14 @@
                 </th>
                 <td>
                     <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
-                        id="nombre" onclick="style=borderColor:#cad1d7"  list="listNombre" placeholder="Buscar.."
+                        id="nombre" onclick="style=borderColor:#cad1d7" list="listNombre" placeholder="Buscar.."
                         value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
                     <datalist id="nombreDatalist">
                     </datalist>
                     <span id="estadoNombre"></span>
                 </td>
                 <td>
-                    
+
                     <input type="text" class="form-control  {{$errors->has('unidad')?'is-invalid':'' }}" name="unidad[]"
                         onkeyup="validarUnidad()" id="unidad"
                         value="{{ isset($transferencia->unidad)?$transferencia->unidad:old('unidad')  }}"> <span
@@ -87,13 +88,13 @@
                     </button>
                 </td>
             </tr>
-          
+
         </tbody>
     </table>
     <div class="div text-center">
         <span id="stateRow"></span>
     </div>
-    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir y Calcular</button>
 </div>
 <script>
 $("#codigoI").change(event => {
@@ -109,10 +110,11 @@ $("#codigoI").change(event => {
 });
 $("#nombre").change(event => {
     $.get(`envioName/${$("#nombre").val()}`, function(res, sta) {
-  //      $("#nombre").empty();
+        //      $("#nombre").empty();
         $("#codigoI").val(res[0].codigo_barra);
         $("#unidad").val(res[0].unidad);
         $("#precio").val(res[0].precio_venta_menor);
+        validarNombre()
         validarUnidad();
         validarCantidad();
         validarPrecio();
@@ -138,7 +140,8 @@ $('#codigoI').keyup(function() {
 
         });
     }
-});$('#nombre').keyup(function() {
+});
+$('#nombre').keyup(function() {
     var query = $(this).val();
     var sucursalID = $("#sucursal_origen").val();
     if (query != '') {
@@ -162,34 +165,38 @@ $('#codigoI').keyup(function() {
 </script>
 
 <script>
-var res = 0;
-var a = 0;
-var b = 0;
-
+var res = "0";
+var a = "0";
+var b = "0";
+var bb3 = "0";
+var bb4 = "0";
 function calcular() {
-    var bb1 = $("input[id=subTotal]").val();
-
     try {
         a = $("input[id=cantidad]").val();
         b = $("input[id=precio]").val();
-
-        $("#subTotal").val((a * b).toFixed(2));
-        if ($("input[id=subTotal]").val() != bb1) {
-            res = (a * b) + res;
-            $("#total").val(res.toFixed(2));
-        }
+        bb4 = a * b;     
+        $("#subTotal").val((bb4).toFixed(2));
     } catch (e) {}
 
 }
-
-
+function calcularTotal() {
+  bb4 = parseFloat(bb4);
+  res = parseFloat(res);
+    res = bb4 + res;
+    res = res.toFixed(2);
+    $("#total").val(res);
+}
 function limpiarCampos() {
     $("#codigoI").val('');
     $("#nombre").val('');
     $("#cantidad").val('');
     $("#unidad").val('');
     $("#precio").val('');
-    $("#subTotal").val('');
+    $("#subTotal").val('0');
+    a = 0;
+    b = 0;
+    bb3 = 0;
+    bb4 = 0;
 }
 $("#sucursal_origen").change(event => {
     limpiarCampos();
@@ -207,6 +214,7 @@ $(function() {
             iman = iman + 1;
             $("#tabla tbody tr:eq(0)").clone().appendTo("#tabla").attr("id", "columna-" + (iman)).find(
                 'input').attr('readonly', true).show();
+            calcularTotal();
             limpiarCampos();
             $("#stateRow").html("<span  class='menor'><h5 class='menor'></h5></span>");
         } else {
@@ -223,13 +231,16 @@ $(function() {
     $(document).on("click", ".eliminar", function() {
         var variableRestar = $(this).closest('tr').find('input[id="subTotal"]').val();
         if ($(this).parents('tr').attr('id') != "columna-0") {
+            variableRestar = parseFloat(variableRestar).toFixed(2);
             res = res - variableRestar;
+            res = res.toFixed(2);
             $("#total").val(res);
             $(this).parents('tr').remove();
         } else {
-            var bb2 = ($("#total").val()-$("#subTotal").val()); 
+            var bb2 = ($("#total").val() - $("#subTotal").val());
             $("#total").val(bb2.toFixed(2));
             res = $("#total").val();
+            res = parseFloat(res).toFixed(2);
             limpiarCampos();
         }
     });
@@ -344,6 +355,7 @@ function existeCodigoBarras() {
         validarNombre();
     }
 }
+
 function existeNombreProducto() {
     var prueba = document.getElementById("codigoI");
     prueba.style.borderColor = '#cad1d7';

@@ -58,22 +58,27 @@
 
         function validardescripcion() {
 
-            if($("#descripcion").val().length < 3){
-                $("#estadoDescripcion").html("<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
+            if($("#descripcion").val() == ""){
+                $("#estadoDescripcion").html("<span  class='menor'><h5 class='menor'> </h5></span>");
             }else{
-                if($("#nombre").val().length > 50){
+                if($("#descripcion").val().length < 3){
                     $("#estadoDescripcion").html("<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
                 }else{
-                     var re = new RegExp("^[0-9a-zA-Z ]+$");
-                    if(!re.test($("#descripcion").val())){
-                        $("#estadoDescripcion").html("<span  class='menor'><h5 class='menor'>Solo se acepta caracteres [A-Z]</h5></span>");
+                    if($("#nombre").val().length > 50){
+                        $("#estadoDescripcion").html("<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
                     }else{
-                         $("#estadoDescripcion").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+                         var re = new RegExp("^[0-9a-zA-Z ]+$");
+                        if(!re.test($("#descripcion").val())){
+                            $("#estadoDescripcion").html("<span  class='menor'><h5 class='menor'>Solo se acepta caracteres [A-Z]</h5></span>");
+                        }else{
+                             $("#estadoDescripcion").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+                        }
+                       
                     }
-                   
+                    
                 }
-                
             }
+            
         }
         </script>
         <style>
