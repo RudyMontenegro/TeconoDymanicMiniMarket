@@ -109,6 +109,7 @@ class CompraController extends Controller
             $sub_total = request('subTotal');
 
             for($i=0; $i < sizeof($nombre); $i++){
+                if(!is_null($nombre[$i])){
                 $compra_detalle = new CompraDetalle();
                 $compra_detalle-> codigo_barra =  $codigo_barra[$i];
                 $compra_detalle-> nombre = $nombre[$i];
@@ -139,6 +140,7 @@ class CompraController extends Controller
                  
                 $compra_detalle->save();
                 //$compra_detalle->aumentarInventario($codigo_barra[$i],intval($cantidad[$i]),intval($request->get('sucursal_origen')));
+            }
             }
         }
         return redirect('compra');
