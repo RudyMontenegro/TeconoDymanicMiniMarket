@@ -99,7 +99,7 @@ $(function() { /// se efecuta una ves termianada la recarga de la pagina
             $("#total").val(res);
             limpiarCampos();
         }
-    });
+    }); 
 });
 function validarNombre() {
     var cod = document.getElementById("sucursal_origen").value;

@@ -40,21 +40,19 @@
                              {!!  $errors->first('comprobante','<div class="invalid-feedback">:message</div>') !!}
                         </div>   
                         <div class="col-6">
-                     
+            
                             <label form="tipo_compra">Tipo de compra</label>
-                            <select class="form-control {{$errors->has('tip0_compra')?'is-invalid':'' }}" name="tipo_compra" id="tipo_compra">
-                                <option selected value="Contado" >Contado</option>
-                                <option valur="Credito">Credito</option>
-                            </select>  
-                            {!!  $errors->first('tipo_compra','<div class="invalid-feedback">:message</div>') !!}           
-                     </div>
+                            <input class="form-control" disabled  name="tipo_compra" id="tipo_compra" value="{{ isset($compra->tipo_compra)?$compra->tipo_compra:old('tipo_compra') }}">
+                         
+                               {!!  $errors->first('tipo_compra','<div class="invalid-feedback">:message</div>') !!}           
+                         </div>
                </div>
               <div class="row">
 
                    <div class="col-6">
                          <div class="form-group">
                             <label form="fecha">Fecha</label>
-                            <input class="form-control text-dark" name="fecha"
+                            <input class="form-control text-dark" disabled name="fecha"
                                     id="fecha" value="{{ isset($compra->fecha)?$compra->fecha:old('responsable_compra') }}">
                          </div>
                   </div>
@@ -71,7 +69,7 @@
                                            <div class="input-group-prepend">
                                               <span class="input-group-text" id="basic-addon1">Bs.</span>
                                            </div>
-                                               <input type="number" class="form-control" placeholder="100" aria-label="Username" id="total" name="total"
+                                               <input type="number" class="form-control" disabled placeholder="100" aria-label="Username" id="total" name="total"
                                                        aria-describedby="basic-addon1"  value="{{ isset($compra->total)?$compra->total:old('total') }}">
                                      </div>
                               </div>
@@ -80,7 +78,7 @@
                    <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label form="total">Recibo</label>
+                            <label form="total">Pagar</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>

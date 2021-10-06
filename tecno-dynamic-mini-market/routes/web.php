@@ -98,7 +98,7 @@ Route::post('/venta/validarCodigoProducto', 'VentaController@validarCodigo')->mi
 Route::post('/autoCompletName', 'VentaController@fetchName');
 Route::post('/autoCompleteNit', 'VentaController@fetchNitR');
 Route::post('/autoCompleteCodigoP', 'VentaController@fetchCodigoP');
-Route::post('/autoCompleteNombreP', 'VentaController@fetchNombreProducto');
+Route::post('/autoCompleteNombreP', 'VentaController@fetchNombreProducto'); 
 Route::get('/autocompleteNit/{id}', 'VentaController@fetchNit');
 Route::get('/venta/envioN/{id}', 'TransferenciaController@nombre')->middleware('auth');
 //COMPRA
@@ -117,6 +117,7 @@ Route::post('/compra/llenar', 'ClienteController@llenado')->middleware('auth');
 
 Route::get('/compra/envioName/{id}', 'CompraController@nombre')->middleware('auth');
 Route::get('/compra/{id}', 'CompraController@show')->middleware('auth');    
+Route::get('/compra/envioN/{id}', 'TransferenciaController@nombre')->middleware('auth');
 //jquery
 
 

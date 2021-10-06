@@ -84,9 +84,26 @@
                 </div>
             </div>  
         </div>
-              </br>  
+              
                @include('compra.table.table')
-              </br>
+
+                <script>
+            $("#sucursal_origen").change(event => {
+                $.get(`envio/${event.target.value}`, function(res, sta) {
+                    $("#sucursal_destino").empty();
+                    $("#sucursal_destino").append(`<option> Elige una Sucursal de Destino </option>`);
+                    $("#codigoI").val('');
+                    $("#estadoCodigo").html("<span  class='menor'><h5 class='menor'> </h5></span>");
+                    res.forEach(element => {
+                        $("#sucursal_destino").append(
+                            `<option value=${element.id}> ${element.nombre} </option>`);
+                    });
+
+                });
+
+            });
+            </script>
+              
               <div class="col-md-12 mx-auto ">
                 <div class="row">
                     <div class="col-6">
@@ -106,14 +123,15 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
-                            <label form="total">Pagar</label>
+                            <label for="recibo">Pagar</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="float" class="form-control" placeholder="100" onblur="devolver()" aria-label="Username" id="recibo" name="recibo"
-                                    aria-describedby="basic-addon1"><span id="estadoRecibo"></span>
+                                <input type="float" value="0" onclick="if(this.value=='0') this.value=''" onBlur="devolver()" onkeyup="validarRecibo()" require class="form-control" id="recibo"
+                                    name="recibo">
                             </div>
+                            <span id="estadoRecibo"></span>
                         </div>
                     </div>
                     <div class="col-6">
@@ -205,15 +223,24 @@
         }
         setInterval(validarFecha,30000);
 
-        
-    </script>
-    <script>
+    
         function devolver() {
-    try {
-        $("#cambio").val(($("#recibo").val() - $("#total").val()).toFixed(2));
-    } catch (e) {}
-}
-        </script>
+             try {
+                $("#cambio").val(($("#recibo").val() - $("#total").val()).toFixed(2));
+                 } catch (e) {}
+              }
+
+        function validarRecibo(){
+            if($("#recibo").val() < $("#total").val()){
+                $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'> Monto a pagar no puede ser menor al Total</h5></span>");
+                
+            } else {
+                $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'>  </h5></span>");
+               
+            }
+            
+        }
+</script>
 
 
     @endsection
