@@ -159,12 +159,12 @@
 
                                         <!-- Button trigger modal -->
                                         <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
-                                            data-target="#exampleModal2{{$productos->id}}">
+                                            data-target="#exampleModal7{{$productos->id}}">
                                             Borrar
                                         </button>
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal2{{$productos->id}}" tabindex="-1" role="dialog"
+                                        <div class="modal fade" id="exampleModal7{{$productos->id}}" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -178,7 +178,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <h2 class="text-center">
-                                                            ¿Esta seguro de eliminar esta categoria?
+                                                            ¿Esta seguro de eliminar este producto?
                                                         </h2>
                                                     </div>
                                                     <div class="modal-footer">

@@ -105,7 +105,7 @@ Route::get('/venta/envioN/{id}', 'TransferenciaController@nombre')->middleware('
 Route::get('/compra', 'CompraController@index')->middleware('auth');
 Route::get('/compra/registrarCompra','CompraController@create')->middleware('auth');
 Route::get('/compra/envioP/{id}', 'CompraController@producto')->middleware('auth');
-Route::get('/compra/envioN/{id}', 'CompraController@nombre')->middleware('auth');
+Route::get('/compra/envioN/{id}', 'CompraController@nombre3')->middleware('auth');
 Route::get('/compra/envioNit/{id}', 'CompraController@nombre')->middleware('auth');
 Route::get('/compra/edit/{id}', 'CompraController@edit')->middleware('auth');
 Route::post('/compra/registrarCompra','CompraController@store')->middleware('auth');
@@ -117,7 +117,6 @@ Route::post('/compra/llenar', 'ClienteController@llenado')->middleware('auth');
 
 Route::get('/compra/envioName/{id}', 'CompraController@nombre')->middleware('auth');
 Route::get('/compra/{id}', 'CompraController@show')->middleware('auth');    
-Route::get('/compra/envioN/{id}', 'TransferenciaController@nombre')->middleware('auth');
 //jquery
 
 

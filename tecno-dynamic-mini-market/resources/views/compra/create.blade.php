@@ -30,10 +30,13 @@
         @endif
  
         <style>
-            .menor {
-                color:#D60202;
-            }
-    
+        .menor {
+            color: #D60202;
+        }
+
+        .estado-nulo {
+            color: #D60202;
+        }
         </style>
 
 
@@ -231,11 +234,16 @@
               }
 
         function validarRecibo(){
-            if($("#recibo").val() < $("#total").val()){
+            var a = document.getElementById("cambio").value;
+            var b = document.getElementById("recibo").value;
+            var c = document.getElementById("total").value;
+
+            if((b-c)<0){
+               
                 $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'> Monto a pagar no puede ser menor al Total</h5></span>");
-                
             } else {
-                $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'>  </h5></span>");
+                 $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'>  </h5></span>");
+                
                
             }
             

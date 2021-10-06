@@ -71,7 +71,15 @@ class CompraController extends Controller
     public function nombre(Request $request, $id)
     {
         if($request->ajax()){
-            $codigo=Productos::nombres2($id);
+            $codigo=Productos::nombres8($id);
+            return response()->json( $codigo);
+        }
+    }
+
+    public function nombre3(Request $request, $id)
+    {
+        if($request->ajax()){
+            $codigo=Productos::nombres4($id);
             return response()->json( $codigo);
         }
     }

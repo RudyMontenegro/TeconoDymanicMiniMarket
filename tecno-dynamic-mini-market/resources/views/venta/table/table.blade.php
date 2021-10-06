@@ -57,7 +57,7 @@
                     <input type="number" class="form-control  {{$errors->has('cantidad')?'is-invalid':'' }}"
                         name="cantidad[]" id="cantidad" onBlur="calcular()" onkeyup="validarCantidad()"
                         onblur="validarCantidadProducto()"
-                        value="{{ isset($transferencia->cantidad)?$transferencia->cantidad:old('cantidad')  }}">
+                        value="1"
                     <span id="estadoCantidad"></span>
                 </td>
                 <td>
@@ -106,6 +106,7 @@ $("#codigoI").change(event => {
         validarUnidad();
         validarCantidad();
         validarPrecio();
+        calcular()
     });
 });
 $("#nombre").change(event => {
@@ -118,6 +119,7 @@ $("#nombre").change(event => {
         validarUnidad();
         validarCantidad();
         validarPrecio();
+        calcular()
     });
 });
 $('#codigoI').keyup(function() {
@@ -189,7 +191,7 @@ function calcularTotal() {
 function limpiarCampos() {
     $("#codigoI").val('');
     $("#nombre").val('');
-    $("#cantidad").val('');
+    $("#cantidad").val('1');
     $("#unidad").val('');
     $("#precio").val('');
     $("#subTotal").val('0');

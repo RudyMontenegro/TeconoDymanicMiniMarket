@@ -13,6 +13,8 @@
     padding-right: 0.1rem;
     padding-left: 0.1rem;
 }
+
+
 </style>
 <div class="table-responsive">
     <table class="table" id="tabla">
@@ -31,7 +33,7 @@
             <span id="estadoBoton"></span>
             <tr id="columna-0">
                 <th>
-                    <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existeCodigoBarras()"
+                    <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existeCodigoBarras()" 
                         list="codigo">
                     <datalist id="codigoDatalist">
                     </datalist>
@@ -94,7 +96,7 @@
     <div class="div text-center">
         <span id="stateRow"></span>
     </div>
-    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir y calcular</button>
 </div>
 <script>
 $("#codigoI").change(event => {
@@ -102,7 +104,7 @@ $("#codigoI").change(event => {
         $("#nombre").empty();
         $("#nombre").val(res[0].nombre);
         $("#unidad").val(res[0].unidad);
-        $("#precio").val(res[0].precio_venta_menor);
+        $("#precio").val(res[0].precio_costo);
         validarUnidad();
         validarCantidad();
         validarPrecio();
@@ -113,7 +115,7 @@ $("#nombre").change(event => {
         //      $("#nombre").empty();
         $("#codigoI").val(res[0].codigo_barra);
         $("#unidad").val(res[0].unidad);
-        $("#precio").val(res[0].precio_venta_menor);
+        $("#precio").val(res[0].precio_costo);
         validarUnidad();
         validarCantidad();
         validarPrecio();

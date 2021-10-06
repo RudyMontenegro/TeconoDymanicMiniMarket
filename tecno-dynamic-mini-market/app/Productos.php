@@ -88,10 +88,17 @@ public static function nombres2($id){
         ->get();
         return $nombre;
     }
-    public static function nombres4($id){
+    public static function nombres8($id){
         $nombre = DB::table('productos') 
         ->select('codigo_barra','unidad','precio_costo')
         ->where('nombre','=',$id)
+        ->get();
+        return $nombre;
+    }
+    public static function nombres4($id){
+        $nombre = DB::table('productos') 
+        ->select('nombre','unidad','precio_costo')
+        ->where('codigo_barra','=',$id)
         ->get();
         return $nombre;
     }
