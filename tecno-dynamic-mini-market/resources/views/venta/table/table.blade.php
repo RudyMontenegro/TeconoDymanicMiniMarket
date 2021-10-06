@@ -94,7 +94,7 @@
     <div class="div text-center">
         <span id="stateRow"></span>
     </div>
-    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir y Calcular</button>
 </div>
 <script>
 $("#codigoI").change(event => {
@@ -165,43 +165,34 @@ $('#nombre').keyup(function() {
 </script>
 
 <script>
-var res = 0;
-var a = 0;
-var b = 0;
-var bb3 = 0;
-var bb4 = 0;
-
+var res = "0";
+var a = "0";
+var b = "0";
+var bb3 = "0";
+var bb4 = "0";
 function calcular() {
-    var bb1 = $("input[id=subTot").val();
-// bb3 = $("input[id=precio]").val();
-try {
-    a = $("input[id=cantidad]").val();
-    b = $("input[id=precio]").val();
-    bb4 = a * b;
-    $("#subTotal").val((bb4).toFixed(2));
-    if ($("input[id=subTotal]").val() != bb1) {
-        if (bb3 == 0) {
-            bb3 = res;
-            res = bb4 + res;
-            $("#total").val(res.toFixed(2));
-        }else{
-            res = bb3 + bb4;
-            $("#total").val(res.toFixed(2));
-        }
-            
-    }
-} catch (e) {}
+    try {
+        a = $("input[id=cantidad]").val();
+        b = $("input[id=precio]").val();
+        bb4 = a * b;     
+        $("#subTotal").val((bb4).toFixed(2));
+    } catch (e) {}
 
 }
-
-
+function calcularTotal() {
+  bb4 = parseFloat(bb4);
+  res = parseFloat(res);
+    res = bb4 + res;
+    res = res.toFixed(2);
+    $("#total").val(res);
+}
 function limpiarCampos() {
     $("#codigoI").val('');
     $("#nombre").val('');
     $("#cantidad").val('');
     $("#unidad").val('');
     $("#precio").val('');
-    $("#subTotal").val('');
+    $("#subTotal").val('0');
     a = 0;
     b = 0;
     bb3 = 0;
@@ -223,6 +214,7 @@ $(function() {
             iman = iman + 1;
             $("#tabla tbody tr:eq(0)").clone().appendTo("#tabla").attr("id", "columna-" + (iman)).find(
                 'input').attr('readonly', true).show();
+            calcularTotal();
             limpiarCampos();
             $("#stateRow").html("<span  class='menor'><h5 class='menor'></h5></span>");
         } else {
@@ -239,6 +231,7 @@ $(function() {
     $(document).on("click", ".eliminar", function() {
         var variableRestar = $(this).closest('tr').find('input[id="subTotal"]').val();
         if ($(this).parents('tr').attr('id') != "columna-0") {
+            variableRestar = parseFloat(variableRestar).toFixed(2);
             res = res - variableRestar;
             res = res.toFixed(2);
             $("#total").val(res);
@@ -247,6 +240,7 @@ $(function() {
             var bb2 = ($("#total").val() - $("#subTotal").val());
             $("#total").val(bb2.toFixed(2));
             res = $("#total").val();
+            res = parseFloat(res).toFixed(2);
             limpiarCampos();
         }
     });
