@@ -23,6 +23,7 @@
                 color:#D60202;
             }
     </style>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
 <div class="card shadow">
     <div class="card-header border-0">
         <div class="row align-items-center">
@@ -93,7 +94,7 @@
                                                             {{csrf_field()}}
                                                             {{method_field('DELETE')}}
                                                             <button id="confirm" type="submit"
-                                                                class="btn btn-sm btn-danger float-right">Borrar</button>
+                                                                class="btn btn-sm btn-danger float-right ">Borrar</button>
                                                         </form>
                                                         <button type="button" class="btn-sm btn-secondary"
                                                             data-dismiss="modal">Cancelar</button>
@@ -125,7 +126,12 @@
             </div>
         </div>
     </div>
+<script>
 
+jQuery('.myClickDisabledElm').bind('click',function(e){ 
+    e.preventDefault(); 
+})
+</script>
         
     <div class="card shadow">
         <div class="card-header border-0">
@@ -187,7 +193,7 @@
                                                             {{csrf_field()}}
                                                             {{method_field('DELETE')}}
                                                             <button id="confirm" type="submit"
-                                                                class="btn btn-sm btn-danger float-right">Borrar</button>
+                                                                class="btn btn-sm btn-danger float-right btn-only1click">Borrar</button>
                                                         </form>
                                                         <button type="button" class="btn-sm btn-secondary"
                                                             data-dismiss="modal">Cancelar</button>

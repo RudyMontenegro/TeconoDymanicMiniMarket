@@ -14,6 +14,7 @@
     padding-left: 0.1rem;
 }
 </style>
+
 <div class="table-responsive">
     <table class="table" id="tabla">
         <thead class="thead-light">
@@ -31,16 +32,16 @@
             <span id="estadoBoton"></span>
             <tr id="columna-0">
                 <th>
-                    <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existeCodigoBarras()"
-                        list="codigo">
+                    <input class="form-control" autocomplete="off" name="codigoI[]" id="codigoI"
+                        onkeyup="existeCodigoBarras()" list="codigo">
                     <datalist id="codigoDatalist">
                     </datalist>
                     <span id="estadoCodigo"></span>
                     <span id="estadoCodigoI"></span>
                 </th>
                 <td>
-                    <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
-                        id="nombre" onclick="style=borderColor:#cad1d7" list="listNombre" placeholder="Buscar.."
+                    <input type="text" class="form-control" autocomplete="off" name="nombre[]" id="nombre"
+                        onclick="style=borderColor:#cad1d7" list="listNombre" placeholder="Buscar.."
                         value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
                     <datalist id="nombreDatalist">
                     </datalist>
@@ -56,9 +57,7 @@
                 <td>
                     <input type="number" class="form-control  {{$errors->has('cantidad')?'is-invalid':'' }}"
                         name="cantidad[]" id="cantidad" onBlur="calcular()" onkeyup="validarCantidad()"
-                        onblur="validarCantidadProducto()"
-                        value="1"
-                    <span id="estadoCantidad"></span>
+                        onblur="validarCantidadProducto()" value="1" <span id="estadoCantidad"></span>
                 </td>
                 <td>
                     <div class="input-group">
@@ -94,7 +93,8 @@
     <div class="div text-center">
         <span id="stateRow"></span>
     </div>
-    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir y Calcular</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir y
+        Calcular</button>
 </div>
 <script>
 $("#codigoI").change(event => {
@@ -106,9 +106,43 @@ $("#codigoI").change(event => {
         validarUnidad();
         validarCantidad();
         validarPrecio();
-        calcular()
+        calcular();
     });
 });
+
+function autoCompleteAll() {
+
+    $.get(`envioN/${$("#codigoI").val()}`, function(res, sta) {
+        $("#nombre").empty();
+        $("#nombre").val(res[0].nombre);
+        $("#unidad").val(res[0].unidad);
+        $("#precio").val(res[0].precio_venta_menor);
+        validarUnidad();
+        validarCantidad();
+        validarPrecio();
+        calcular();
+        while (validaciones()) {
+        $("#adicional").click();
+    }
+    });
+   
+}
+
+function PulsarTecla(e) {
+    var e = e ;
+    var tecla = e.keyCode;
+
+    if (tecla == 13) {
+
+        autoCompleteAll();
+    }
+
+
+}
+
+document.onkeydown = PulsarTecla
+
+
 $("#nombre").change(event => {
     $.get(`envioName/${$("#nombre").val()}`, function(res, sta) {
         //      $("#nombre").empty();
@@ -119,7 +153,7 @@ $("#nombre").change(event => {
         validarUnidad();
         validarCantidad();
         validarPrecio();
-        calcular()
+        calcular();
     });
 });
 $('#codigoI').keyup(function() {
@@ -164,30 +198,33 @@ $('#nombre').keyup(function() {
         });
     }
 });
-</script>
 
-<script>
 var res = "0";
 var a = "0";
 var b = "0";
 var bb3 = "0";
 var bb4 = "0";
+
 function calcular() {
     try {
         a = $("input[id=cantidad]").val();
         b = $("input[id=precio]").val();
-        bb4 = a * b;     
+        bb4 = a * b;
         $("#subTotal").val((bb4).toFixed(2));
     } catch (e) {}
 
 }
+
 function calcularTotal() {
-  bb4 = parseFloat(bb4);
-  res = parseFloat(res);
+    
+    bb4 = parseFloat(bb4);
+    res = parseFloat(res);
     res = bb4 + res;
     res = res.toFixed(2);
     $("#total").val(res);
+    limpiarCampos();
 }
+
 function limpiarCampos() {
     $("#codigoI").val('');
     $("#nombre").val('');
@@ -206,18 +243,25 @@ $("#sucursal_origen").change(event => {
 
 });
 
+function validaciones() {
+    if (!existeValor("codigoI") && !existeValor("nombre") && !existeValor("cantidad") && !
+        existeValor("precio") && !existeValor("unidad") && !existeValor("subTotal")
+    ) {
+        return true
+    } else {
+        return false
+    }
+}
 var iman = 0;
 $(function() {
+
     console.log(existeValor("codigoI"));
     $("#adicional").on('click', function() {
-        if (!existeValor("codigoI") && !existeValor("nombre") && !existeValor("cantidad") && !
-            existeValor("precio") && !existeValor("unidad") && !existeValor("subTotal")
-        ) {
+        if (validaciones()) {
             iman = iman + 1;
             $("#tabla tbody tr:eq(0)").clone().appendTo("#tabla").attr("id", "columna-" + (iman)).find(
                 'input').attr('readonly', true).show();
             calcularTotal();
-            limpiarCampos();
             $("#stateRow").html("<span  class='menor'><h5 class='menor'></h5></span>");
         } else {
             $("#stateRow").html("<h5 class='menor'>Revise todos los campos </h5>");

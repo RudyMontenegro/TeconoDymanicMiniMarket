@@ -156,13 +156,7 @@
     <script src="{{ asset('js/argon.js?v=1.0.0') }}"></script>
 
     <script>
-    $("form").bind("keypress", function(e) {
-        if (e.keyCode == 13) {
-            $("#btnSearch").attr('value');
-            //add more buttons here
-            return false;
-        }
-    });
+    
     </script>
 </body>
 
