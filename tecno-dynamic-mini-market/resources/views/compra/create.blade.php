@@ -136,7 +136,7 @@
                                     <span class="input-group-text"  autocomplete="off" id="basic-addon1">Bs.</span>
                                 </div>
                                 <input type="float" value="0" onclick="if(this.value=='0') this.value=''"
-                                    onBlur="devolver()" onkeyup="validarRecibo()" require class="form-control"
+                                    onkeyup="devolver();validarRecibo()" require class="form-control"
                                     id="recibo" name="recibo">
                             </div>
                             <span id="estadoRecibo"></span>

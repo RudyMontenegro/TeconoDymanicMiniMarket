@@ -32,7 +32,7 @@
             <tr id="columna-0">
                 <th>
                     <input class="form-control" name="codigoI[]" autocomplete="off" id="codigoI"
-                        onkeyup="existeCodigoBarras()" list="codigo">
+                        list="codigo">
                     <datalist id="codigoDatalist">
                     </datalist>
                     <span id="estadoCodigo"></span>
@@ -335,20 +335,7 @@ function validarPrecio() {
     }
 }
 
-function existeCodigoBarras() {
-    var prueba = document.getElementById("codigoI");
-    prueba.style.borderColor = '#cad1d7';
-    var e = document.getElementById("sucursal_origen");
-    var str = e.options[e.selectedIndex].text;
-    if (str == "Elige una Sucursal de Origen") {
-        $("#estadoCodigo").html(
-            "<span  class='menor'><h5 class='menor'>Seleccione una sucursal de origen </h5></span>");
-        $("#estadoCodigoI").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-    } else {
-        $("#nombre").val('');
-        validarNombre();
-    }
-}
+
 
 function existeNombreProducto() {
     var prueba = document.getElementById("codigoI");

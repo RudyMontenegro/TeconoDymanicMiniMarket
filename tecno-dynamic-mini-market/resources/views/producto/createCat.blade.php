@@ -166,7 +166,7 @@
             </div>
             <div class="col-5">
                 <button type="button" id="idButtonSaveCreate" disabled onClick="validarTodo()"
-                    class="btn btn-success float-right">Guardar"</button>
+                    class="btn btn-success float-right">Guardar</button>
             </div>
         </div>
 
