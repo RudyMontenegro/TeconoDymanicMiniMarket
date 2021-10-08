@@ -196,7 +196,7 @@
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
                                 <input type="number" onclick="if(this.value=='0') this.value=''"
-                                    onBlur="CalcularCambio()" onkeyup="validarRecibo()" require class="form-control"
+                                   onkeyup="validarRecibo()" require class="form-control"
                                     id="recibo" name="recibo">
                             </div>
                             <span id="estadoRecibo"></span>
@@ -235,7 +235,7 @@
                     Guardar
                 </button>
             </div>
-            </fieldset>
+            
         </form>
     </div>
 </div>
@@ -284,13 +284,11 @@ function validarRecibo() {
     var c = document.getElementById("total").value;
 
     if ((b - c) < 0) {
-
         $("#estadoRecibo").html(
             "<span  class='menor'><h5 class='menor'> Monto a pagar no puede ser menor al Total</h5></span>");
     } else {
         $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'>  </h5></span>");
-
-
+        CalcularCambio()
     }
 
 }

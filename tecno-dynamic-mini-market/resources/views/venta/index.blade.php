@@ -67,10 +67,10 @@
                                         </h2>
                                     </div>
                                     <div class="modal-footer">
-                                        <form method="POST" action="{{url('/venta/'.$venta->id) }}">
+                                        <form method="POST" id="idFormDeleteSale" action="{{url('/venta/'.$venta->id) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger float-right">Borrar</button>
+                                            <button type="button" id="idButtDelete" onClick="submitDeleteSale()" disabled class="btn btn-danger float-right">Borrar</button>
                                         </form>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Cancelar</button>
@@ -86,4 +86,14 @@
         </table>
     </div>
 </div>
+<script>
+
+$(document).ready(function() {
+    $("#idButtDelete").prop("disabled", false);
+});
+function submitDeleteSale(){
+    $("#idFormDeleteSale").submit();
+    $("#idButtDelete").prop("disabled", true);
+}
+</script>
 @endsection

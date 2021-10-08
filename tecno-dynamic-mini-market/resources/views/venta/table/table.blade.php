@@ -32,8 +32,7 @@
             <span id="estadoBoton"></span>
             <tr id="columna-0">
                 <th>
-                    <input class="form-control" autocomplete="off" name="codigoI[]" id="codigoI"
-                        onkeyup="existeCodigoBarras()" list="codigo">
+                    <input class="form-control" autocomplete="off" name="codigoI[]" id="codigoI" list="codigo">
                     <datalist id="codigoDatalist">
                     </datalist>
                     <span id="estadoCodigo"></span>
@@ -99,29 +98,22 @@
 <script>
 
 function autoCompleteAll() {
-
-    $.get(`envioN/${$("#codigoI").val()}`, function(res, sta) {
-        $("#nombre").empty();
+    
+    $.get(`envioN/${codigoRE}`, function(res, sta) {
         $("#nombre").val(res[0].nombre);
         $("#unidad").val(res[0].unidad);
         $("#precio").val(res[0].precio_venta_menor);
         $("#cantidad").val("1");
-        validarUnidad();
-        validarCantidad();
-        validarPrecio();
         calcular();
         $("#adicional").click();
-        while (validaciones()) {
-        $("#adicional").click();
-    }
     });
 }
-
+var codigoRE;
 function PulsarTecla(e) {
     var e = e ;
     var tecla = e.keyCode;
     if (tecla == 13) {
-      //  alert("Revise todos los campos del formulario")
+        codigoRE =  $("#codigoI").val()
        autoCompleteAll();
     }
 }
@@ -131,38 +123,12 @@ document.onkeydown = PulsarTecla
 
 $("#nombre").change(event => {
     $.get(`envioName/${$("#nombre").val()}`, function(res, sta) {
-        //      $("#nombre").empty();
         $("#codigoI").val(res[0].codigo_barra);
         $("#unidad").val(res[0].unidad);
         $("#precio").val(res[0].precio_venta_menor);
         $("#cantidad").val("1");
-        validarNombre()
-        validarUnidad();
-        validarCantidad();
-        validarPrecio();
         calcular();
     });
-});
-$('#codigoI').keyup(function() {
-    var query = $(this).val();
-    var sucursalID = $("#sucursal_origen").val();
-    if (query != '') {
-        var _token = $('input[name="_token"]').val();
-        $.ajax({
-            url: '/autoCompleteCodigoP',
-            method: 'POST',
-            data: {
-                query: query,
-                _token: _token,
-                sucursalID: sucursalID
-            },
-            success: function(data) {
-                $('#codigoDatalist').fadeIn();
-                $('#codigoDatalist').html(data);
-            }
-
-        });
-    }
 });
 $('#nombre').keyup(function() {
     var query = $(this).val();
@@ -228,6 +194,12 @@ function validaciones() {
     if (!existeValor("codigoI") && !existeValor("nombre") && !existeValor("cantidad") && !
         existeValor("precio") && !existeValor("unidad") && !existeValor("subTotal")
     ) {
+        lleno("codigoI");
+        lleno("nombre");
+        lleno("cantidad");
+        lleno("precio");
+        lleno("unidad");
+        lleno("subTotal");
         return true
     } else {
         return false
@@ -293,6 +265,10 @@ function vacio($valor) {
         }
 
     }
+}
+function lleno($valor) {
+    var prueba = document.getElementById($valor);
+        prueba.style.borderColor = '#cad1d7';
 }
 
 function validarUnidad() {
@@ -361,8 +337,6 @@ function validarPrecio() {
             a.style.borderColor = '#cad1d7';
             $("#estadoPrecio").html("<span  class='menor'><h5 class='menor'> </h5></span>");
             $("#estadoSubTotal").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-            // calcular();
-
         }
     }
 }
@@ -402,7 +376,7 @@ function validarNombre() {
 
         },
         error: function() {
-            console.log('no da');
+           
         }
     });
 }

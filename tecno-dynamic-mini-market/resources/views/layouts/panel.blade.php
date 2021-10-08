@@ -16,8 +16,8 @@
     <link href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <!-- Argon CSS -->
     <link href="{{ asset('css/argon.css?v=1.0.0') }}" rel="stylesheet">
-
-
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+ 
     <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
     <script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
@@ -156,7 +156,7 @@
     <script src="{{ asset('js/argon.js?v=1.0.0') }}"></script>
 
     <script>
-    
+
     </script>
 </body>
 

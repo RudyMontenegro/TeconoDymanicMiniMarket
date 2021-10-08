@@ -13,8 +13,6 @@
     padding-right: 0.1rem;
     padding-left: 0.1rem;
 }
-
-
 </style>
 <div class="table-responsive">
     <table class="table" id="tabla">
@@ -33,8 +31,8 @@
             <span id="estadoBoton"></span>
             <tr id="columna-0">
                 <th>
-                    <input class="form-control" name="codigoI[]" id="codigoI" onkeyup="existeCodigoBarras()" 
-                        list="codigo">
+                    <input class="form-control" name="codigoI[]" autocomplete="off" id="codigoI"
+                        onkeyup="existeCodigoBarras()" list="codigo">
                     <datalist id="codigoDatalist">
                     </datalist>
                     <span id="estadoCodigo"></span>
@@ -42,7 +40,8 @@
                 </th>
                 <td>
                     <input type="text" class="form-control  {{$errors->has('nombre')?'is-invalid':'' }}" name="nombre[]"
-                        id="nombre" onclick="style=borderColor:#cad1d7" list="listNombre" placeholder="Buscar.."
+                        id="nombre" autocomplete="off" onclick="style=borderColor:#cad1d7" list="listNombre"
+                        placeholder="Buscar.."
                         value="{{ isset($transferencia->nombre)?$transferencia->nombre:old('nombre')  }}">
                     <datalist id="nombreDatalist">
                     </datalist>
@@ -56,9 +55,9 @@
                         id="estadoUnidad"></span>
                 </td>
                 <td>
-                    <input type="number" class="form-control  {{$errors->has('cantidad')?'is-invalid':'' }}"
-                        name="cantidad[]" id="cantidad" onBlur="calcular()" onkeyup="validarCantidad()"
-                        onblur="validarCantidadProducto()"
+                    <input type="number" autocomplete="off"
+                        class="form-control   {{$errors->has('cantidad')?'is-invalid':'' }}" name="cantidad[]"
+                        id="cantidad" onBlur="calcular()" onkeyup="validarCantidad()" onblur="validarCantidadProducto()"
                         value="{{ isset($transferencia->cantidad)?$transferencia->cantidad:old('cantidad')  }}">
                     <span id="estadoCantidad"></span>
                 </td>
@@ -67,8 +66,9 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Bs.</span>
                         </div>
-                        <input type="number" class="form-control  {{$errors->has('precio')?'is-invalid':'' }}"
-                            name="precio[]" onkeyup="validarPrecio()" id="precio"
+                        <input type="number" autocomplete="off"
+                            class="form-control  {{$errors->has('precio')?'is-invalid':'' }}" name="precio[]"
+                            onkeyup="validarPrecio()" id="precio"
                             value="{{ isset($transferencia->precio)?$transferencia->precio:old('precio')  }}">
                     </div>
 
@@ -96,7 +96,8 @@
     <div class="div text-center">
         <span id="stateRow"></span>
     </div>
-    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir y calcular</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="adicional" name="adicional">Añadir y
+        calcular</button>
 </div>
 <script>
 $("#codigoI").change(event => {
@@ -120,27 +121,6 @@ $("#nombre").change(event => {
         validarCantidad();
         validarPrecio();
     });
-});
-$('#codigoI').keyup(function() {
-    var query = $(this).val();
-    var sucursalID = $("#sucursal_origen").val();
-    if (query != '') {
-        var _token = $('input[name="_token"]').val();
-        $.ajax({
-            url: '/autoCompleteCodigoP',
-            method: 'POST',
-            data: {
-                query: query,
-                _token: _token,
-                sucursalID: sucursalID
-            },
-            success: function(data) {
-                $('#codigoDatalist').fadeIn();
-                $('#codigoDatalist').html(data);
-            }
-
-        });
-    }
 });
 $('#nombre').keyup(function() {
     var query = $(this).val();
@@ -203,6 +183,10 @@ function limpiarCampos() {
     bb4 = 0;
 }
 
+function lleno($valor) {
+    var prueba = document.getElementById($valor);
+    prueba.style.borderColor = '#cad1d7';
+}
 $("#sucursal_origen").change(event => {
     limpiarCampos();
     $("#estadoCodigo").html("<span  class='menor'><h5 class='menor'> </h5></span>");
@@ -213,14 +197,21 @@ var iman = 0;
 $(function() {
     console.log(existeValor("codigoI"));
     $("#adicional").on('click', function() {
-        if (!existeValor("codigoI") && !existeValor("nombre") && !existeValor("cantidad") && !
-            existeValor("precio") && !existeValor("unidad") && !existeValor("subTotal")
+        if (!existeValor2("codigoI") && !existeValor2("nombre") && !existeValor2("cantidad") && !
+            existeValor2("precio") && !existeValor2("unidad") && !existeValor2("subTotal")
         ) {
+            lleno("codigoI");
+            lleno("nombre");
+            lleno("cantidad");
+            lleno("precio");
+            lleno("unidad");
+            lleno("subTotal");
             iman = iman + 1;
             $("#tabla tbody tr:eq(0)").clone().appendTo("#tabla").attr("id", "columna-" + (iman)).find(
                 'input').attr('readonly', true).show();
             calcularTotal()
             limpiarCampos();
+           
             $("#stateRow").html("<span  class='menor'><h5 class='menor'></h5></span>");
         } else {
             $("#stateRow").html("<h5 class='menor'>Revise todos los campos </h5>");
@@ -248,10 +239,11 @@ $(function() {
     });
 });
 
-function existeValor($dato) {
+function existeValor2($dato) {
     var boolean = false;
     var aux = document.getElementById($dato).value;
     if (aux == "") {
+
         boolean = true;
     }
     return boolean;
