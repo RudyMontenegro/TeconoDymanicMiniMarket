@@ -56,8 +56,8 @@
                 </td>
                 <td>
                     <input type="number" class="form-control  {{$errors->has('cantidad')?'is-invalid':'' }}"
-                        name="cantidad[]" id="cantidad" onBlur="calcular()" onkeyup="validarCantidad()"
-                        onblur="validarCantidadProducto()" value="1" <span id="estadoCantidad"></span>
+                        name="cantidad[]" id="cantidad" autocomplete="off" onBlur="calcular()" onkeyup="validarCantidad()"
+                        onblur="validarCantidadProducto()"  <span id="estadoCantidad"></span>
                 </td>
                 <td>
                     <div class="input-group">
@@ -65,7 +65,7 @@
                             <span class="input-group-text" id="basic-addon1">Bs.</span>
                         </div>
                         <input type="number" class="form-control  {{$errors->has('precio')?'is-invalid':'' }}"
-                            name="precio[]" onkeyup="validarPrecio()" id="precio"
+                            name="precio[]" autocomplete="off" onkeyup="validarPrecio()" id="precio"
                             value="{{ isset($transferencia->precio)?$transferencia->precio:old('precio')  }}">
                     </div>
 
@@ -97,18 +97,6 @@
         Calcular</button>
 </div>
 <script>
-$("#codigoI").change(event => {
-    $.get(`envioN/${$("#codigoI").val()}`, function(res, sta) {
-        $("#nombre").empty();
-        $("#nombre").val(res[0].nombre);
-        $("#unidad").val(res[0].unidad);
-        $("#precio").val(res[0].precio_venta_menor);
-        validarUnidad();
-        validarCantidad();
-        validarPrecio();
-        calcular();
-    });
-});
 
 function autoCompleteAll() {
 
@@ -117,27 +105,25 @@ function autoCompleteAll() {
         $("#nombre").val(res[0].nombre);
         $("#unidad").val(res[0].unidad);
         $("#precio").val(res[0].precio_venta_menor);
+        $("#cantidad").val("1");
         validarUnidad();
         validarCantidad();
         validarPrecio();
         calcular();
+        $("#adicional").click();
         while (validaciones()) {
         $("#adicional").click();
     }
     });
-   
 }
 
 function PulsarTecla(e) {
     var e = e ;
     var tecla = e.keyCode;
-
     if (tecla == 13) {
-
-        autoCompleteAll();
+      //  alert("Revise todos los campos del formulario")
+       autoCompleteAll();
     }
-
-
 }
 
 document.onkeydown = PulsarTecla
@@ -149,6 +135,7 @@ $("#nombre").change(event => {
         $("#codigoI").val(res[0].codigo_barra);
         $("#unidad").val(res[0].unidad);
         $("#precio").val(res[0].precio_venta_menor);
+        $("#cantidad").val("1");
         validarNombre()
         validarUnidad();
         validarCantidad();
@@ -202,7 +189,6 @@ $('#nombre').keyup(function() {
 var res = "0";
 var a = "0";
 var b = "0";
-var bb3 = "0";
 var bb4 = "0";
 
 function calcular() {
@@ -216,7 +202,6 @@ function calcular() {
 }
 
 function calcularTotal() {
-    
     bb4 = parseFloat(bb4);
     res = parseFloat(res);
     res = bb4 + res;
@@ -228,14 +213,10 @@ function calcularTotal() {
 function limpiarCampos() {
     $("#codigoI").val('');
     $("#nombre").val('');
-    $("#cantidad").val('1');
+    $("#cantidad").val('');
     $("#unidad").val('');
     $("#precio").val('');
     $("#subTotal").val('0');
-    a = 0;
-    b = 0;
-    bb3 = 0;
-    bb4 = 0;
 }
 $("#sucursal_origen").change(event => {
     limpiarCampos();
@@ -255,7 +236,6 @@ function validaciones() {
 var iman = 0;
 $(function() {
 
-    console.log(existeValor("codigoI"));
     $("#adicional").on('click', function() {
         if (validaciones()) {
             iman = iman + 1;
@@ -387,21 +367,6 @@ function validarPrecio() {
     }
 }
 
-function existeCodigoBarras() {
-    var prueba = document.getElementById("codigoI");
-    prueba.style.borderColor = '#cad1d7';
-    var e = document.getElementById("sucursal_origen");
-    var str = e.options[e.selectedIndex].text;
-    if (str == "Elige una Sucursal de Origen") {
-        $("#estadoCodigo").html(
-            "<span  class='menor'><h5 class='menor'>Seleccione una sucursal de origen </h5></span>");
-        $("#estadoCodigoI").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-    } else {
-        $("#nombre").val('');
-        validarNombre();
-    }
-}
-
 function existeNombreProducto() {
     var prueba = document.getElementById("codigoI");
     prueba.style.borderColor = '#cad1d7';
@@ -431,6 +396,7 @@ function validarNombre() {
         asycn: false,
         type: "POST",
         success: function(data) {
+
             $("#estadoCodigo").html(data);
             $("#loaderIcon").hide();
 

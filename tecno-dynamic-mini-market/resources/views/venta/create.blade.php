@@ -2,7 +2,7 @@
 @section('subtitulo','proveedores')
 @section('content')
 
-<div class="card shadow" style="background-color:#ffffff; color: rgb(0, 0, 0); font color: yellow !important">
+<div class="card shadow">
     <div class="card-header border-0">
         <div class="row align-items-center">
             <div class="col">
@@ -25,33 +25,7 @@
         @endif
         <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
         <script>
-        function validaComprobante() {
-
-            if ($("#comprobante").val() == "") {
-                $("#estadoComprobante").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-            } else {
-                if ($("#comprobante").val().length < 3) {
-                    $("#estadoComprobante").html(
-                        "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
-                } else {
-                    if ($("#comprobante").val().length > 50) {
-                        $("#estadoComprobante").html(
-                            "<span  class='menor'><h5 class='menor'>Ingrese de 3 a 50 caracteres</h5></span>");
-                    } else {
-                        var re = new RegExp("^[0-9a-zA-Z ]+$");
-                        if (!re.test($("#comprobante").val())) {
-                            $("#estadoComprobante").html(
-                                "<span  class='menor'><h5 class='menor'>Solo se acepta caracteres [A-Z] y [0-9]</h5></span>"
-                            );
-                        } else {
-                            $("#estadoComprobante").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-                        }
-                    }
-
-                }
-            }
-        }
-
+    
         function caseSN() {
             if ($("#nombre_contacto").val() == "") {
                 $("#nombre_contacto").val("Sin nombre")
@@ -101,17 +75,6 @@
             document.getElementById("fecha").value = `${YYYY}-${MTH}-${DAY}T${HH}:${MM}`;
         }
         setInterval(validarFecha, 30000);
-
-        function validarSucursal() {
-
-            var cod = document.getElementById("sucursal_origen").value;
-            //console.log(cod);
-            if (cod != "Elige una Sucursal de Origen") {
-                $("#estadoSucursal").html("<span  class='menor'><h5 class='menor'> </h5></span>");
-            } else {
-                $("#estadoSucursal").html("<span  class='menor'><h5 class='menor'>Seleccione una sucursal</h5></span>");
-            }
-        }
         </script>
         <style>
         .menor {
@@ -136,37 +99,13 @@
                                 placeholder="Escriba para buscar..." name="nit" id="nit" class="form-control">
                             <datalist id="NitList">
                             </datalist>
-                            <span id="estadoCodigo2"></span>
-
                         </div>
-                        <script>
-                        $('#nit').keyup(function() {
-                            var query = $(this).val();
-                            if (query != '') {
-                                var _token = $('input[name="_token"]').val();
-                                $.ajax({
-                                    url: '/autoCompleteNit',
-                                    method: 'POST',
-                                    data: {
-                                        query: query,
-                                        _token: _token
-                                    },
-                                    success: function(data) {
-                                        $('#NitList').fadeIn();
-                                        $('#NitList').html(data);
-                                    }
-
-                                });
-                            }
-                        });
-                        </script>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="comprobante">Comprobante</label>
                             <input type="text" name="comprobante" id="comprobante" class="form-control"
-                                value="Sin comprobante" onkeyup="validaComprobante()"><span
-                                id="estadoComprobante"></span>
+                                value="Sin comprobante">
                         </div>
                     </div>
                     <div class="col-6">
@@ -186,7 +125,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="nanombre_contactome">Fecha</label>
-                            <input class="form-control" type="datetime-local" name="fecha" readonly value="" id="fecha"
+                            <input class="form-control" type="datetime-local" name="fecha" readonly id="fecha"
                                 onblur="validarFecha()">
                         </div>
                     </div>
@@ -244,8 +183,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" require onclick="if(this.value=='0.00') this.value=''" class="form-control"
-                                    id="total" name="total">
+                                <input type="number" require onclick="if(this.value=='0.00') this.value=''"
+                                    class="form-control" id="total" name="total">
                             </div>
                         </div>
                     </div>
@@ -256,10 +195,11 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" value="0" onclick="if(this.value=='0') this.value=''" onBlur="CalcularCambio()" onkeyup="validarRecibo()" require class="form-control" id="recibo"
-                                    name="recibo">
+                                <input type="number" onclick="if(this.value=='0') this.value=''"
+                                    onBlur="CalcularCambio()" onkeyup="validarRecibo()" require class="form-control"
+                                    id="recibo" name="recibo">
                             </div>
-                             <span id="estadoRecibo"></span>
+                            <span id="estadoRecibo"></span>
                         </div>
                     </div>
                     <div class="col-6">
@@ -269,7 +209,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Bs.</span>
                                 </div>
-                                <input type="number" value="0" require class="form-control" id="cambio" name="cambio">
+                                <input type="number" require class="form-control" id="cambio" name="cambio">
                             </div>
                         </div>
                     </div>
@@ -287,7 +227,10 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" id="idBotonGuardar" onclick="guardarForm()"
+                <div class="div text-center">
+                    <span id="stateForm"></span>
+                </div>
+                <button type="button" id="idBotonGuardar" disabled onClick="guardarForm()"
                     class="btn btn-primary  btn-lg btn-block">
                     Guardar
                 </button>
@@ -320,30 +263,36 @@ function existeSucursalCreate() {
         return true;
     }
 }
+$(document).ready(function() {
+    $("#idBotonGuardar").prop("disabled", false);
+});
 
 function guardarForm() {
-    if (existeValorCreate('nombre_contacto') &&
-        existeValorCreate('total') && existeSucursalCreate()) {
+  //  alert("hey");
+    if (existeValorCreate('recibo') &&
+        existeValorCreate('total')) {
+        $('#idBotonGuardar').prop("disabled", true);
         $('#idform').submit();
     } else {
-        alert("Revise todos los campos del formulario")
+        $("#stateForm").html("<h5 class='menor'>Revise todos los campos </h5>");
+}
+}
+
+function validarRecibo() {
+    var a = document.getElementById("cambio").value;
+    var b = document.getElementById("recibo").value;
+    var c = document.getElementById("total").value;
+
+    if ((b - c) < 0) {
+
+        $("#estadoRecibo").html(
+            "<span  class='menor'><h5 class='menor'> Monto a pagar no puede ser menor al Total</h5></span>");
+    } else {
+        $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'>  </h5></span>");
+
+
     }
 
 }
-function validarRecibo(){
-            var a = document.getElementById("cambio").value;
-            var b = document.getElementById("recibo").value;
-            var c = document.getElementById("total").value;
-
-            if((b-c)<0){
-               
-                $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'> Monto a pagar no puede ser menor al Total</h5></span>");
-            } else {
-                 $("#estadoRecibo").html("<span  class='menor'><h5 class='menor'>  </h5></span>");
-                
-               
-            }
-            
-        }
 </script>
 @endsection
