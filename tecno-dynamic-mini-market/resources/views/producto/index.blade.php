@@ -136,16 +136,19 @@ jQuery('.myClickDisabledElm').bind('click', function(e) {
 })
 
 $(document).ready(function() {
-    $("#confirmDeleteProduct").prop("disabled", false);
-    $("#confirmDeleteCat").prop("disabled", false);
+    $("button[id=confirmDeleteProduct]").prop("disabled", false);
+    $("button[id=confirmDeleteCat]").prop("disabled", false);
+});
+$(document).on("click", ".confirmDeleteProduct", function() {
+        $(this).closest('tr').remove();
 });
 function submitDeleteProduct(){
-    $("#idFormDeleteProduct").submit();
-    $("#confirmDeleteProduct").prop("disabled", true);
+    $(this).$("#idFormDeleteProduct").submit();
+    $("button[id=confirmDeleteProduct]").prop("disabled", true);
 }
 function submitDeleteCat(){
     $("#idFormDelCat").submit();
-    $("#confirmDeleteCat").prop("disabled", true);
+    $("button[id=confirmDeleteCat]").prop("disabled", true);
 }
 </script>
 
@@ -208,7 +211,7 @@ function submitDeleteCat(){
                                                     style="display:inline">
                                                     {{csrf_field()}}
                                                     {{method_field('DELETE')}}
-                                                    <button id="confirmDeleteProduct" disabled type="button" onClick="submitDeleteProduct()"
+                                                    <button id="confirmDeleteProduct" disabled type="button" 
                                                         class="btn btn-sm btn-danger float-right btn-only1click">Borrar</button>
                                                 </form>
 

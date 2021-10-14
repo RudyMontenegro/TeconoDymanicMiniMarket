@@ -55,7 +55,7 @@ $factory->define(App\Productos::class, function (Faker $faker) {
         'cantidad' => $faker->randomNumber(2, true),
         'unidad' => $faker->randomElement(['docena','centena']),
       //  'cantidad_inicial' => $faker -> randomDigit,     
-        'id_proveedor' =>  $faker->randomElement($proveedor),
+       // 'id_proveedor' =>  $faker->randomElement($proveedor),
         'id_categoria' => $faker->randomElement($categoria),
         'id_sucursal' =>  $faker->randomElement($sucursal),
     ];

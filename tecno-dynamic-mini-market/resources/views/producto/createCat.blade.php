@@ -96,13 +96,9 @@
         if (existeValor('nombre')) {
             event.preventDefault();
         } else {
-            if (existeValor('descripcion')) {
-                event.preventDefault();
-            } else {
                     $("#idFormCreate").submit();
                     $("#idButtonSaveCreate").prop("disabled",true);
             }
-        }
     }
 
     function existeValor($dato) {

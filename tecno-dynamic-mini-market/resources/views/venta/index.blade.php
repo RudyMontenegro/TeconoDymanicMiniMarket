@@ -36,7 +36,7 @@
                     <td>
                         {{ $venta->fecha }}
                     </td>
-                  
+
                     <td>
                         {{ $venta->total}}
                     </td>
@@ -46,7 +46,7 @@
                     <td>
                         {{ $venta->cambio }}
                     </td>
-                    <td>
+                    <td class="eliminar">
                         <a href="{{ url('/venta/'.$venta->id.'/show') }}" class="btn btn-sm btn-info">Detalles</a>
                         <button class="btn btn-sm btn-danger" type="submit" data-toggle="modal"
                             data-target="#exampleModal{{$venta->id}}">Eliminar</button>
@@ -66,11 +66,13 @@
                                             ¿Esta seguro de eliminar esta venta?
                                         </h2>
                                     </div>
-                                    <div class="modal-footer">
-                                        <form method="POST" id="idFormDeleteSale" action="{{url('/venta/'.$venta->id) }}">
+                                    <div class="modal-footer eliminar">
+                                        <form method="POST" id="idFormDeleteSale"
+                                            action="{{url('/venta/'.$venta->id) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" id="idButtDelete" onClick="submitDeleteSale()" disabled class="btn btn-danger float-right">Borrar</button>
+                                            <button type="button" id="idButtDelete" onClick="submitDeleteSale()"
+                                                disabled class="btn btn-danger float-right">Borrar</button>
                                         </form>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Cancelar</button>
@@ -87,13 +89,13 @@
     </div>
 </div>
 <script>
-
 $(document).ready(function() {
-    $("#idButtDelete").prop("disabled", false);
+    $("button[id=idButtDelete]").prop("disabled", false);
 });
-function submitDeleteSale(){
+
+function submitDeleteSale() {
     $("#idFormDeleteSale").submit();
-    $("#idButtDelete").prop("disabled", true);
+    $("button[id=idButtDelete]").prop("disabled", true);
 }
 </script>
 @endsection
