@@ -139,9 +139,13 @@ $(document).ready(function() {
     $("button[id=confirmDeleteProduct]").prop("disabled", false);
     $("button[id=confirmDeleteCat]").prop("disabled", false);
 });
-$(document).on("click", ".confirmDeleteProduct", function() {
-        $(this).closest('tr').remove();
+$(function() {
+$(document).on("click", "#confirmDeleteProduct", function() {
+    
+        $(this).closest('tr').find('form[id="idFormDeleteProduct"]').submit();
 });
+});
+
 function submitDeleteProduct(){
     $(this).$("#idFormDeleteProduct").submit();
     $("button[id=confirmDeleteProduct]").prop("disabled", true);
