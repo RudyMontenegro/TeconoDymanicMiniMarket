@@ -71,8 +71,8 @@
                                             action="{{url('/venta/'.$venta->id) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" id="idButtDelete" onClick="submitDeleteSale()"
-                                                disabled class="btn btn-danger float-right">Borrar</button>
+                                            <button type="button" id="idButtDelete" disabled
+                                                class="btn btn-danger float-right">Borrar</button>
                                         </form>
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Cancelar</button>
@@ -86,16 +86,22 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="paginacion">
+            {{$ventas->links()}}
+        </div>
     </div>
 </div>
 <script>
 $(document).ready(function() {
     $("button[id=idButtDelete]").prop("disabled", false);
 });
+$(function() {
+    $(document).on("click", "#idButtDelete", function() {
+        $(this).prop("disabled", true);
+        $(this).closest('tr').find('form[id="idFormDeleteSale"]').submit();
+    })
 
-function submitDeleteSale() {
-    $("#idFormDeleteSale").submit();
-    $("button[id=idButtDelete]").prop("disabled", true);
-}
+
+});
 </script>
 @endsection

@@ -98,7 +98,8 @@
                                                         {{csrf_field()}}
                                                         {{method_field('DELETE')}}
                                                         <button id="confirmDeleteCat" type="button"
-                                                            class="btn btn-sm btn-danger float-right" disabled onClick="submitDeleteCat()">Borrar</button>
+                                                            class="btn btn-sm btn-danger float-right"
+                                                            disabled>Borrar</button>
                                                     </form>
                                                     <button type="button" class="btn-sm btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
@@ -140,20 +141,15 @@ $(document).ready(function() {
     $("button[id=confirmDeleteCat]").prop("disabled", false);
 });
 $(function() {
-$(document).on("click", "#confirmDeleteProduct", function() {
-    
+    $(document).on("click", "#confirmDeleteProduct", function() {
+        $(this).prop("disabled", true);
         $(this).closest('tr').find('form[id="idFormDeleteProduct"]').submit();
+    });
+    $(document).on("click", "#confirmDeleteCat", function() {
+        $(this).prop("disabled", true);
+        $(this).closest('tr').find('form[id="idFormDelCat"]').submit();
+    });
 });
-});
-
-function submitDeleteProduct(){
-    $(this).$("#idFormDeleteProduct").submit();
-    $("button[id=confirmDeleteProduct]").prop("disabled", true);
-}
-function submitDeleteCat(){
-    $("#idFormDelCat").submit();
-    $("button[id=confirmDeleteCat]").prop("disabled", true);
-}
 </script>
 
 <div class="card shadow">
@@ -168,6 +164,7 @@ function submitDeleteCat(){
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
+                                <th scope="col">#</th>
                                 <th scope="col">Codigo Barra</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Categoria</th>
@@ -175,7 +172,8 @@ function submitDeleteCat(){
                             </tr>
                         </thead>
                         <tbody id="miTabla">
-                            @foreach ($producto as $productos)
+                            @foreach ($producto as $index => $productos)
+                            <th scope="row">{{ $index+1}}</th>
                             <td scope="row">{{$productos->codigo_barra}}</td>
                             <td>{{$productos->nombre}}</td>
                             <td>{{$productos->categoriaNombre}}</td>
@@ -211,11 +209,12 @@ function submitDeleteCat(){
                                                 </h2>
                                             </div>
                                             <div class="modal-footer">
-                                                <form method="post" id="idFormDeleteProduct" action="{{url('/producto/'.$productos->id)}}"
+                                                <form method="post" id="idFormDeleteProduct"
+                                                    action="{{url('/producto/'.$productos->id)}}"
                                                     style="display:inline">
                                                     {{csrf_field()}}
                                                     {{method_field('DELETE')}}
-                                                    <button id="confirmDeleteProduct" disabled type="button" 
+                                                    <button id="confirmDeleteProduct" disabled type="button"
                                                         class="btn btn-sm btn-danger float-right btn-only1click">Borrar</button>
                                                 </form>
 

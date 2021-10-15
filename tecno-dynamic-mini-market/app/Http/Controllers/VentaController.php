@@ -23,7 +23,7 @@ class VentaController extends Controller
     
     public function index() 
     {
-        $ventas = Venta::all();
+        $ventas = Venta::paginate(3);
      //   $ventasDetalles = VentaDetalle::all();
       //  $VentasSucursales = Venta::ventaXsucursal();
         //dd($VentasSucursales);
@@ -205,7 +205,7 @@ class VentaController extends Controller
       $query = $request->get('query');
       $sucursalID = $request->get('sucursalID');
       $data = DB::table('productos')
-        ->where('codigo_barra', 'LIKE', "{$query}%")
+        ->where('codigo_barra', 'LIKE', "%{$query}%")
         ->where('id_sucursal', '=', $sucursalID)
         ->get();
       $output = '<datalist id="codigo">';
@@ -226,7 +226,7 @@ class VentaController extends Controller
       $query = $request->get('query');
       $sucursalID = $request->get('sucursalID');
       $data = DB::table('productos')
-        ->where('nombre', 'LIKE', "{$query}%")
+        ->where('nombre', 'LIKE', "%{$query}%")
         ->where('id_sucursal', '=', $sucursalID)
         ->get();
       $output = '<datalist id="listNombre">';

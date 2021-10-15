@@ -35,10 +35,10 @@ class DatabaseSeeder extends Seeder
         'categoria'=> 'tangible'
         ]);
        // factory(Proveedor::class, 10)->create();
-        factory(Categoria::class, 2)->create();
+       factory(Categoria::class, 2)->create();
         //factory(Cliente::class, 100)->create();
        //factory(Productos::class, 100)->create();
-        factory(Productos::class, 20)->create();
+        factory(Productos::class, 500)->create();
     }
     
 }
